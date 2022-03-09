@@ -59,7 +59,7 @@ class Novel(models.Model):
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
     words = models.PositiveIntegerField(
         verbose_name="number of words")
-    createrd_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now_add=True)
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
