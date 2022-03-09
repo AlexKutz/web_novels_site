@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Tag, Author, Rate, Novel, Status, Chapter, Language
 
 
 class CustomUserAdmin(UserAdmin):
@@ -19,10 +19,12 @@ class CustomUserAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2', 'is_staff', 'is_active')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+admin.site.register([Tag, Author, Rate, Novel, Status, Chapter, Language])

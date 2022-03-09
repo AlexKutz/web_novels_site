@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Novel, Tag
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    ctx = {
+        "novel": Novel.objects.all(),
+        "popular_tags": Tag.objects.all()[:16]
+    }
+    return render(request, 'novel/index.html', ctx)
