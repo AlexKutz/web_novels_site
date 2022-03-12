@@ -14,16 +14,20 @@
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
-  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  {% load compress %}
+  {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'css/main.scss' %}">
+  {% endcompress %}
+  {% compress js %}
   <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+  {% endcompress %}
   <meta name="theme-color" content="#fafafa">
 </head>
 <body>
 {% block header %}
   <header class="header">
   <div class="header__limiter">
-    <a href="#" class="header__logo">
+    <a href="{% url 'index' %}" class="header__logo">
       <svg id="Слой_1" data-name="Слой 1" style="max-height: 300px; max-width: 300px"
            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 152.38 17.77">
         <defs>
@@ -69,7 +73,7 @@
               transform="translate(-1.43 -0.01)"/>
       </svg>
     </a>
-    <nav class="header__menu">
+    <nav class="header__menu noselect">
       <a href="#" class="header__menu-link">Каталог</a>
       <a href="#" class="header__menu-link">Теги</a>
       <a href="#" class="header__menu-link">Фанфики</a>
@@ -101,10 +105,10 @@
         </svg>
       </div>
     </div>
-    <div class="header__authentication">
-      <a href="" class="header__login-link noselect btn-border-anim">
+    <div class="header__authentication authentication">
+      <a href="" class="authentication__btn authentication__login-btn noselect btn-border-anim">
         Вход
-        <svg xmlns="http://www.w3.org/2000/svg" class="header__authentication-image"
+        <svg xmlns="http://www.w3.org/2000/svg" class="authentication__icon"
              style="max-height: 30px; max-width: 30px" viewBox="0 0 310 330">
           <path
               d="M25,180H208.79l-44.4,44.39a15,15,0,0,0,21.22,21.22l70-70a15,15,0,0,0,0-21.21l-70-70a15,15,0,0,0-21.22,21.22L208.79,150H25a15,15,0,0,0,0,30Z"
@@ -114,10 +118,10 @@
               transform="translate(-10)"/>
         </svg>
       </a>
-      <a href="" class="header__register-link noselect btn-border-anim">
+      <a href="" class="authentication__btn authentication__register-btn noselect btn-border-anim">
         Регистрация
         <svg version="1.1" width="15" style="max-height: 30px; max-width: 30px"
-             class="header__authentication-image" xmlns="http://www.w3.org/2000/svg"
+             class="authentication__icon" xmlns="http://www.w3.org/2000/svg"
              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 1523 1639.7" xml:space="preserve">
           <path d="M976.6,1011.3c25.4,9.9,50.2,21.3,74.2,34c29.9,15.8,41.3,52.7,25.5,82.6c-15.8,29.9-52.7,41.3-82.6,25.5
@@ -136,9 +140,26 @@
   </div>
 </header>
 {% endblock %}
-  {% block content %}{% endblock %}
+    <button class="backToTop noselect>">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M0 16.67l2.829 2.83 9.175-9.339 9.167 9.339 2.829-2.83-11.996-12.17z"/>
+      </svg>
+    </button>
+    <main class="page">
+      <div class="page__limiter">
+        <div class="flex-container">
+          <div class="page__col-1">
+            {% block content %}
+
+            {% endblock %}
+          </div>
+          <div class="page__col-2">
+            <div class="info-board"></div>
+          </div>
+        </div>
+      </div>
+    </main>
 <footer class="footer">
   <div class="footer__limiter"></div>
 </footer>
-</body>
 </html>

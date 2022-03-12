@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
+from novel.models import Status, Author, Language, Tag, Novel, Rate, Chapter
+
 
 class UsersManagersTests(TestCase):
 

@@ -1,0 +1,109 @@
+{% extends 'novel/base.html' %}
+{% block title %}page{% endblock %}
+{% block content %}
+    <div class="book">
+        <div class="flex-container">
+            <div class="book__image noselect">
+                <a href="#" class="bookCard__image">
+                    <img src="{{ novel.book_image.url }}" alt="Cover of the book">
+                </a>
+            </div>
+            <div class="meta">
+                <h1 href="#" class="meta__title">{{ novel.title }}</h1>
+                {% if novel.adult_only %}<span class="bookCard__adultOnly">[R18+]</span>{% endif %}
+                <p class="meta__altTitle">
+                    Альтернативное название: {{ novel.alt_title }}
+                </p>
+                <p class="meta__author">
+                    Автор: {{ novel.author }}
+                </p>
+                {% load clipto %}
+                {% load localize_sinceto %}
+                <p class="meta__updated-data">
+                    Загружено: <span>{{ novel.created_at|timesince|clipto:','|localize_sinceto }} назад</span>
+                </p>
+                {% load number_words_filter %}
+                <p class="meta__words-count">
+                    Количество слов: {{ novel.words|number_words_filter }}
+                </p>
+                <p class="meta__status">
+                    Статус: {{ novel.status }}
+                </p>
+                <div class="meta__tags">
+                    Теги:
+                    {% for tag in novel.tags.all %}<a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="bookCard__description">{{ novel.description }}</div>
+        <div class="meta__buttons noselect">
+            <a href="{% url 'novels' novel.id %}"
+               class="btn meta__btn btn-border-anim">Прочитать</a>
+            <a href="{% url 'novels' novel.id %}"
+               class="btn meta__btn btn-border-anim">Добавить на
+                <br>
+            книжную полку</a>
+        </div>
+        <div class="rate">
+            <h2 class="rate__title">Оценить книгу</h2>
+            <textarea id="rate"
+                      class="rate__textarea"
+                      name=""
+                      id=""
+                      placeholder="Напишите комментарий"></textarea>
+            <div class="rate__row">
+                <div class="rate__stars">
+                    <input type="radio" id="star5" name="rate" value="5"/>
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4" name="rate" value="4"/>
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3" name="rate" value="3"/>
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2" name="rate" value="2"/>
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1" name="rate" value="1"/>
+                    <label for="star1" title="text">1 star</label>
+                </div>
+                <input class="btn rate__submit" type="submit" value="Отправить">
+            </div>
+        </div>
+        <div class="comments">
+            <div class="comment">
+                <div class="comment__avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
+                        <defs>
+                        <style>.a {
+                  fill: #1d1d1b;
+              }
+                        </style>
+                        </defs>
+                        <rect class="a" width="126" height="126"/>
+                    </svg>
+                </div>
+                <div class="comment__data">
+                    <span class="comment__name">Youan</span>
+                    <span class="comment__stars">★★★★★</span>
+                    <span class="comment__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium cum facilis perferendis placeat provident quos repellat tenetur ullam, ut voluptate!</span>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment__avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
+                        <defs>
+                        <style>.a {
+                  fill: #1d1d1b;
+              }
+                        </style>
+                        </defs>
+                        <rect class="a" width="126" height="126"/>
+                    </svg>
+                </div>
+                <div class="comment__data">
+                    <span class="comment__name">Youan</span>
+                    <span class="comment__stars">★★★★★</span>
+                    <span class="comment__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium cum facilis perferendis placeat provident quos repellat tenetur ullam, ut voluptate!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

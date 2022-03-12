@@ -51,6 +51,18 @@ class DarkMode {
         this.darkBtn = document.querySelector("." + darkBtnClass)
         this.lightHideClass = lightHideClass
         this.darkHideClass = darkHideClass
+        this.lightMode = window.localStorage.getItem('lightMode')
+        if (this.lightMode == 'light') {
+            document.documentElement.dataset.colorscheme = 'light'
+        } else if (this.lightMode == 'dark') {
+            document.documentElement.dataset.colorscheme = 'dark'
+        } else {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                window.localStorage.setItem('lightMode', 'dark')
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                window.localStorage.setItem('lightMode', 'light')
+            }
+        }
         if (!this.lightBtn || !this.darkBtn) {
             throw `Can't find button (${lightBtnClass}, ${darkBtnClass})`
         }
@@ -74,11 +86,13 @@ class DarkMode {
             this.hide(this.darkBtn, this.darkHideClass)
             this.show(this.lightBtn, this.lightHideClass)
             document.documentElement.dataset.colorscheme = "dark"
+            window.localStorage.setItem('lightMode', 'dark')
         }
         this.lightBtn.onclick = () => {
             this.hide(this.lightBtn, this.lightHideClass)
             this.show(this.darkBtn, this.darkHideClass)
             document.documentElement.dataset.colorscheme = "light"
+            window.localStorage.setItem('lightMode', 'light')
         }
     }
 }
