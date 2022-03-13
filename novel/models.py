@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.utils.timesince import timesince
+from .templatetags.fixtimesince import fixtimesince
 
 from .managers import CustomUserManager
 
@@ -63,8 +65,13 @@ class Novel(models.Model):
     last_updated = models.DateTimeField(auto_now_add=True)
     language = models.ForeignKey(
         Language, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='novel')
     description = models.CharField(max_length=900, blank=True)
+
+    def _get_timesince(self):
+        return fixtimesince(timesince(self.created_at))
+
+    time_from_upload = property(_get_timesince)
 
     def __str__(self):
         return f'{self.title} / {self.author}'

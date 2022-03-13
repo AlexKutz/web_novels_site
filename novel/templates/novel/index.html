@@ -2,17 +2,17 @@
 {% block title %}Novel{% endblock %}
 {% block content %}
   <div class="search">
-    <form action="#">
-      <input type="text" class="search__input"
-             placeholder="Название, автор, тег (несколько разделенных пробелами)">
-      <div class="search__icon-wraper noselect">
+    <form id="search-form">
+      <input type="text" name="q" class="search__input"
+             placeholder="Поиск по названию, автору или тегам (разделенных пробелами)">
+      <label for="search-submit" class="search__icon-wraper noselect">
         <svg class="search__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
              viewBox="0 0 24 24">
           <path
               d="M9.145 18.29c-5.042 0-9.145-4.102-9.145-9.145s4.103-9.145 9.145-9.145 9.145 4.103 9.145 9.145-4.102 9.145-9.145 9.145zm0-15.167c-3.321 0-6.022 2.702-6.022 6.022s2.702 6.022 6.022 6.022 6.023-2.702 6.023-6.022-2.702-6.022-6.023-6.022zm9.263 12.443c-.817 1.176-1.852 2.188-3.046 2.981l5.452 5.453 3.014-3.013-5.42-5.421z"/>
         </svg>
-      </div>
-      <input type="submit" class="hidden" id="searchSubmit">
+      </label>
+      <input type="submit" id="search-submit" class="hidden" id="searchSubmit">
     </form>
   </div>
   <div class="popular-tags">
@@ -58,9 +58,8 @@
             </div>
           </div>
         </div>
-        {% load clipto %}
-        {% load l10n %}
-        <div class="bookCard__uploadTime">{{ novel.created_at|timesince|clipto:',' }} назад</div>
+        {% load fixtimesince %}
+        <div class="bookCard__uploadTime">{{ novel.created_at|timesince|fixtimesince}} назад</div>
       </div>
     {% endfor %}
   </section>

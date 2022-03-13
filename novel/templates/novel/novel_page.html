@@ -17,10 +17,9 @@
                 <p class="meta__author">
                     Автор: {{ novel.author }}
                 </p>
-                {% load clipto %}
-                {% load localize_sinceto %}
+                {% load fixtimesince %}
                 <p class="meta__updated-data">
-                    Загружено: <span>{{ novel.created_at|timesince|clipto:','|localize_sinceto }} назад</span>
+                    Загружено: <span>{{  novel.created_at|timesince|fixtimesince }} назад</span>
                 </p>
                 {% load number_words_filter %}
                 <p class="meta__words-count">

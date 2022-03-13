@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => main())
 function main() {
     backToTop = new BackToTop("backToTop", "backToTop_hide")
     DarkModeBtn = new DarkMode("changeColorScheme__sun", "changeColorScheme__moon", "changeColorScheme__sun_hide", "changeColorScheme__moon_hide")
+    search = new Search('search-form')
 }
 
 class BackToTop {
@@ -94,5 +95,26 @@ class DarkMode {
             document.documentElement.dataset.colorscheme = "light"
             window.localStorage.setItem('lightMode', 'light')
         }
+    }
+}
+
+class Search {
+    constructor(formId) {
+        this.form = document.getElementById(formId)
+        this.addEventListeners()
+    }
+    addEventListeners () {
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            this.sendRequest()
+        })
+    }
+    async sendRequest () {
+        const inputValue = this.form.childNodes[1].value
+        let url = new URL("search/", location.protocol.concat("//").concat(window.location.host))
+        url.searchParams.append('q', inputValue)
+        let response = await fetch(url);
+        let result = await response.json()
+        console.log(result)
     }
 }
