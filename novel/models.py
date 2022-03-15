@@ -10,23 +10,6 @@ from .templatetags.number_words_filter import number_words_filter
 from django.db.models.signals import post_save
 
 
-from .managers import CustomUserManager
-
-
-class CustomUser(AbstractUser):
-    username = None
-    email = models.EmailField('email address', unique=True)
-    is_email_verified = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.email
-
-
 class Status(models.Model):
     name = models.CharField(max_length=16)
 

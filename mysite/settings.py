@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'authentication',
+    'reader',
     'novel',
     'compressor',
 ]
@@ -104,8 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Europe/Kiev'
-USE_I18N = True
-USE_L10N = True
+USE_I18N = False
+USE_L10N = False
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -119,7 +121,7 @@ STATIC_ROOT = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'novel.CustomUser'
+AUTH_USER_MODEL = 'authentication.User'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / 'media'
