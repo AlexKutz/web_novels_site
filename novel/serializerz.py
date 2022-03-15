@@ -1,11 +1,7 @@
-import datetime
-
-from django.forms import DateTimeField
 from rest_framework import serializers
 from rest_framework.fields import CharField
 
 from .models import *
-from django.utils.timesince import timesince
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,8 +28,9 @@ class NovelSerializer(serializers.ModelSerializer):
     language = LanguageSerializer()
     status = StatusSerializer()
     author = AuthorSerializer()
-    timesince = CharField(source='time_from_upload')
+    timesince = CharField(source='time_from_upload', max_length=16)
+    words = CharField(source='number_words_formatted', max_length=16)
     class Meta:
         model = Novel
-        fields = ('id', 'book_image', 'title', 'alt_title', 'adult_only', 'time_from_upload', 'tags', 'author', 'status', 'words', 'language', 'description', 'created_at', 'timesince')
+        fields = ('id', 'book_image', 'title', 'alt_title', 'adult_only', 'tags', 'author', 'status', 'words', 'language', 'description', 'created_at', 'timesince')
 

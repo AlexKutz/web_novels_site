@@ -1,0 +1,9 @@
+{% extends "novel/base.html" %}
+{% block title %}Tags{% endblock %}
+{% block content %}
+    <div class="tag-page">
+    {% for tag in tags %}
+        <a href="#" class="tag-page__tag">{{ tag.name }} [{{ tag.count }}]</a>
+    {% endfor %}
+    </div>
+{% endblock %}

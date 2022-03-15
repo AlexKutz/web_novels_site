@@ -4,7 +4,7 @@
   <div class="search">
     <form id="search-form">
       <input type="text" name="q" class="search__input"
-             placeholder="Поиск по названию, автору или тегам (разделенных пробелами)">
+             placeholder="Поиск по названию, автору или тегам (разделенных запятыми)">
       <label for="search-submit" class="search__icon-wraper noselect">
         <svg class="search__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
              viewBox="0 0 24 24">
@@ -20,7 +20,7 @@
       <a href="#" class="popular-tags__tag">{{ tag }}</a>
     {% endfor %}
   </div>
-  <section class="last-books">
+  <section class="last-books" id="section">
 
     <h2 class="sectionTitle">Последние Книги</h2>
 
@@ -59,7 +59,7 @@
           </div>
         </div>
         {% load fixtimesince %}
-        <div class="bookCard__uploadTime">{{ novel.created_at|timesince|fixtimesince}} назад</div>
+        <div class="bookCard__uploadTime">{{ novel.created_at|timesince|fixtimesince}}</div>
       </div>
     {% endfor %}
   </section>

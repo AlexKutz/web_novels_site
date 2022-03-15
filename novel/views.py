@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 
-
 from .models import Novel, Tag
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from novel.serializerz import *
 
 from .services import search_novel_by_query
@@ -11,7 +10,7 @@ from .services import search_novel_by_query
 
 def index(request):
     ctx = {
-        "novel": Novel.objects.all().order_by('-created_at'),
+        "novel": Novel.objects.all(),
         "popular_tags": Tag.objects.all()[:16]
     }
     return render(request, 'novel/index.html', ctx)
@@ -29,7 +28,7 @@ def search(request):
     query = request.GET.get('q')
     if not query:
         return JsonResponse({
-            'message': 'query not sent',
+            'message': 'Запрос не был передан',
         }, status=400)
     result = search_novel_by_query(query=query)
     if result:
@@ -37,6 +36,20 @@ def search(request):
         return JsonResponse(serializer.data, safe=False)
     else:
         return JsonResponse({
-            'message': 'Nothing found',
+            'message': 'Ничего не найдено',
             'query': query,
         }, safe=False, status=404)
+
+
+def catalog(request):
+    ctx = {
+        'tags': Tag.objects.all()
+    }
+    return render(request, 'novel/catalog.html', ctx)
+
+
+def tags(request):
+    ctx = {
+        'tags': Tag.objects.all()
+    }
+    return render(request, 'novel/tags.html', ctx)
