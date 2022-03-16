@@ -26,6 +26,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         # unique=True,
         blank=True,
     )
+
+    image = models.ImageField(default='defaultUserImage.svg', upload_to='user-images')
+
     last_login = models.DateTimeField('last login', blank=True, null=True)
     is_staff = models.BooleanField(
         'staff status',
@@ -49,6 +52,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    def get_username(self):
+        """Return the username for this User."""
+        return getattr(self, self.USERNAME_FIELD)
 
     def __str__(self):
         return self.username

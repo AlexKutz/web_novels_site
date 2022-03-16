@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 
 from .models import Novel, Tag
 from django.http import JsonResponse, HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from novel.serializerz import *
 
 from .services import search_novel_by_query

@@ -21,8 +21,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('novel.urls')),
+    path('read', include('reader.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('authentication.urls'))
 ]
 
 if settings.DEBUG:
