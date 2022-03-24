@@ -17,20 +17,19 @@
                 <p class="meta__author">
                     Автор: {{ novel.author }}
                 </p>
-                {% load fixtimesince %}
                 <p class="meta__updated-data">
-                    Загружено: <span>{{  novel.created_at|timesince|fixtimesince }}</span>
+                    Загружено: <span>{{ novel.time_from_upload }}</span>
                 </p>
-                {% load number_words_filter %}
                 <p class="meta__words-count">
-                    Количество слов: {{ novel.words|number_words_filter }}
+                    Количество слов: {{ novel.number_words_formatted }}
                 </p>
                 <p class="meta__status">
                     Статус: {{ novel.status }}
                 </p>
                 <div class="meta__tags">
                     Теги:
-                    {% for tag in novel.tags.all %}<a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
+                    {% for tag in novel.tags.all %}
+                        <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
                 </div>
             </div>
         </div>
@@ -41,7 +40,15 @@
             <a href="{% url 'novels' novel.id %}"
                class="btn meta__btn btn-border-anim">Добавить на
                 <br>
-            книжную полку</a>
+                книжную полку</a>
+        </div>
+        <div class="chapters">
+            <h2>Список глав</h2>
+            <div class="chapters-box">
+                {% for chapter in chapters %}
+                    <a class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
+                {% endfor %}
+            </div>
         </div>
         <div class="rate">
             <h2 class="rate__title">Оценить книгу</h2>
@@ -71,10 +78,10 @@
                 <div class="comment__avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
                         <defs>
-                        <style>.a {
-                  fill: #1d1d1b;
-              }
-                        </style>
+                            <style>.a {
+                                fill: #1d1d1b;
+                            }
+                            </style>
                         </defs>
                         <rect class="a" width="126" height="126"/>
                     </svg>
@@ -89,10 +96,10 @@
                 <div class="comment__avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
                         <defs>
-                        <style>.a {
-                  fill: #1d1d1b;
-              }
-                        </style>
+                            <style>.a {
+                                fill: #1d1d1b;
+                            }
+                            </style>
                         </defs>
                         <rect class="a" width="126" height="126"/>
                     </svg>

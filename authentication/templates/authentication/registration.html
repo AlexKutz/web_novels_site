@@ -1,0 +1,18 @@
+{% extends 'novel/base.html' %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+    <div class="authentication-form">
+        <form method="post" action="{% url 'registration' %}">
+            {% csrf_token %}
+{#            <div class="authentication-form__errors">#}
+{#                {{ form.errors }}#}
+{#            </div>#}
+{#            <div class="authentication-form__username">#}
+{#                {{ form.username }}#}
+{#            </div>#}
+            {{ form }}
+        <button type="submit">Зарегестрироваться</button>
+    </form>
+    </div>
+
+{% endblock %}

@@ -50,7 +50,8 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media/
-static/CACHE/
+static_collected/
+static/index.js
 
 # Environments
 .env
@@ -63,3 +64,6 @@ venv.bak/
 
 # PyCharm editor
 .idea/
+
+# Node
+node_modules/

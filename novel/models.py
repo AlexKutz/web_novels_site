@@ -1,14 +1,22 @@
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Count
-from django.db.models.signals import post_save
 from django.utils.timesince import timesince
-from .templatetags.fixtimesince import fixtimesince
-from .templatetags.number_words_filter import number_words_filter
+from django.utils.translation import ngettext_lazy
+
+from .utils.fixtimesince import fixtimesince
+from .utils.number_words_filter import number_words_filter
 from django.db.models.signals import post_save
 
+TIME_STRINGS = {
+    'year': ngettext_lazy('%(num)d год', '%(num)d года', 'num'),
+    'month': ngettext_lazy('%(num)d месяц', '%(num)d месяца', 'num'),
+    'week': ngettext_lazy('%(num)d неделя', '%(num)d недели', 'num'),
+    'day': ngettext_lazy('%(num)d день', '%(num)d дня', 'num'),
+    'hour': ngettext_lazy('%(num)d час', '%(num)d часа', 'num'),
+    'minute': ngettext_lazy('%(num)d минута', '%(num)d минуты', 'num'),
+}
 
 class Status(models.Model):
     name = models.CharField(max_length=16)
@@ -64,8 +72,9 @@ class Novel(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+
     def _get_timesince(self):
-        return fixtimesince(timesince(self.created_at))
+        return fixtimesince(timesince(self.created_at, time_strings=TIME_STRINGS, depth=1))
 
     def _get_num_words_formatted(self):
         return number_words_filter(self.words)
@@ -92,6 +101,7 @@ class Rate(models.Model):
 class Chapter(models.Model):
     title = models.CharField(max_length=16, blank=True)
     novel = models.ForeignKey(Novel, on_delete=models.CASCADE)
+    number = models.PositiveIntegerField()
     content = models.TextField()
     createrd_at = models.DateTimeField(auto_now_add=True)
 

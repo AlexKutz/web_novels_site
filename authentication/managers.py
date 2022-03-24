@@ -6,6 +6,7 @@ class CustomUserManager(BaseUserManager):
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
     """
+
     def create_user(self, username, password, email=None, **extra_fields):
         """
         Create and save a User with the given email and password.
@@ -18,9 +19,16 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
+    def get_by_natural_key(self, username):
+        """
+        Rewrite get to make username case-insensitive
+        """
+        case_insensitive_username_field = '{}__iexact'.format(self.model.USERNAME_FIELD)
+        return self.get(**{case_insensitive_username_field: username})
+
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         """
-        Create and save a SuperUser with the given email and password.
+        Create and save a SuperUser with the given username, email and password.
         """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)

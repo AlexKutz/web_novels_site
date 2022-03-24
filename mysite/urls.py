@@ -24,8 +24,14 @@ urlpatterns = [
     path('read', include('reader.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('authentication.urls'))
+    path('accounts/', include('authentication.urls')),
 ]
+
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         path('__debug__/', include('debug_toolbar.urls'))
+#     ] + urlpatterns
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

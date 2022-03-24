@@ -1,0 +1,38 @@
+{% for novel in novel %}
+    <div class="bookCard">
+        <div class="bookCard__container">
+            <div class="bookCard__column-1">
+                <a href="{% url 'novels' novel.id %}" class="bookCard__image noselect">
+                    <img src="{{ novel.book_image.url }}" alt="Cover of the book">
+                </a>
+                <div class="bookCard__buttons noselect">
+                    <a href="{% url 'novels' novel.id %}" class="btn bookCard__btn btn-border-anim">Читать</a>
+                </div>
+            </div>
+            <div class="bookCard__column-2">
+                <div class="bookCard__title-box">
+                    <a href="{% url 'novels' novel.id %}" class="bookCard__title">{{ novel.title }}</a>
+                    {% if novel.adult_only %}
+                        <span class="bookCard__adultOnly"> [R18+]</span>
+                    {% endif %}
+                </div>
+                <div class="bookCard__metaData">
+                    <a href="#" class="bookCard__author">{{ novel.author }}</a>
+                    <span class="bookCard__numWords">
+                {{ novel.number_words_formatted }}
+              </span>
+                    <span class="bookCard__status">{{ novel.status|title }}</span>
+                </div>
+                <div class="bookCard__tags">
+                    {% for tag in novel.tags.all %}
+                        <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+                <div class="bookCard__description">
+                    {{ novel.description }}
+                </div>
+            </div>
+        </div>
+        <div class="bookCard__uploadTime">{{ novel.time_from_upload }}</div>
+    </div>
+{% endfor %}
