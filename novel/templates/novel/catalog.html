@@ -1,51 +1,62 @@
 {% extends 'novel/base.html' %}
 {% block title %}Catalog{% endblock %}
 {% block content %}
-    <div class="filters">
-        <form action="" id="filters-form">
-            <div class="catalog-chapters">
-                <h2 class="catalog-title">Количество глав</h2>
-                <div class="catalog-flex">
-                    <select class="catalog-chapter">
-                        <option value="more">Больше чем</option>
-                        <option value="less">Меньше чем</option>
-                    </select>
-                    <input type="number" id="chaptersInput" class="catalog-chapters-input">
+    <div class="searchByFiltersPage">
+        <div class="filters">
+            <form action="" id="filters-form">
+                <div class="catalog-chapters">
+                    <h2 class="catalog-title">Количество глав</h2>
+                    <div class="catalog-flex">
+                        <select class="catalog-chapter">
+                            <option value="more">Больше чем</option>
+                            <option value="less">Меньше чем</option>
+                        </select>
+                        <input type="number" id="chaptersInput" class="catalog-chapters-input">
+                    </div>
                 </div>
-            </div>
-            <div class="catalog-tags">
-                <h2 class="catalog-title">Теги</h2>
-                <div class="catalog-flex">
-                    <select class="include-tags select-margin" multiple>
-                        <option data-placeholder="true">Поиск по тегам</option>
-                        {% for tag in tags %}
-                            <option value="{{ tag.name }}">{{ tag.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <select class="exclude-tags" multiple>
-                        <option data-placeholder="true">Исключить теги из поиска</option>
-                        {% for tag in tags %}
-                            <option value="{{ tag.name }}">{{ tag.name }}</option>
-                        {% endfor %}
+                <div class="catalog-tags">
+                    <h2 class="catalog-title">Теги</h2>
+                    <div class="catalog-flex">
+                        <select class="include-tags select-margin" multiple>
+                            <option data-placeholder="true">Поиск по тегам</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.name }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="exclude-tags" multiple>
+                            <option data-placeholder="true">Исключить теги из поиска</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.name }}">{{ tag.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="catalog-sort">
+                    <h2 class="catalog-title">Сортировать результаты по</h2>
+                    <select class="catalog-sortby">
+                        <option value="title">Имени</option>
+                        <option value="-chapters">Количеству глав</option>
+                        <option value="-rate">Рейтингу</option>
+                        <option value="-comments">Количеству комментариев</option>
                     </select>
                 </div>
+                <div class="catalog-submit">
+                    <button class="catalog-submit__btn">Применить фильтры</button>
+                </div>
+            </form>
+        </div>
+        <div class="catalog-books">
+            {% include 'novel/novel_card.html' %}
+        </div>
+        <div class="loading-cover" id="loading">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
-            <div class="catalog-sort">
-                <h2 class="catalog-title">Сортировать результаты по</h2>
-                <select class="catalog-sortby">
-                    <option value="title">Имени</option>
-                    <option value="-chapters">Количеству глав</option>
-                    <option value="-rate">Рейтингу</option>
-                    <option value="-comments">Количеству комментариев</option>
-                </select>
-            </div>
-            <div class="catalog-submit">
-                <button class="catalog-submit__btn">Применить фильтры</button>
-            </div>
-        </form>
+        </div>
     </div>
-    <div class="catalog-books">
-        {% include 'novel/novel_card.html' %}
-    </div>
+
 {% endblock %}
 

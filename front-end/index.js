@@ -8,7 +8,50 @@ function main() {
     }
     Catalog()
     authenticationMenu()
+    const tagSortForm = document.getElementById('tagSort')
+    if (tagSortForm != null) {
+        tagPageSorting(tagSortForm)
+    }
 }
+
+function tagPageSorting(form) {
+    `Sort bookCards on tag page using fetch ajax`
+    const bookCards = document.getElementById('tagCards')
+    const loading = document.getElementById('loading')
+    form.onclick = () => {
+        loading.style.display = 'block'
+        let params = {
+            'sort_by': form.elements.sort.value
+        }
+        getFilteredBooksFromServer(params)
+            .then((books) => {
+                renderPage(books, bookCards)
+                loading.style.display = 'none'
+            })
+    }
+}
+
+function getFilteredBooksFromServer(params) {
+    return fetch('/get_filtered_books_JSON/', {
+        method: 'POST', headers: {
+            'Content-Type': 'application/json'
+        }, body: JSON.stringify(params)
+    })
+        .then((response) => {
+            return response
+        }).then((res) => res.json())
+
+}
+
+function renderPage(json, whereToRender) {
+    `Get list of dictionaries with book data and render it on page`
+    let html = ''
+    for (let book of json) {
+        html += createBookCard(book)
+    }
+    whereToRender.innerHTML = html
+}
+
 
 function createBookCard(novelData) {
     let tags = ''
@@ -65,20 +108,12 @@ function authenticationMenu() {
 }
 
 
-function renderPage(data, whereToRender) {
-    `Get list of dictionaries with book data and render it on page`
-    let page = ''
-    for (let book of data) {
-        page += createBookCard(book)
-    }
-    whereToRender.innerHTML = page
-}
-
 import SlimSelect from 'slim-select'
 
 function Catalog() {
-    const catalogBooks = document.querySelector('.catalog-books')
-    if (catalogBooks) {
+    const bookCards = document.querySelector('.catalog-books')
+    const loading = document.getElementById('loading')
+    if (bookCards) {
         const includeTags = new SlimSelect({
             select: '.include-tags', searchPlaceholder: 'Поиск',
         })
@@ -95,31 +130,20 @@ function Catalog() {
         const form = document.getElementById('filters-form')
         form.onsubmit = (e) => {
             e.preventDefault()
-            let data = {
+            loading.style.display = 'block'
+            let params = {
                 'include_tags': includeTags.selected(),
                 'exclude_tags': excludeTags.selected(),
                 'sort_by': sortBy.selected(),
                 'chapters_more_less_select': chaptersSelect.selected(),
                 'chaptersNumber': chaptersInput.value,
             }
-            getFilteredBooksFromServer(data)
+            getFilteredBooksFromServer(params)
+                .then((books) => {
+                    renderPage(books, bookCards)
+                    loading.style.display = 'none'
+                })
         }
-    }
-
-
-    function getFilteredBooksFromServer(data) {
-        fetch('/get_filtered_books_JSON/', {
-            method: 'POST', headers: {
-                'Content-Type': 'application/json'
-            }, body: JSON.stringify(data)
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                // console.log(data)
-                renderPage(data, catalogBooks)
-            })
     }
 
 }

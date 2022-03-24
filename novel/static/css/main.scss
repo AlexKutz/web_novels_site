@@ -120,9 +120,11 @@
 ::-webkit-scrollbar {
   width: 12px;
 }
+
 ::-webkit-scrollbar-track {
   background: #d2cbcb;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #84c472;
   border-radius: 3px;
@@ -1218,6 +1220,33 @@ body {
   //background-color: var(--second-bg-color);
 }
 
+.tag-sort {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #77777a;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.tag-sort__option {
+  text-align: center;
+  margin-left: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+.tag-sort__option + label {
+  font-size: 14px;
+}
+
+.tag-sort__option:checked + label {
+  color: #16a816;
+}
+
 .authenticated {
   display: inline-block;
   position: relative;
@@ -1284,7 +1313,7 @@ body {
 
 .dropdown ul li {
   padding: 4px 4px 4px 7px;
-  border-top: 1px solid rgba(0,0,0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .dropdown__icon {
@@ -1310,6 +1339,7 @@ body {
   color: #1aa414;
 }
 
+// Catalog styles
 .catalog-flex {
   display: flex;
 }
@@ -1318,6 +1348,10 @@ body {
   font-size: 18px;
   font-weight: 400;
   margin: 0 0 8px 0;
+}
+
+.searchByFiltersPage {
+  position: relative;
 }
 
 .filters > div {
@@ -1334,13 +1368,13 @@ body {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+  -moz-appearance: textfield; /* Firefox */
 }
 
 .catalog-submit {
@@ -1752,6 +1786,69 @@ input[type=number] {
   margin-top: 50px;
 }
 
+//Search by tag page
+
+.searchByTagPage {
+  position: relative;
+}
+
+// Loading
+.loading-cover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #2f2f2f;
+  opacity: 0.2;
+  z-index: 9999;
+  display: none;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 /* ==========================================================================
 Helper classes
@@ -1816,7 +1913,7 @@ Helper classes
   white-space: nowrap;
   height: 390px;
   width: 100%;
-  border:1px solid #9b9696;
+  border: 1px solid #9b9696;
 }
 
 .chapter {

@@ -64,6 +64,7 @@ def tags(request):
 
 def tag(request, tag):
     ctx = {
+        'tag':tag,
         'novel': Novel.objects.filter(tags__name=tag)
     }
     return render(request, 'novel/tag.html', ctx)
@@ -73,14 +74,14 @@ def get_filtered_books_JSON(request):
     if request.method == "POST":
         params = json.loads(request.body)
         books = Novel.objects.all().annotate(chapters=Count('chapter')).order_by(params['sort_by'])
-        if params['include_tags']:
+        if params.get('include_tags'):
             for tag in params['include_tags']:
                 books = books.filter(tags__name=tag)
-        if params['exclude_tags']:
+        if params.get('exclude_tags'):
             for tag in params['exclude_tags']:
                 books = books.exclude(tags__name=tag)
-        if params['chaptersNumber']:
-            if params['chapters_more_less_select'] == 'more':
+        if params.get('chaptersNumber'):
+            if params.get('chapters_more_less_select') == 'more':
                 books = books.filter(chapters__gte=params['chaptersNumber'])
             else:
                 books = books.filter(chapters__lte=params['chaptersNumber'])
