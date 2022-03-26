@@ -25,7 +25,7 @@
                 </div>
                 <div class="bookCard__tags">
                     {% for tag in novel.tags.all %}
-                        <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>
+                        <a href="{% url 'tag' tag.name %}" class="meta__tag bookCard__tag">{{ tag.name }}</a>
                     {% endfor %}
                 </div>
                 <div class="bookCard__description">

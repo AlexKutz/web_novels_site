@@ -1,16 +1,19 @@
 {% extends 'novel/base.html' %}
 {% block title %}{{ tag.name }}{% endblock %}
 {% block content %}
-    <h1>Поиск по тегу: {{ tag }}</h1>
+    <h1 class="tag-page__title"><a href="/">Webnovels.com</a> > <a href="{% url 'tags' %}">tags</a> > {{ tag }}</h1>
     <div class="searchByTagPage">
-        <form class="tag-sort" id="tagSort">
-            <input type="radio" name="sort" value="-created_at" class="tag-sort__option" id="sort-1" checked><label
-                for="sort-1">Дате<br>загрузки</label>
-            <input type="radio" name="sort" value="title" class="tag-sort__option" id="sort-2"><label
-                for="sort-2">Имени</label>
-            <input type="radio" name="sort" value="-chapters" class="tag-sort__option" id="sort-3"><label for="sort-3">Количеству<br>глав</label>
-            <input type="radio" name="sort" value="-rate" class="tag-sort__option" id="sort-4"><label for="sort-4">Рейтингу</label>
-            <input type="radio" name="sort" value="-comments" class="tag-sort__option" id="sort-5"><label for="sort-5">Количеству<br>комментариев</label>
+        <form class="tag-sort noselect" id="tagSort">
+            <input type="radio" name="sort" value="-created_at" class="tag-sort__option" id="sort-1" data-input="true" checked>
+            <label for="sort-1">Дате<br>загрузки</label>
+            <input type="radio" name="sort" value="title" class="tag-sort__option" id="sort-2" data-input="true">
+            <label for="sort-2">Имени</label>
+            <input type="radio" name="sort" value="-chapters" class="tag-sort__option" id="sort-3" data-input="true">
+            <label for="sort-3">Количеству<br>глав</label>
+            <input type="radio" name="sort" value="-rate" class="tag-sort__option" id="sort-4" data-input="true">
+            <label for="sort-4">Рейтингу</label>
+            <input type="radio" name="sort" value="-comments" class="tag-sort__option" id="sort-5" data-input="true">
+            <label for="sort-5">Количеству<br>комментариев</label>
         </form>
         <div class="tag-cards" id="tagCards">
             {% include 'novel/novel_card.html' %}

@@ -28,10 +28,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         # unique=True,
         blank=True,
     )
+    is_active_email = models.BooleanField(
+        'active email',
+        default=False,
+        help_text='If user verified email'
+    )
 
     image = models.ImageField(default='./authentication/img/defaultUserImage.svg', upload_to='user-images')
 
-    last_login = models.DateTimeField('last login', blank=True, null=True)
     is_staff = models.BooleanField(
         'staff status',
         default=False,

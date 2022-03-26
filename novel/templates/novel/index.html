@@ -17,7 +17,7 @@
   </div>
   <div class="popular-tags">
     {% for tag in popular_tags %}
-      <a href="#" class="popular-tags__tag">{{ tag }}</a>
+      <a href="{% url 'tag' tag.name %}" class="popular-tags__tag">{{ tag }}</a>
     {% endfor %}
   </div>
   <section class="last-books" id="section">

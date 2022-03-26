@@ -18,16 +18,27 @@ function tagPageSorting(form) {
     `Sort bookCards on tag page using fetch ajax`
     const bookCards = document.getElementById('tagCards')
     const loading = document.getElementById('loading')
-    form.onclick = () => {
-        loading.style.display = 'block'
-        let params = {
-            'sort_by': form.elements.sort.value
+    const radio = form.sort
+    form.onclick = (e) => {
+        if (e.target.dataset.input == 'true') {
+            bookCards.innerHTML = ''
+            loading.style.display = 'block'
+            let params = {
+                'sort_by': e.target.value
+            }
+            getFilteredBooksFromServer(params)
+                .then((books) => {
+                    console.log(params)
+                    console.log(books)
+                    renderPage(books, bookCards)
+                    loading.style.display = 'none'
+                })
+                .catch((e) => {
+                    console.warn(e)
+                    loading.style.display = 'none'
+                })
         }
-        getFilteredBooksFromServer(params)
-            .then((books) => {
-                renderPage(books, bookCards)
-                loading.style.display = 'none'
-            })
+
     }
 }
 
@@ -141,6 +152,10 @@ function Catalog() {
             getFilteredBooksFromServer(params)
                 .then((books) => {
                     renderPage(books, bookCards)
+                    loading.style.display = 'none'
+                })
+                .catch((e) => {
+                    console.warn(e)
                     loading.style.display = 'none'
                 })
         }
@@ -258,7 +273,6 @@ class Search {
         // Return url with parameters for request
         let url = new URL("search/", location.protocol.concat("//").concat(window.location.host))
         for (let [key, value] of Object.entries(data)) {
-            console.log(key)
             url.searchParams.append(key, value)
         }
         return url

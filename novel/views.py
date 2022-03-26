@@ -1,16 +1,11 @@
 import json
-from django.db.models import  Q
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-
-from .models import Novel, Tag
-from django.http import JsonResponse, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse, HttpResponseNotFound
 from .serializerz import *
 
-from .services import search_novel_by_query
+from .services import search_novel_by_query, search_books_by_filters
 
 
 def index(request):
@@ -73,16 +68,5 @@ def tag(request, tag):
 def get_filtered_books_JSON(request):
     if request.method == "POST":
         params = json.loads(request.body)
-        books = Novel.objects.all().annotate(chapters=Count('chapter')).order_by(params['sort_by'])
-        if params.get('include_tags'):
-            for tag in params['include_tags']:
-                books = books.filter(tags__name=tag)
-        if params.get('exclude_tags'):
-            for tag in params['exclude_tags']:
-                books = books.exclude(tags__name=tag)
-        if params.get('chaptersNumber'):
-            if params.get('chapters_more_less_select') == 'more':
-                books = books.filter(chapters__gte=params['chaptersNumber'])
-            else:
-                books = books.filter(chapters__lte=params['chaptersNumber'])
+        books = search_books_by_filters(params)
         return JsonResponse(NovelSerializer(books, many=True).data, safe=False)
