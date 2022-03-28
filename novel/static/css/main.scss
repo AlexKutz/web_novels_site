@@ -129,6 +129,120 @@
   border-radius: 3px;
 }
 
+/**
+ * ==============================================
+ * Dot Pulse
+ * ==============================================
+ */
+
+@mixin dot(
+  $width: $dot-width,
+  $height: $dot-height,
+  $radius: $dot-radius,
+  $bg-color: $dot-bg-color,
+  $color: $dot-color
+) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-color: $bg-color;
+  color: $color;
+}
+
+$dot-width: 10px;
+$dot-height: 10px;
+$dot-radius: $dot-width/2;
+
+$dot-color: #9880ff;
+$dot-bg-color: $dot-color;
+$dot-before-color: $dot-color;
+$dot-after-color: $dot-color;
+
+$dot-spacing: $dot-width + $dot-width/2;
+$left-pos: -9999px;
+$x1: -$left-pos - $dot-spacing;
+$x2: -$left-pos;
+$x3: -$left-pos + $dot-spacing;
+
+.dot-pulse {
+  position: relative;
+  left: $left-pos;
+  margin-left: 20px;
+
+  @include dot;
+
+  box-shadow: $x2 0 0 -5px;
+  animation: dot-pulse 1.5s infinite linear;
+  animation-delay: .25s;
+
+  &::before,
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+
+    @include dot;
+  }
+
+  &::before {
+    box-shadow: $x1 0 0 -5px;
+    animation: dot-pulse-before 1.5s infinite linear;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    box-shadow: $x3 0 0 -5px;
+    animation: dot-pulse-after 1.5s infinite linear;
+    animation-delay: .5s;
+  }
+}
+
+@keyframes dot-pulse-before {
+  0% {
+    box-shadow: $x1 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x1 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x1 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse {
+  0% {
+    box-shadow: $x2 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x2 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x2 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse-after {
+  0% {
+    box-shadow: $x3 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x3 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x3 0 0 -5px;
+  }
+}
+
 /*
  * A better looking default horizontal rule
  */
@@ -1207,7 +1321,8 @@ body {
   margin-bottom: 25px;
   color: #525252;
   font-size: 14px;
-  a{
+
+  a {
     color: #525252;
   }
 }
@@ -1883,21 +1998,21 @@ input[type=number] {
     border: 1px solid #7c8879;
     transition: 0.1s;
     font-weight: 500;
-    color: rgba(0,0,0, 0.75);
+    color: rgba(0, 0, 0, 0.75);
   }
 
-  label:first-of-type{
+  label:first-of-type {
     border-radius: 11px 0px 0px 11px;
     transform: translateX(5px);
   }
 
-  label:nth-of-type(2n){
+  label:nth-of-type(2n) {
     border-radius: 0px 11px 11px 0px;
     width: 167px;
     transform: translateX(-5px);
   }
 
-  input:checked + label{
+  input:checked + label {
     color: green;
     background-color: #e8ece8;
     font-size: 15px;
@@ -1957,12 +2072,17 @@ input[type=number] {
 
 .profile-row {
   display: flex;
+
   &__name {
     flex: 0 1 240px;
     color: #363636;
+    display: flex;
   }
+
   &__value {
     flex: 1 1 auto;
+    display: flex;
+    align-items: center;
     color: black;
   }
 }
@@ -1972,6 +2092,77 @@ input[type=number] {
   font-size: 18px;
 }
 
+.tooltip {
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 17px;
+  height: 17px;
+  background-color: #29a6d0;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 2px 2px;
+  box-sizing: border-box;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: white;
+
+    &:hover + span {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &-text {
+    position: absolute;
+    top: 24px;
+    left: -20px;
+    width: 450px;
+    background-color: #29a6d0;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    z-index: 1;
+    transition: opacity 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    padding: 4px 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 22px;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #29a6d0 transparent;
+    }
+  }
+}
+
+.profile-email__input {
+}
+
+.profile-email__input_valid {
+  outline: 1px green solid;
+}
+
+.profile-email__input_invalid {
+  outline: 1px red solid;
+}
+
+#setEmailBtn {
+  display: block;
+}
+#emailConfirmBtn {
+  display: block;
+}
 
 /* ==========================================================================
 Helper classes
@@ -2029,6 +2220,7 @@ Helper classes
 
 .chapters {
   margin-top: 25px;
+
   h2 {
 
     font-size: 18px;

@@ -59,7 +59,7 @@ def tags(request):
 
 def tag(request, tag):
     ctx = {
-        'tag':tag,
+        'tag': tag,
         'novel': Novel.objects.filter(tags__name=tag)
     }
     return render(request, 'novel/tag.html', ctx)

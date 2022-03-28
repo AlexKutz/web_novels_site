@@ -12,6 +12,88 @@ function main() {
     if (tagSortForm != null) {
         tagPageSorting(tagSortForm)
     }
+    const container = document.getElementById('profileEmail')
+    if (container != null) {
+        setAccountEmail(container)
+    }
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return re.test(email)
+}
+
+function setAccountEmail(block, btn) {
+    //Change link to input field on click. Send request to set email on server.
+    const container = block
+    const buttonChange = document.getElementById('setEmailBtn')
+    const buttonConfirm = document.getElementById('emailConfirmBtn')
+    const containerText = container.innerText.split('\n')[0]
+    const inputField =
+        `
+        <input type='text' class='profile-email__input' autofocus> 
+        `
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    buttonChange.onclick = () => {
+        container.innerHTML = inputField
+        const input = container.children[0]
+        input.focus()
+        input.addEventListener('input', () => {
+            if (validateEmail(input.value)) {
+                input.classList.remove('profile-email__input_invalid')
+                input.classList.add('profile-email__input_valid')
+            } else {
+                input.classList.remove('profile-email__input_valid')
+                input.classList.add('profile-email__input_invalid')
+            }
+        })
+        input.addEventListener('focusout', () => {
+            if (input.value.trim() == '') {
+                container.innerHTML = containerText
+                container.appendChild(buttonChange)
+                container.appendChild(buttonConfirm)
+            } else {
+                if (!validateEmail(input.value)) {
+                    return ''
+                }
+                container.innerHTML = '<div class="dot-pulse"></div>'
+                fetch('/accounts/email_change', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    mode: 'same-origin',
+                    body: JSON.stringify({'new_email': input.value})
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw response
+                        }
+                        return response.json()
+                    })
+                    .then(resp => {
+                        container.innerHTML = resp.new_email
+                        container.appendChild(buttonChange)
+                        container.appendChild(buttonConfirm)
+
+                    })
+                    .catch(err => {
+                        err.json().then(response => {
+                            container.innerHTML = ''
+                            container.appendChild(input)
+                            const message = document.createElement('div')
+                            message.innerHTML = response.message.new_email
+                            message.style.marginTop = '10px'
+                            container.appendChild(message)
+                        })
+                    })
+
+            }
+        })
+    }
 }
 
 function tagPageSorting(form) {
