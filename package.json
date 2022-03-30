@@ -26,6 +26,8 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "slim-select": "^1.27.1"
+    "croppie": "^2.6.5",
+    "slim-select": "^1.27.1",
+    "vanilla-modal": "^1.6.5"
   }
 }

@@ -1,23 +1,22 @@
 import json
-
+from io import BytesIO
+from PIL import Image
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.files import File
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.http import urlencode
-
 from .forms import CustomUserCreationForm, EmailChangeForm
 
 
-@login_required(redirect_field_name='login')
 def profile(request):
-    return render(request, 'authentication/profile.html')
-    # if request.user.is_authenticated:
-    #     return render(request, 'authentication/profile.html')
-    # else:
-    #     login_url = reverse('login')+'?'+urlencode({'next': request.path})
-    #     return redirect(login_url)
+    if request.user.is_authenticated:
+        return render(request, 'authentication/profile.html')
+    else:
+        login_url = reverse('login')+'?'+urlencode({'next': request.path})
+        return redirect(login_url)
 
 
 def registration(request):
@@ -53,3 +52,24 @@ def email_change(request):
             return JsonResponse({
                 'message': form.errors,
             }, safe=False, status=400)
+
+
+@login_required(redirect_field_name='login')
+def account_image_change(request):
+    if request.method == 'POST':
+        if request.FILES.get('image'):
+            file = request.FILES.get('image')
+            pil_image = Image.open(file)
+            # pil_image = pil_image.resize((200, 200), Image.LANCZOS)
+            io = BytesIO()
+            pil_image.save(io, 'PNG', quality=100)
+            image = File(io, name='%s.png' % request.user.username)
+            request.user.image.delete()
+            request.user.image = image
+            request.user.save()
+            return JsonResponse({
+                'message': 'Фото профиля изменено',
+            }, safe=False, status=200)
+        return JsonResponse({
+            'message': 'Не передано изображение',
+        }, safe=False, status=400)

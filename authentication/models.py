@@ -34,7 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text='If user verified email'
     )
 
-    image = models.ImageField(default='./authentication/img/defaultUserImage.svg', upload_to='user-images')
+    image = models.ImageField(default='./authentication/defaultUserImage.svg',
+                              upload_to='./authentication/user-images')
 
     is_staff = models.BooleanField(
         'staff status',

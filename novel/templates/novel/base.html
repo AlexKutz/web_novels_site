@@ -62,7 +62,7 @@
             {% if user.is_authenticated %}
                 <div class="header__authentication noselect authenticated">
                     <div class="authenticated__account" id="accountIco" data-menu="true">
-                        <img src="{{ user.image.url }}" class="authenticated__account-image" data-menu="true">
+                        <img src="{{ user.image.url }}" class="authenticated__account-image" id="headerAccImage" data-menu="true">
                     </div>
                     <div class="authenticated__dropdown dropdown" id="accountDrop" data-menu="true">
                         <ul>

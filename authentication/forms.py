@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from .models import User
-from django.core.validators import validate_email
 
 
 class CustomUserCreationForm(UserCreationForm):

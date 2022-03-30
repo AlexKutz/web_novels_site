@@ -1,3 +1,7 @@
+import SlimSelect from 'slim-select'
+import Croppie from "./croppie"
+import tingle from './tingle'
+
 document.addEventListener("DOMContentLoaded", () => main())
 
 function main() {
@@ -16,6 +20,77 @@ function main() {
     if (container != null) {
         setAccountEmail(container)
     }
+
+    if (document.getElementById('imageInput') != null) {
+        changeProfileImage()
+    }
+}
+
+function changeProfileImage() {
+    const profileImg = document.getElementById('profileImg')
+    const imageInput = document.getElementById('imageInput')
+    const imageDemo = document.createElement('div')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    const modal = new tingle.modal({
+        footer: true,
+        stickyFooter: false,
+        closeMethods: ['overlay', 'button', 'escape'],
+        closeLabel: "Close",
+        cssClass: ['custom-class-1', 'custom-class-2'],
+    });
+
+    modal.addFooterBtn('Обрезать и сохранить', 'tingle-btn tingle-btn--primary', function () {
+        const formData = new FormData()
+        imageCrop.result('blob').then(function (image) {
+            const objectURL = URL.createObjectURL(image);
+            profileImg.src = objectURL
+            document.getElementById('headerAccImage').src = objectURL
+            formData.append('image', image)
+            ajaxImagePost(formData, '/accounts/image')
+        })
+        modal.close();
+    })
+
+    // imageDemo is Croppie
+    imageDemo.id = 'imageDemo'
+    modal.setContent(imageDemo)
+
+
+    profileImg.onclick = () => {
+        imageInput.click()
+    }
+
+    const imageCrop = new Croppie(imageDemo, {
+        viewport: {
+            width: 200, height: 200, type: 'square'
+        }, boundary: {
+            width: 400, height: 400
+        },
+    })
+
+    imageInput.onchange = function () {
+        if (imageInput.value) {
+            modal.open()
+            const reader = new FileReader()
+            reader.onload = function (event) {
+                imageCrop.bind({
+                    url: event.target.result,
+                })
+            }
+            reader.readAsDataURL(this.files[0])
+        }
+    }
+
+    function ajaxImagePost(data, url) {
+        fetch(url, {
+            method: 'POST', body: data, headers: {
+                'X-CSRFToken': csrftoken
+            }, mode: 'same-origin'
+        }).then(response => {
+            console.log(response.json())
+        })
+    }
 }
 
 function validateEmail(email) {
@@ -29,8 +104,7 @@ function setAccountEmail(block, btn) {
     const buttonChange = document.getElementById('setEmailBtn')
     const buttonConfirm = document.getElementById('emailConfirmBtn')
     const containerText = container.innerText.split('\n')[0]
-    const inputField =
-        `
+    const inputField = `
         <input type='text' class='profile-email__input' autofocus> 
         `
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
@@ -51,22 +125,20 @@ function setAccountEmail(block, btn) {
         input.addEventListener('focusout', () => {
             if (input.value.trim() == '') {
                 container.innerHTML = containerText
-                container.appendChild(buttonChange)
-                container.appendChild(buttonConfirm)
+                const btnsContainer = document.createElement('div')
+                btnsContainer.classList.add('profile-email__btns-container')
+                btnsContainer.appendChild(buttonChange)
+                btnsContainer.appendChild(buttonConfirm)
+                container.appendChild(btnsContainer)
             } else {
                 if (!validateEmail(input.value)) {
                     return ''
                 }
                 container.innerHTML = '<div class="dot-pulse"></div>'
                 fetch('/accounts/email_change', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken,
-                    },
-                    mode: 'same-origin',
-                    body: JSON.stringify({'new_email': input.value})
+                    method: 'POST', headers: {
+                        'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken,
+                    }, mode: 'same-origin', body: JSON.stringify({'new_email': input.value})
                 })
                     .then((response) => {
                         if (!response.ok) {
@@ -76,14 +148,18 @@ function setAccountEmail(block, btn) {
                     })
                     .then(resp => {
                         container.innerHTML = resp.new_email
-                        container.appendChild(buttonChange)
-                        container.appendChild(buttonConfirm)
+                        const btnsContainer = document.createElement('div')
+                        btnsContainer.classList.add('profile-email__btns-container')
+                        btnsContainer.appendChild(buttonChange)
+                        btnsContainer.appendChild(buttonConfirm)
+                        container.appendChild(btnsContainer)
 
                     })
                     .catch(err => {
                         err.json().then(response => {
                             container.innerHTML = ''
                             container.appendChild(input)
+                            container.children[0].style.outline = '1px red solid'
                             const message = document.createElement('div')
                             message.innerHTML = response.message.new_email
                             message.style.marginTop = '10px'
@@ -97,7 +173,7 @@ function setAccountEmail(block, btn) {
 }
 
 function tagPageSorting(form) {
-    `Sort bookCards on tag page using fetch ajax`
+    //Sort bookCards on tag page using fetch ajax
     const bookCards = document.getElementById('tagCards')
     const loading = document.getElementById('loading')
     const radio = form.sort
@@ -137,7 +213,7 @@ function getFilteredBooksFromServer(params) {
 }
 
 function renderPage(json, whereToRender) {
-    `Get list of dictionaries with book data and render it on page`
+    //Get list of dictionaries with book data and render it on page
     let html = ''
     for (let book of json) {
         html += createBookCard(book)
@@ -200,8 +276,6 @@ function authenticationMenu() {
 
 }
 
-
-import SlimSelect from 'slim-select'
 
 function Catalog() {
     const bookCards = document.querySelector('.catalog-books')
@@ -279,7 +353,7 @@ class BackToTop {
         button.classList.add(hideClass)
     }
 
-    scrollToTop = () => {
+    scrollToTop() {
         const c = document.documentElement.scrollTop || document.body.scrollTop;
         if (c > 0) {
             window.requestAnimationFrame(this.scrollToTop);
