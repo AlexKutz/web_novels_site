@@ -1,11 +1,13 @@
 import SlimSelect from 'slim-select'
 import Croppie from "./croppie"
 import tingle from './tingle'
+import FastAverageColor from "fast-average-color";
 
 document.addEventListener("DOMContentLoaded", () => main())
 
 function main() {
     const backToTop = new BackToTop("backToTop", "backToTop_hide")
+
     const DarkModeBtn = new DarkMode("changeColorScheme__sun", "changeColorScheme__moon", "changeColorScheme__sun_hide", "changeColorScheme__moon_hide")
     if (document.getElementById('search-form') != null) {
         const search = new Search('search-form', 'section')
@@ -24,7 +26,39 @@ function main() {
     if (document.getElementById('imageInput') != null) {
         changeProfileImage()
     }
+
+    let btn = document.getElementById('emailConfirmBtn')
+    if (btn) {
+        btn.onclick = () => {
+            sendActivationRequest()
+        }
+    }
+
+    changeBackgroundOnNovePage()
 }
+
+function changeBackgroundOnNovePage() {
+    const bg = document.querySelector('.info-bg')
+    const bookImage = document.getElementById('bookImage')
+    const fac = new FastAverageColor()
+    fac.getColorAsync(bookImage)
+        .then(color => {
+            bg.style.background = color.rgba
+
+        })
+}
+
+function sendActivationRequest() {
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    fetch('/accounts/send_activation_email', {
+        headers: {
+            'X-CSRFToken': csrftoken
+        }
+    }).then(response => {
+        console.log(response.json())
+    })
+}
+
 
 function changeProfileImage() {
     const profileImg = document.getElementById('profileImg')
@@ -63,7 +97,7 @@ function changeProfileImage() {
 
     const imageCrop = new Croppie(imageDemo, {
         viewport: {
-            width: 200, height: 200, type: 'square'
+            width: 200, height: 200, type: 'circle'
         }, boundary: {
             width: 400, height: 400
         },
@@ -98,7 +132,7 @@ function validateEmail(email) {
     return re.test(email)
 }
 
-function setAccountEmail(block, btn) {
+function setAccountEmail(block) {
     //Change link to input field on click. Send request to set email on server.
     const container = block
     const buttonChange = document.getElementById('setEmailBtn')
@@ -127,8 +161,8 @@ function setAccountEmail(block, btn) {
                 container.innerHTML = containerText
                 const btnsContainer = document.createElement('div')
                 btnsContainer.classList.add('profile-email__btns-container')
-                btnsContainer.appendChild(buttonChange)
-                btnsContainer.appendChild(buttonConfirm)
+                buttonChange ? btnsContainer.appendChild(buttonChange) : ''
+                buttonConfirm ? btnsContainer.appendChild(buttonConfirm) : ''
                 container.appendChild(btnsContainer)
             } else {
                 if (!validateEmail(input.value)) {
@@ -156,12 +190,12 @@ function setAccountEmail(block, btn) {
 
                     })
                     .catch(err => {
-                        err.json().then(response => {
+                        err.then(response => {
                             container.innerHTML = ''
                             container.appendChild(input)
                             container.children[0].style.outline = '1px red solid'
                             const message = document.createElement('div')
-                            message.innerHTML = response.message.new_email
+                            message.innerHTML = response.message
                             message.style.marginTop = '10px'
                             container.appendChild(message)
                         })
@@ -323,6 +357,7 @@ function Catalog() {
 class BackToTop {
     constructor(btnClass, hideClass) {
         this.btn = document.querySelector("." + btnClass)
+        document.scrollToTop = this.scrollToTop
         if (!this.btn) {
             throw `Button (${btnClass}) not found`
         } else {
@@ -353,13 +388,13 @@ class BackToTop {
         button.classList.add(hideClass)
     }
 
-    scrollToTop() {
+    scrollToTop = () => {
         const c = document.documentElement.scrollTop || document.body.scrollTop;
         if (c > 0) {
             window.requestAnimationFrame(this.scrollToTop);
             window.scrollTo(0, c - c / 8);
         }
-    }
+    };
 
 }
 

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "croppie": "^2.6.5",
+    "fast-average-color": "^7.1.0",
     "slim-select": "^1.27.1",
     "vanilla-modal": "^1.6.5"
   }

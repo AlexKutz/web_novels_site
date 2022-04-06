@@ -2,39 +2,42 @@
 {% block title %}page{% endblock %}
 {% block content %}
     <div class="book">
-        <div class="flex-container">
-            <div class="book__image noselect">
-                <a href="#" class="bookCard__image">
-                    <img src="{{ novel.book_image.url }}" alt="Cover of the book">
-                </a>
-            </div>
-            <div class="meta">
-                <h1 href="#" class="meta__title">{{ novel.title }}</h1>
-                {% if novel.adult_only %}<span class="bookCard__adultOnly">[R18+]</span>{% endif %}
-                <p class="meta__altTitle">
-                    Альтернативное название: {{ novel.alt_title }}
-                </p>
-                <p class="meta__author">
-                    Автор: {{ novel.author }}
-                </p>
-                <p class="meta__updated-data">
-                    Загружено: <span>{{ novel.time_from_upload }}</span>
-                </p>
-                <p class="meta__words-count">
-                    Количество слов: {{ novel.number_words_formatted }}
-                </p>
-                <p class="meta__status">
-                    Статус: {{ novel.status }}
-                </p>
-                <div class="meta__tags">
-                    Теги:
-                    {% for tag in novel.tags.all %}
-                        <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
+        <div class="info">
+            <div class="info-bg"></div>
+            <div class="flex-container">
+                <div class="book__image noselect">
+                    <a href="#" class="bookCard__image">
+                        <img src="{{ novel.book_image.url }}" id="bookImage" alt="Cover of the book">
+                    </a>
+                </div>
+                <div class="meta">
+                    <h1 href="#" class="meta__title">{{ novel.title }}</h1>
+                    {% if novel.adult_only %}<span class="bookCard__adultOnly">[R18+]</span>{% endif %}
+                    <p class="meta__altTitle">
+                        Альтернативное название: {{ novel.alt_title }}
+                    </p>
+                    <p class="meta__author">
+                        Автор: {{ novel.author }}
+                    </p>
+                    <p class="meta__updated-data">
+                        Загружено: <span>{{ novel.time_from_upload }}</span>
+                    </p>
+                    <p class="meta__words-count">
+                        Количество слов: {{ novel.number_words_formatted }}
+                    </p>
+                    <p class="meta__status">
+                        Статус: {{ novel.status }}
+                    </p>
+                    <div class="meta__tags">
+                        Теги:
+                        {% for tag in novel.tags.all %}
+                            <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
+                    </div>
                 </div>
             </div>
+            <div class="info__description">{{ novel.description }}</div>
         </div>
-        <div class="bookCard__description">{{ novel.description }}</div>
-        <div class="meta__buttons noselect">
+        <div class="buttons noselect">
             <a href="{% url 'novels' novel.id %}"
                class="btn meta__btn btn-border-anim">Прочитать</a>
             <a href="{% url 'novels' novel.id %}"

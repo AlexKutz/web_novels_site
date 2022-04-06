@@ -1,0 +1,6 @@
+{% autoescape off %}
+Привет {{ user }},
+Пожалуйста, перейдите по ссылке для подтверждения адреса электронной почты,
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endautoescape %}
