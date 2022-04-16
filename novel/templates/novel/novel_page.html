@@ -38,18 +38,17 @@
             <div class="info__description">{{ novel.description }}</div>
         </div>
         <div class="buttons noselect">
-            <a href="{% url 'novels' novel.id %}"
+            <a href="{% url 'read' novel.id '1' %}"
                class="btn meta__btn btn-border-anim">Прочитать</a>
-            <a href="{% url 'novels' novel.id %}"
-               class="btn meta__btn btn-border-anim">Добавить на
+            <button class="btn meta__btn btn-border-anim" id="bookShelf">Добавить на
                 <br>
-                книжную полку</a>
+                книжную полку</button>
         </div>
         <div class="chapters">
             <h2>Список глав</h2>
             <div class="chapters-box">
                 {% for chapter in chapters %}
-                    <a class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
+                    <a href="{% url 'read' novel.id chapter.number %}" class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
                 {% endfor %}
             </div>
         </div>

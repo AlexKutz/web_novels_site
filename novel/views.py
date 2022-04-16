@@ -64,9 +64,20 @@ def tag(request, tag):
     }
     return render(request, 'novel/tag.html', ctx)
 
+
 @csrf_exempt
-def get_filtered_books_JSON(request):
+def get_filtered_books_json(request):
     if request.method == "POST":
         params = json.loads(request.body)
         books = search_books_by_filters(params)
         return JsonResponse(NovelSerializer(books, many=True).data, safe=False)
+
+
+def add_to_bookshelf(request):
+    if request.method == "POST":
+        pass
+
+
+def remove_from_bookshelf(request):
+    if request.method == "POST":
+        pass

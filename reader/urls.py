@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.read, name='read'),
+    path('<int:novel_id>/<int:chapter_id>/', views.read, name='read'),
 ]

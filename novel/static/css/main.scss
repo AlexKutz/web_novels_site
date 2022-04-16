@@ -93,11 +93,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-body {
-  transform: unset !important;
-}
-
 // Basic enchantment
 /*
  * Remove text-shadow in selection highlight:
@@ -467,7 +462,7 @@ body {
   background-color: $main-bg-color;
   background-color: var(--main-bg-color);
   font-family: Montserrat, serif;
-  height: 4000px;
+  overflow-x: hidden;
 }
 
 // Header
@@ -889,7 +884,38 @@ body {
 
 .last-books {
   margin-top: 20px;
+  position: relative;
 }
+
+//.last-books:before {
+//  content: '';
+//  display: block;
+//  position: fixed;
+//  height: 700px;
+//  width: 250px;
+//  left: 50%;
+//  top: 20%;
+//  transform: translateX(-320%);
+//  background: url("../img/contimage.png");
+//  background-repeat: no-repeat;
+//  background-position: right;
+//  background-size: 130% 69%;
+//}
+//
+//.last-books:after {
+//  content: '';
+//  display: block;
+//  position: fixed;
+//  height: 700px;
+//  width: 250px;
+//  right: 50%;
+//  top: 19%;
+//  transform: translateX(320%);
+//  background: url("../img/c2.png");
+//  background-repeat: no-repeat;
+//  background-position: right;
+//  background-size: 70% 68%;
+//}
 
 .sectionTitle {
   color: var(--main-text-color);

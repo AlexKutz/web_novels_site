@@ -1,6 +1,6 @@
 import SlimSelect from 'slim-select'
-import Croppie from "./croppie"
-import tingle from './tingle'
+import Croppie from "./plugins/croppie"
+import tingle from './plugins/tingle'
 import FastAverageColor from "fast-average-color";
 
 document.addEventListener("DOMContentLoaded", () => main())
@@ -34,8 +34,21 @@ function main() {
         }
     }
 
+    const bookShelfBtn = document.getElementById('bookShelf')
+    if (bookShelfBtn) {
+        bookShelfBtn.onclick = () => {
+            toggleBookShelf()
+        }
+    }
+
     changeBackgroundOnNovePage()
 }
+
+
+function toggleBookShelf() {
+
+}
+
 
 function changeBackgroundOnNovePage() {
     const bg = document.querySelector('.info-bg')
@@ -235,7 +248,7 @@ function tagPageSorting(form) {
 }
 
 function getFilteredBooksFromServer(params) {
-    return fetch('/get_filtered_books_JSON/', {
+    return fetch('/get_filtered_books_json/', {
         method: 'POST', headers: {
             'Content-Type': 'application/json'
         }, body: JSON.stringify(params)

@@ -1,10 +1,15 @@
 const path = require('path');
 
 module.exports = {
-    entry: './front-end/index.js',  // path to our input file
+    context: path.resolve(__dirname, './front-end'),
+    entry: {
+        novel: './index.js',
+        reader: './reader.js'
+    },
     output: {
-        filename: 'index.js',  // output bundle file name
-        path: path.resolve(__dirname, './static'),  // path to our Django static directory
+        filename: '[name].js',
+        path: path.resolve(__dirname, './static'),
+        library: "[name]"
     },
     module: {
         rules: [
@@ -12,7 +17,6 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader'
             },
-            // the react entry we addded above goes here
         ]
     },
     watch: true
