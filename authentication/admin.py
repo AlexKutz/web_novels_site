@@ -5,11 +5,20 @@ from .models import User
 
 from django.contrib.auth.admin import UserAdmin
 
+from novel.models import UserBookShelfBook
+
+
+class UserBookShelfInline(admin.TabularInline):
+    model = UserBookShelfBook
+    fields = ['novel', ]
+    readonly_fields = ['added', ]
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = User
+    inlines = [UserBookShelfInline, ]
     list_display = ('username', 'email', 'is_staff', 'is_active',)
     list_filter = ('username', 'email', 'is_staff', 'is_active',)
     fieldsets = (

@@ -28,21 +28,22 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'livereload'
     'rest_framework',
     'authentication',
     'reader',
     'novel',
     'compressor',
     # 'debug_toolbar',
+    'django.contrib.staticfiles',
 ]
-
 MIDDLEWARE = [
     'middleware.force_default_language_middleware.ForceDefaultLanguageMiddleware',
     # 'django.middleware.locale.LocaleMiddleware',
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -109,8 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'Europe/Kiev'
-# USE_I18N = True
-# USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -132,20 +132,21 @@ MEDIA_ROOT = BASE_DIR / 'media'
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = False if DEBUG == True else True
 
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 ]
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "novel", "static"),
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "reader", "static")
 ]
-
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
 
 INTERNAL_IPS = [
     # ...

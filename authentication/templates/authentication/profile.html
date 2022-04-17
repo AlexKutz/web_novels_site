@@ -4,14 +4,16 @@
     {% csrf_token %}
     <div id="demo"></div>
     <!-- or even simpler -->
-    <div class="profile">
-        <div class="profile__change-tabs">
+    <div class="profile__change-tabs">
+        <form action="#" id="changeTabsForm">
             <input type="radio" name="tabs" value="1" id="changetab1" checked>
             <label for="changetab1">Информация</label>
             <input type="radio" name="tabs" value="2" id="changetab2">
             <label for="changetab2">Книжная полка</label>
-        </div>
-        <hr>
+        </form>
+    </div>
+    <hr>
+    <div class="profile" id="profile">
         <div class="profile__flex">
             <div class="profile__data">
                 <div class="profile-row">
@@ -89,5 +91,8 @@
                 <input type="file" accept="image/*" id="imageInput" class="hidden">
             </div>
         </div>
+    </div>
+    <div class="bookshelf hidden" id="bookshelf">
+        {% include 'novel/novel_card.html' %}
     </div>
 {% endblock %}

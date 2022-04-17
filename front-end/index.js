@@ -34,19 +34,31 @@ function main() {
         }
     }
 
-    const bookShelfBtn = document.getElementById('bookShelf')
-    if (bookShelfBtn) {
-        bookShelfBtn.onclick = () => {
-            toggleBookShelf()
-        }
+    const bg = document.querySelector('.info-bg')
+    if (bg) {
+        changeBackgroundOnNovePage()
     }
 
-    changeBackgroundOnNovePage()
+    const changeTabsForm = document.getElementById('changeTabsForm')
+    if (changeTabsForm){
+        changeTab(changeTabsForm)
+    }
 }
 
-
-function toggleBookShelf() {
-
+function changeTab(form) {
+    const profile = document.getElementById('profile')
+    const bookshelf = document.getElementById('bookshelf')
+    bookshelf.classList.add('hidden')
+    profile.classList.remove('hidden')
+    form.onclick = (e) => {
+        if (e.target.value == 1) {
+            bookshelf.classList.add('hidden')
+            profile.classList.remove('hidden')
+        } else if (e.target.value == 2) {
+            bookshelf.classList.remove('hidden')
+            profile.classList.add('hidden')
+        }
+    }
 }
 
 

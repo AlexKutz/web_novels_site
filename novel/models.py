@@ -121,9 +121,10 @@ def update_tag_counter(sender, instance, created, **kwargs):
 post_save.connect(update_tag_counter, sender=Novel)
 
 
-class UserBookshelf(models.Model):
-    user = models.OneToOneField(
+class UserBookShelfBook(models.Model):
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    novels = models.ManyToManyField(Novel, related_name='bookshelf', blank=True)
+    novel = models.ForeignKey(Novel, on_delete=models.CASCADE)
+    added = models.DateTimeField(auto_now_add=True)

@@ -18,11 +18,18 @@ from .forms import CustomUserCreationForm, EmailChangeForm
 from .models import User
 from .utils import mul_of_num
 import binascii, os
-
+from novel.models import UserBookShelfBook
 
 def profile(request):
     if request.user.is_authenticated:
-        return render(request, 'authentication/profile.html')
+        bookShelf = UserBookShelfBook.objects.filter(user = request.user)
+        novels = []
+        for novel in bookShelf:
+            novels.append(novel.novel)
+        ctx = {
+            'novel': novels
+        }
+        return render(request, 'authentication/profile.html', ctx)
     else:
         login_url = reverse('login') + '?' + urlencode({'next': request.path})
         return redirect(login_url)

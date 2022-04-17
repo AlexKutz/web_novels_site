@@ -35,4 +35,6 @@
         </div>
         <div class="bookCard__uploadTime">{{ novel.time_from_upload }}</div>
     </div>
+{% empty %}
+    <p class="bookCard__title" style="margin-left: 3vw; font-size: 20px;">Тут пока ничего нет.</p>
 {% endfor %}
