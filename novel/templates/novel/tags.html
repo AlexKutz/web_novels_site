@@ -1,5 +1,12 @@
 {% extends "novel/base.html" %}
 {% block title %}Tags{% endblock %}
+{% load static %}
+{% load compress %}
+{% block loadscss %}
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'css/tags.scss' %}">
+    {% endcompress %}
+{% endblock %}
 {% block content %}
     <div class="tag-page">
     {% for tag in tags %}

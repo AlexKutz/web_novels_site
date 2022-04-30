@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-hkr9@!m4^ry+)6v1txqj9t-xcll4x)ghqk9fa4_muse=ncqaxa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.8', '127.0.0.1', ]
 
 # Application definition
 
@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload'
     'rest_framework',
     'authentication',
     'reader',
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -145,7 +143,8 @@ STATICFILES_FINDERS = [
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "novel", "static"),
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "reader", "static")
+    os.path.join(BASE_DIR, "reader", "static"),
+    os.path.join(BASE_DIR, "authentication", "static")
 ]
 
 INTERNAL_IPS = [

@@ -13,7 +13,9 @@ function main() {
         const search = new Search('search-form', 'section')
     }
     Catalog()
-    authenticationMenu()
+    if (document.getElementById('accountIco')) {
+        authenticationMenu()
+    }
     const tagSortForm = document.getElementById('tagSort')
     if (tagSortForm != null) {
         tagPageSorting(tagSortForm)
@@ -40,10 +42,56 @@ function main() {
     }
 
     const changeTabsForm = document.getElementById('changeTabsForm')
-    if (changeTabsForm){
+    if (changeTabsForm) {
         changeTab(changeTabsForm)
     }
+
+    const bookshelfAdd = document.getElementById('bookShelfAdd')
+    const bookshelfRemove = document.getElementById('bookShelfRemove')
+    if (bookshelfAdd || bookshelfRemove) {
+        toggleBookshelf()
+    }
 }
+
+function toggleBookshelf() {
+    const bookshelfAdd = document.getElementById('bookShelfAdd')
+    const bookshelfRemove = document.getElementById('bookShelfRemove')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    const novelId = document.getElementById('novelId').innerText
+    bookshelfAdd.onclick = () => {
+        fetch('/add_to_bookshelf/', {
+            method: 'POST', headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken,
+            }, mode: 'same-origin', body: JSON.stringify({'novelId': novelId})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw response
+                }
+                bookshelfAdd.style.display = 'none'
+                bookshelfRemove.style.display = 'flex'
+            })
+            .catch(err => {
+            })
+    }
+    bookshelfRemove.onclick = () => {
+        fetch('/remove_from_bookshelf/', {
+            method: 'POST', headers: {
+                'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRFToken': csrftoken,
+            }, mode: 'same-origin', body: JSON.stringify({'novelId': novelId})
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw response
+                }
+                bookshelfRemove.style.display = 'none'
+                bookshelfAdd.style.display = 'flex'
+            })
+            .catch(err => {
+            })
+    }
+}
+
 
 function changeTab(form) {
     const profile = document.getElementById('profile')
@@ -66,7 +114,12 @@ function changeBackgroundOnNovePage() {
     const bg = document.querySelector('.info-bg')
     const bookImage = document.getElementById('bookImage')
     const fac = new FastAverageColor()
-    fac.getColorAsync(bookImage)
+    fac.getColorAsync(bookImage, {
+        ignoredColor: [
+            [0, 0, 0, 255, 25],
+            [255, 255, 255, 255, 25]
+        ],
+    })
         .then(color => {
             bg.style.background = color.rgba
 
@@ -214,16 +267,14 @@ function setAccountEmail(block) {
                         container.appendChild(btnsContainer)
 
                     })
-                    .catch(err => {
-                        err.then(response => {
-                            container.innerHTML = ''
-                            container.appendChild(input)
-                            container.children[0].style.outline = '1px red solid'
-                            const message = document.createElement('div')
-                            message.innerHTML = response.message
-                            message.style.marginTop = '10px'
-                            container.appendChild(message)
-                        })
+                    .catch(response => {
+                        container.innerHTML = ''
+                        container.appendChild(input)
+                        container.children[0].style.outline = '1px red solid'
+                        const message = document.createElement('div')
+                        message.innerHTML = response.message
+                        message.style.marginTop = '10px'
+                        container.appendChild(message)
                     })
 
             }
@@ -236,12 +287,14 @@ function tagPageSorting(form) {
     const bookCards = document.getElementById('tagCards')
     const loading = document.getElementById('loading')
     const radio = form.sort
+    const tag = document.getElementById('tag')
     form.onclick = (e) => {
         if (e.target.dataset.input == 'true') {
             bookCards.innerHTML = ''
             loading.style.display = 'block'
+            let includeTags = [tag.innerText]
             let params = {
-                'sort_by': e.target.value
+                'include_tags': includeTags, 'sort_by': e.target.value
             }
             getFilteredBooksFromServer(params)
                 .then((books) => {
@@ -357,6 +410,7 @@ function Catalog() {
         form.onsubmit = (e) => {
             e.preventDefault()
             loading.style.display = 'block'
+            console.log(includeTags.selected())
             let params = {
                 'include_tags': includeTags.selected(),
                 'exclude_tags': excludeTags.selected(),

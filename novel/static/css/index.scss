@@ -1,0 +1,105 @@
+.search {
+  position: relative;
+
+  &__input {
+    width: 100%;
+    height: 46px;
+    border: 2px solid var(--search-border-color);
+    border-radius: 4px;
+    padding: 0 12px;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: 0 3px 8px -1px rgba(0, 0, 0, 0.08);
+    color: var(--main-text-color);
+    font-weight: normal;
+    background-color: var(--second-bg-color);
+
+    &::placeholder {
+      font-size: 15px;
+      color: var(--search-placeholder);
+    }
+
+    &:focus {
+      border: 2px solid var(--authentication-border-color);
+
+      & + .search__icon-wraper {
+        border:  2px solid var(--authentication-border-color);
+      }
+      & + .search__icon-wraper {
+        .search__icon {
+        }
+      }
+    }
+  }
+
+  &__icon-wraper {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 46px;
+    width: 55px;
+    padding: 11px 17px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-top: 2px solid var(--search-border-color);
+    border-right: 2px solid var(--search-border-color);
+    border-bottom: 2px solid var(--search-border-color);
+    border-left: 2px solid var(--search-border-color);
+    background-color: var(--second-bg-color);
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+    }
+
+    &:active {
+      box-shadow: inset 0 0 4px #d4cece;
+
+      .search__icon {
+        transform: scale(0.9);
+      }
+    }
+  }
+
+  &__icon {
+    width: 100%;
+    width: 100%;
+    fill: #999;
+  }
+}
+
+.popular-tags {
+  margin-top: 3px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 14px;
+  width: 100%;
+  font-weight: 400;
+  color: var(--second-text-color);
+  width: calc(100% + 15px);
+
+  &__tag {
+    text-decoration: none;
+    color: var(--search-placeholder);
+    margin: 5px 16px 0 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.last-books {
+  margin-top: 20px;
+  position: relative;
+}
+
+.sectionTitle {
+  color: var(--main-text-color);
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 27px;
+}

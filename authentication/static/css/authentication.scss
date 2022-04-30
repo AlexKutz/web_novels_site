@@ -1,0 +1,26 @@
+.page__col-1 > p {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.login-form-wrap {
+    display: flex;
+}
+
+.login-form {
+    margin: 30px auto 0 auto;
+}
+.login-form p{
+    display: flex;
+    align-items: center;
+}
+.login-form label {
+    flex: 0 0 165px;
+}
+.login-form input[type='text'], input[type='password'] {
+    margin-left: 20px;
+    outline: none;
+    padding: 4px 15px;
+    border-radius: 4px;
+    /*border: 1px solid var(--border);*/
+}

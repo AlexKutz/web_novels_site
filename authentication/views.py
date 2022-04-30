@@ -20,9 +20,10 @@ from .utils import mul_of_num
 import binascii, os
 from novel.models import UserBookShelfBook
 
+
 def profile(request):
     if request.user.is_authenticated:
-        bookShelf = UserBookShelfBook.objects.filter(user = request.user)
+        bookShelf = UserBookShelfBook.objects.filter(user=request.user)
         novels = []
         for novel in bookShelf:
             novels.append(novel.novel)
@@ -54,15 +55,16 @@ def registration(request):
 @login_required(redirect_field_name='login')
 def email_change(request):
     if request.method == 'POST':
-        change_datetime = datetime.datetime.fromisoformat(request.session.get('email_change_datetime'))
-        if change_datetime:
-            current_datetime = datetime.datetime.now()
-            print('current', current_datetime, 'change:', change_datetime)
-            next_change = 60 - (current_datetime - change_datetime).total_seconds() / 60.0
-            if next_change > 0:
-                return JsonResponse({
-                    'message': f'Следущий раз вы можете изменить почту через {int(next_change)} {mul_of_num(int(next_change))}'
-                }, status=400)
+        if request.session.get('email_change_datetime'):
+            change_datetime = datetime.datetime.fromisoformat(request.session.get('email_change_datetime'))
+            if change_datetime:
+                current_datetime = datetime.datetime.now()
+                print('current', current_datetime, 'change:', change_datetime)
+                next_change = 60 - (current_datetime - change_datetime).total_seconds() / 60.0
+                if next_change > 0:
+                    return JsonResponse({
+                        'message': f'Следущий раз вы можете изменить почту через {int(next_change)} {mul_of_num(int(next_change))}'
+                    }, status=400)
         data = json.loads(request.body)
         form = EmailChangeForm(request.user, data)
         if form.is_valid():
@@ -77,7 +79,6 @@ def email_change(request):
             return JsonResponse({
                 'message': form.errors,
             }, safe=False, status=400)
-
 
 
 @login_required(redirect_field_name='login')

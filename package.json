@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development"
+    "dev": "webpack --mode development"
   },
   "repository": {
     "type": "git",

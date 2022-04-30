@@ -1,5 +1,12 @@
 {% extends "novel/base.html" %}
 {% block title %}Novel{% endblock %}
+{% load static %}
+{% load compress %}
+{% block loadscss %}
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'css/index.scss' %}">
+    {% endcompress %}
+{% endblock %}
 {% block content %}
   <div class="search">
     <form id="search-form" autocomplete="off">
@@ -22,7 +29,7 @@
   </div>
   <section class="last-books" id="section">
 
-    <h2 class="sectionTitle noselect">Последние Книги</h2>
+    <h1 class="sectionTitle noselect">Последние Книги</h1>
     {% include 'novel/novel_card.html' %}
   </section>
 {% endblock %}

@@ -1,5 +1,12 @@
 {% extends 'novel/base.html' %}
 {% block title %}page{% endblock %}
+{% load static %}
+{% load compress %}
+{% block loadscss %}
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'css/novel_page.scss' %}">
+    {% endcompress %}
+{% endblock %}
 {% block content %}
     <div class="book">
         <div class="info">
@@ -11,14 +18,18 @@
                     </a>
                 </div>
                 <div class="meta">
+                    <div id="novelId" style="display: none;">{{ novel.id }}</div>
                     <h1 href="#" class="meta__title">{{ novel.title }}</h1>
                     {% if novel.adult_only %}<span class="bookCard__adultOnly">[R18+]</span>{% endif %}
                     <p class="meta__altTitle">
                         Альтернативное название: {{ novel.alt_title }}
                     </p>
-                    <p class="meta__author">
-                        Автор: {{ novel.author }}
+                    <p class="meta__updated-data">
+                        <span>Автор: </span>
+                        <a href="{% url 'author' novel.author.id %}" class="meta__author">{{ novel.author }}
+                        </a>
                     </p>
+
                     <p class="meta__updated-data">
                         Загружено: <span>{{ novel.time_from_upload }}</span>
                     </p>
@@ -31,24 +42,36 @@
                     <div class="meta__tags">
                         Теги:
                         {% for tag in novel.tags.all %}
-                            <a href="#" class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
+                            <a href="{% url 'tag' tag.name %}"
+                               class="meta__tag bookCard__tag">{{ tag.name }}</a>{% endfor %}
                     </div>
                 </div>
             </div>
             <div class="info__description">{{ novel.description }}</div>
-        </div>
-        <div class="buttons noselect">
-            <a href="{% url 'read' novel.id '1' %}"
-               class="btn meta__btn btn-border-anim">Прочитать</a>
-            <button class="btn meta__btn btn-border-anim" id="bookShelf">Добавить на
-                <br>
-                книжную полку</button>
+            <div class="buttons noselect">
+                <a href="{% url 'read' novel.id '1' %}"
+                   class="btn meta__btn btn-border-anim">Прочитать
+                </a>
+                {% if user.is_authenticated %}
+                    <button class="btn meta__btn btn-border-anim" style="{% if bookshelf %}display:none;{% endif %}"
+                            id="bookShelfAdd">Добавить на
+                        <br>
+                        книжную полку
+                    </button>
+                    <button class="btn meta__btn btn-border-anim" style="{% if not bookshelf %}display:none;{% endif %}"
+                            id="bookShelfRemove">Убрать с
+                        <br>
+                        книжной полки
+                    </button>
+                {% endif %}
+            </div>
         </div>
         <div class="chapters">
             <h2>Список глав</h2>
             <div class="chapters-box">
                 {% for chapter in chapters %}
-                    <a href="{% url 'read' novel.id chapter.number %}" class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
+                    <a href="{% url 'read' novel.id chapter.number %}"
+                       class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -72,7 +95,7 @@
                     <input type="radio" id="star1" name="rate" value="1"/>
                     <label for="star1" title="text">1 star</label>
                 </div>
-                <input class="btn rate__submit" type="submit" value="Отправить">
+                <button type="submit" class="btn rate__submit" type="submit">Отправить</button>
             </div>
         </div>
         <div class="comments">

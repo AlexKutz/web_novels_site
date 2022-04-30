@@ -1,0 +1,362 @@
+// Imports
+@import 'croppie.css';
+@import 'tingle.css';
+
+
+/**
+ * ==============================================
+ * Dot Pulse
+ * ==============================================
+ */
+@mixin dot(
+  $width: $dot-width,
+  $height: $dot-height,
+  $radius: $dot-radius,
+  $bg-color: $dot-bg-color,
+  $color: $dot-color
+) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-color: $bg-color;
+  color: $color;
+}
+
+$dot-width: 10px;
+$dot-height: 10px;
+$dot-radius: $dot-width/2;
+
+$dot-color: #1aa81a;
+$dot-bg-color: $dot-color;
+$dot-before-color: $dot-color;
+$dot-after-color: $dot-color;
+
+$dot-spacing: $dot-width + $dot-width/2;
+$left-pos: -9999px;
+$x1: -$left-pos - $dot-spacing;
+$x2: -$left-pos;
+$x3: -$left-pos + $dot-spacing;
+.dot-pulse {
+  position: relative;
+  left: $left-pos;
+  margin-left: 20px;
+
+  @include dot;
+
+  box-shadow: $x2 0 0 -5px;
+  animation: dot-pulse 1.5s infinite linear;
+  animation-delay: .25s;
+
+  &::before,
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+
+    @include dot;
+  }
+
+  &::before {
+    box-shadow: $x1 0 0 -5px;
+    animation: dot-pulse-before 1.5s infinite linear;
+    animation-delay: 0s;
+  }
+
+  &::after {
+    box-shadow: $x3 0 0 -5px;
+    animation: dot-pulse-after 1.5s infinite linear;
+    animation-delay: .5s;
+  }
+}
+
+@keyframes dot-pulse-before {
+  0% {
+    box-shadow: $x1 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x1 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x1 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse {
+  0% {
+    box-shadow: $x2 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x2 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x2 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse-after {
+  0% {
+    box-shadow: $x3 0 0 -5px;
+  }
+
+  30% {
+    box-shadow: $x3 0 0 2px;
+  }
+
+  60%,
+  100% {
+    box-shadow: $x3 0 0 -5px;
+  }
+}
+
+.profile__change-tabs {
+  height: 38px;
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+  }
+
+  label {
+    margin: 0;
+    font-size: 16px;
+    background-color: var(--second-bg-color);
+    padding: 7px 0;
+    width: 150px;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid var(--header-menu-btn-text-color);
+    transition: 0.1s;
+    font-weight: 500;
+    color: var(--main-text-color);
+    letter-spacing: 1px;
+    opacity: 0.90;
+    cursor: pointer;
+  }
+
+  label:first-of-type {
+    border-radius: 8px 0 0 8px;
+    transform: translateX(6px);
+  }
+
+  label:nth-of-type(2n) {
+    border-radius: 0 8px 8px 0;
+    width: 167px;
+    transform: translateX(-6px);
+  }
+
+  input:checked + label {
+    font-size: 14px;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    filter: brightness(0.98);
+  }
+}
+
+
+.profile {
+  &__flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 35px;
+  }
+}
+
+.profile__data {
+  flex: 1 1 auto;
+  padding: 0 30px 0 0;
+  color: var(--main-text-color);
+}
+
+.profile__title {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.profile h1 {
+  font-size: 28px;
+  display: inline-block;
+}
+
+.profile__image {
+  height: 150px;
+  width: 150px;
+  display: inline-block;
+  flex: 0 0 150px;
+  cursor: pointer;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  }
+
+  &-change-icon {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0.4;
+    transition: transform 0.3s;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+  &:hover &-change-icon {
+    opacity: 1;
+    transform: rotate(45deg);
+  }
+}
+html[data-colorscheme="dark"] {
+  .profile__image-change-icon {
+    fill: #e7e5e5;
+  }
+}
+
+.profile__name {
+  margin-top: 10px;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.profile-row {
+  display: flex;
+  margin-left: 10px;
+
+  &__name {
+    flex: 0 0 220px;
+    display: flex;
+    align-items: center;
+
+  }
+
+  &__value {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.profile__username {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.tooltip {
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 2px;
+  width: 17px;
+  height: 17px;
+  background-color: #29a6d0;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 2px 2px;
+  box-sizing: border-box;
+
+  &:hover span {
+    visibility: visible;
+    opacity: 1;
+  }
+  &:focus span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: white;
+
+  }
+
+  &-text {
+    position: absolute;
+    top: 24px;
+    left: -20px;
+    width: 450px;
+    background-color: #29a6d0;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    z-index: 1;
+    transition: opacity 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    padding: 4px 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 22px;
+      margin-top: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #29a6d0 transparent;
+    }
+  }
+}
+
+.profile-email__input {
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+
+}
+
+.profile-email__input_valid {
+  outline: 1px green solid;
+}
+
+.profile-email__input_invalid {
+  outline: 1px red solid;
+}
+
+.email-btn {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 3px 8px;
+  color: var(--second-text-color);
+  background-color: var(--second-bg-color);
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.email-btn:first-child {
+  margin-left: 0;
+}
+
+.email-btn:hover {
+  color: var(--main-text-color);
+  border: 1px solid #aaa;
+}
+
+
+.profile-email__btns-container {
+  margin-top: 4px;
+  display: flex;
+}
+
+.page__col-1 {
+  width: 100%;
+}
+

@@ -17,7 +17,7 @@
                     {% endif %}
                 </div>
                 <div class="bookCard__metaData">
-                    <a href="#" class="bookCard__author">{{ novel.author }}</a>
+                    <a href="{% url 'author' novel.author.id %}" class="bookCard__author">{{ novel.author }}</a>
                     <span class="bookCard__numWords">
                 {{ novel.number_words_formatted }}
               </span>

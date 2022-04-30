@@ -1,0 +1,19 @@
+// Tag page styles
+.tag-page {
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  transform: translateX(-10px);
+  background-color: var(--second-bg-color);
+  padding: 10px 10px;
+}
+
+.tag-page__tag {
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 2px 3px;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--tag-color);
+}
+

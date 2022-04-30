@@ -1,15 +1,20 @@
 {% extends 'novel/base.html' %}
 {% block title %}Profile{% endblock %}
+{% load static %}
+{% load compress %}
+{% block loadscss %}
+    {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'css/profile.scss' %}">
+    {% endcompress %}
+{% endblock %}
 {% block content %}
-    {% csrf_token %}
     <div id="demo"></div>
-    <!-- or even simpler -->
     <div class="profile__change-tabs">
         <form action="#" id="changeTabsForm">
-            <input type="radio" name="tabs" value="1" id="changetab1" checked>
-            <label for="changetab1">Информация</label>
-            <input type="radio" name="tabs" value="2" id="changetab2">
-            <label for="changetab2">Книжная полка</label>
+            <input type="radio" name="tabs" value="1" id="Tab1" checked>
+            <label for="Tab1">Информация</label>
+            <input type="radio" name="tabs" value="2" id="Tab2">
+            <label for="Tab2">Книжная полка</label>
         </form>
     </div>
     <hr>
@@ -53,21 +58,21 @@
                             <div class="profile-email" id="profileEmail">
                                 {{ user.email }}
                                 <div id="btnsContainer" class="profile-email__btns-container">
-                                    <button id="setEmailBtn">Изменить</button>
+                                    <button id="setEmailBtn" class="email-btn">Изменить</button>
                                 </div>
                             </div>
                         {% elif user.email and not user.is_active_email %}
                             <div class="profile-email" id="profileEmail">
                                 {{ user.email }}
                                 <div id="btnsContainer" class="profile-email__btns-container">
-                                    <button id="setEmailBtn">Изменить</button>
-                                    <button class="profile-email__confirm-btn" id="emailConfirmBtn">Подтвердить</button>
+                                    <button id="setEmailBtn" class="email-btn">Изменить</button>
+                                    <button class="profile-email__confirm-btn email-btn" id="emailConfirmBtn">Подтвердить</button>
                                 </div>
                             </div>
                         {% else %}
                             <div class="profile-email" id="profileEmail">
                                 <div id="btnsContainer" class="profile-email__btns-container">
-                                    <button class="profile-email__set-btn" id="setEmailBtn">Указать Email</button>
+                                    <button class="profile-email__set-btn email-btn" id="setEmailBtn">Указать Email</button>
                                 </div>
                             </div>
                         {% endif %}

@@ -13,14 +13,14 @@ function settingPanel() {
     const panel = document.getElementById('settings')
     const toggleBtn = document.getElementById('settingsToggle')
     const svg = document.getElementById('settingsToggleSvg')
-    panel.classList.add('disable-css-transitions')
-    svg.classList.add('disable-css-transitions')
+    panel.classList.add('disable-transitions')
+    svg.classList.add('disable-transitions')
     if (window.localStorage.getItem('settingPanelClosed') == 'true') {
         panel.classList.add('settings_closed')
     }
     toggleBtn.onclick = () => {
-        panel.classList.remove('disable-css-transitions')
-        svg.classList.remove('disable-css-transitions')
+        panel.classList.remove('disable-transitions')
+        svg.classList.remove('disable-transitions')
         if (panel.classList.contains('settings_closed')) {
             panel.classList.remove('settings_closed')
             window.localStorage.setItem('settingPanelClosed', 'false')

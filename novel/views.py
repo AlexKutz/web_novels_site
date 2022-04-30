@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-from django.http import JsonResponse, HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 from .serializerz import *
 
 from .services import search_novel_by_query, search_books_by_filters
@@ -16,11 +16,18 @@ def index(request):
     return render(request, 'novel/index.html', ctx)
 
 
-def return_novel_page(request, novel_id):
+def novel(request, novel_id):
     try:
         novel = Novel.objects.get(id=novel_id)
+        bookshelf = False
+        if request.user.is_authenticated:
+            try:
+                bookshelf = UserBookShelfBook.objects.filter(user=request.user).get(novel=novel_id)
+                bookshelf = True
+            except UserBookShelfBook.DoesNotExist:
+                bookshelf = None
         chapters = Chapter.objects.filter(novel=novel).order_by('-number')
-        return render(request, 'novel/novel_page.html', {'novel': novel, 'chapters': chapters})
+        return render(request, 'novel/novel_page.html', {'novel': novel, 'chapters': chapters, 'bookshelf': bookshelf})
     except Novel.DoesNotExist:
         return HttpResponseNotFound('Page not found')
 
@@ -65,6 +72,14 @@ def tag(request, tag):
     return render(request, 'novel/tag.html', ctx)
 
 
+def author_novels(request, author):
+    ctx = {
+        'author': Author.objects.get(id=author),
+        'novel': Novel.objects.filter(author=author)
+    }
+    return render(request, 'novel/author.html', ctx)
+
+
 @csrf_exempt
 def get_filtered_books_json(request):
     if request.method == "POST":
@@ -75,9 +90,20 @@ def get_filtered_books_json(request):
 
 def add_to_bookshelf(request):
     if request.method == "POST":
-        pass
+        novel_id = json.loads(request.body)['novelId']
+        try:
+            novel = Novel.objects.get(id=novel_id)
+        except Novel.DoesNotExist:
+            return HttpResponseNotFound('')
+        UserBookShelfBook.objects.create(user=request.user, novel=novel)
+        return HttpResponse('', status=200)
 
 
 def remove_from_bookshelf(request):
     if request.method == "POST":
-        pass
+        novel_id = json.loads(request.body)['novelId']
+        try:
+            UserBookShelfBook.objects.get(novel_id__exact=novel_id).delete()
+        except UserBookShelfBook.DoesNotExist:
+            return HttpResponseNotFound('')
+        return HttpResponse('', status=200)
