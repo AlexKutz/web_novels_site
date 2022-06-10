@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Count
+from django.urls import reverse
 from django.utils.timesince import timesince
 from django.utils.translation import ngettext_lazy
 
@@ -72,6 +73,8 @@ class Novel(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def get_absolute_urs(self):
+        return reverse('novels', args=[str(self.id)])
 
     def _get_timesince(self):
         return fixtimesince(timesince(self.created_at, time_strings=TIME_STRINGS, depth=1))
@@ -106,7 +109,7 @@ class Chapter(models.Model):
     createrd_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.novel} / {self.title}'
+        return f'{self.novel} / {self.title} / {self.number}'
 
 
 def update_tag_counter(sender, instance, created, **kwargs):
@@ -128,3 +131,36 @@ class UserBookShelfBook(models.Model):
     )
     novel = models.ForeignKey(Novel, on_delete=models.CASCADE)
     added = models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+    novel = models.ForeignKey(Novel, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    active = models.BooleanField(default=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
+
+    def _get_timesince(self):
+        return fixtimesince(timesince(self.created_on, time_strings=TIME_STRINGS, depth=1))
+
+    def _get_total_likes(self):
+        return self.likes.users.count()
+
+    time_from_upload = property(_get_timesince)
+    totalLikes = property(_get_total_likes)
+
+    class Meta:
+        ordering = ['created_on']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.text[:20], self.user)
+
+
+class CommentLike(models.Model):
+    comment = models.OneToOneField(Comment, related_name="likes", on_delete=models.CASCADE)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_comments')
+
+    def __str__(self):
+        return 'Comment id {}'.format(self.comment)
+

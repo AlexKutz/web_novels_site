@@ -1,96 +1,6 @@
 // Imports
 @import 'normalize';
-
-// Fonts
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat ExtraBold'), local('Montserrat-ExtraBold'),
-  url('../fonts/Montserrat/Montserrat-ExtraBold.woff') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-ExtraBold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Bold'), local('Montserrat-Bold'),
-  url('../fonts/Montserrat/Montserrat-Bold.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Black'), local('Montserrat-Black'),
-  url('../fonts/Montserrat/Montserrat-Black.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'),
-  url('../fonts/Montserrat/Montserrat-ExtraLight.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-ExtraLight.woff') format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Light'), local('Montserrat-Light'),
-  url('../fonts/Montserrat/Montserrat-Light.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Thin'), local('Montserrat-Thin'),
-  url('../fonts/Montserrat/Montserrat-Thin.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Thin.woff') format('woff');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat SemiBold'), local('Montserrat-SemiBold'),
-  url('../fonts/Montserrat/Montserrat-SemiBold.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-SemiBold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Regular'), local('Montserrat-Regular'),
-  url('../fonts/Montserrat/Montserrat-Regular.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Montserrat';
-  src: local('Montserrat Medium'), local('Montserrat-Medium'),
-  url('../fonts/Montserrat/Montserrat-Medium.woff2') format('woff2'),
-  url('../fonts/Montserrat/Montserrat-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
+@import 'fonts';
 
 // Basic enchantment
 /*
@@ -320,8 +230,8 @@ $chapter-bg-hover: #f3f3f3;
   --main-bg-color: #18181a;
   --second-bg-color: #2a2a2c;
 
-  --main-text-color: #dfdfdf;
-  --second-text-color: #a6a6a6;
+  --main-text-color: #eaeaea;
+  --second-text-color: #c7c7c7;
 
   --logo-color: #dfdfdf;
   --logo-color-hover: white;
@@ -352,7 +262,7 @@ $chapter-bg-hover: #f3f3f3;
   --textarea-border: #444;
 
   --rate-submit-bg-color: #323234;
-  --rate-submit-bg-color-hover: #343436;
+  --rate-submit-bg-color-hover: #000000;
   --rate-submit-border-color: #{$rate-submit-border-color};
 
   --select-border: #202020;
@@ -401,10 +311,7 @@ $chapter-bg-hover: #f3f3f3;
     svg {
       stroke-width: 1px;
       stroke: $header-menu-btn-text-color;
-      stroke-width: 2;
-    }
-
-    &:hover svg {
+      stroke-width: 1;
     }
 
     &_hide {
@@ -423,7 +330,7 @@ $chapter-bg-hover: #f3f3f3;
     svg {
       stroke-width: 1px;
       stroke: #dad8d8;
-      stroke-width: 2;
+      stroke-width: 1;
     }
 
     &:hover svg {
@@ -758,7 +665,6 @@ body {
   color: var(--main-text-color);
   font-family: Montserrat, serif;
   overflow-x: hidden;
-  height: 4000px;
   letter-spacing: 0.5px;
 }
 
@@ -795,6 +701,9 @@ h1 {
     height: 100%;
     max-width: 200px;
     min-width: 150px;
+    @media screen and (max-width: 880px){
+      display: none;
+    }
     svg {
       width: 100%;
       height: 100%;
@@ -809,12 +718,42 @@ h1 {
     }
   }
 
+  &__left-container {
+    display: flex;
+    align-items: center;
+  }
+
   &__menu {
-    height: 100%;
     display: flex;
     align-items: center;
     margin: 0 20px;
     flex-grow: 1;
+    z-index: 112;
+    transition-duration: .2s;
+
+    &-container {
+      display: flex;
+      align-items: center;
+      @media screen and (max-width: 880px){
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 auto;
+      }
+    }
+
+    @media screen and (max-width: 880px){
+      position: absolute;
+      background-color: var(--second-bg-color);
+      top: -200px;
+      width: 100%;
+      margin: 0;
+      left: 0;
+      right: 0;
+      padding: 5px 0 8px 0;
+      z-index: -100;
+      opacity: 0;
+      box-shadow: 0 6px 6px rgba(70, 70, 70, 0.12);
+    }
 
     &-icon {
       width: 35px;
@@ -877,9 +816,73 @@ h1 {
 
   &__changeColorScheme {
     margin-right: 20px;
-    margin-top: 2px;
   }
 }
+
+#menuToggle {
+  opacity: 0;
+  display: none;
+  @media screen and (max-width: 880px){
+    display: inline-block;
+  }
+}
+
+#menuToggle:checked ~ .hamburger-menu__btn > span {
+  transform: rotate(45deg);
+}
+
+#menuToggle:checked ~ .hamburger-menu__btn > span::before {
+  top: 0;
+  transform: rotate(0);
+}
+
+#menuToggle:checked ~ .hamburger-menu__btn > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+.hamburger-menu__btn {
+  display: none;
+  align-items: center;
+  position: fixed;
+  left: 20px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  z-index: 1;
+  @media screen and (max-width: 880px){
+    display: flex;
+  }
+}
+
+.hamburger-menu__btn > span,
+.hamburger-menu__btn > span::before,
+.hamburger-menu__btn > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+
+  background-color: var(--header-menu-btn-text-color);
+}
+
+.hamburger-menu__btn > span::before {
+  content: '';
+  top: -8px;
+}
+
+.hamburger-menu__btn > span::after {
+  content: '';
+  top: 8px;
+}
+
+#menuToggle:checked ~ .header__menu {
+  z-index: 5;
+  top: 56px;
+  opacity: 1;
+  display: flex;
+}
+
 .footer {
   height: 30px;
 }
@@ -891,9 +894,11 @@ h1 {
     padding: 30px 20px 0 20px;
     margin: 55px auto 0 auto;
     height: 100%;
+    box-sizing: border-box;
   }
 
   &__col-1 {
+    flex: 1 1 auto;
   }
 
   &__col-2 {
@@ -918,6 +923,9 @@ h1 {
 
   &__container {
     display: flex;
+    @media screen and (max-width: 550px) {
+      flex-direction: column;
+    }
   }
 
   &__column-1 {
@@ -952,6 +960,9 @@ h1 {
     color: $main-text-color;
     color: var(--main-text-color);
     font-weight: 500;
+    @media screen and (max-width: 550px) {
+      margin-top: 20px;
+    }
   }
 
   &__adultOnly {

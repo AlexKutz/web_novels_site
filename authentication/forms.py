@@ -1,9 +1,25 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django import forms
 from .models import User
 
 
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            self.fields[field_name].widget.attrs['placeholder'] = field.label + ' *' if field.required else field.label
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2')
+
+
 class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            self.fields[field_name].widget.attrs['placeholder'] = field.label + ' *' if field.required else field.label
+
     def clean(self):
         cleaned_data = super(CustomUserCreationForm, self).clean()
         username = cleaned_data.get('username')

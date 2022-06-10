@@ -154,7 +154,7 @@ $x3: -$left-pos + $dot-spacing;
   }
 
   input:checked + label {
-    font-size: 14px;
+    font-size: 15px;
     box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
     opacity: 1;
     filter: brightness(0.98);
@@ -235,6 +235,7 @@ html[data-colorscheme="dark"] {
 .profile-row {
   display: flex;
   margin-left: 10px;
+  margin-top: 20px;
 
   &__name {
     flex: 0 0 220px;

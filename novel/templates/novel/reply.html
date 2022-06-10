@@ -1,0 +1,25 @@
+{% for reply in replies %}
+    <div class="comment reply">
+        <div class="flex-container">
+            <div class="comment__avatar">
+                <img src="{{ reply.user.image.url }}" class="authenticated__account-image"
+                     id="headerAccImage">
+            </div>
+            <div class="comment__data">
+                <span class="comment__name">{{ reply.user.username }}</span>
+                <span class="comment__created">{{ reply.created_on }}</span>
+                {% if user != comment.user or user != reply.user %}
+                    <div class="comment__reply-msg">
+                        <svg id="Layer_1" style="max-width: 15px; max-height: 15px; display: inline-block" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 879.19 860.19"><path d="M863.49,979.67s15.6,4.1,15.7-19.6c-.1-23.8-.1-135.5-.1-152.5.1-16.8-13-16.5-13-16.5H305.59c0-191.2,0-318.05-.1-369.25.1-24.4,0-40.2,0-40.2h95.1c36.7,0,9-27.6,9-27.6s-159.1-206-180.8-227.8c-15.8-15.6-30.6,1.9-30.6,1.9L11.59,348.92S-16,375.12,14,375h102.9s0,17.8.1,44.9c-.1,53.2-.1,180.75,0,371.15h-.2v176.8c.3,4.3,3.3,11,16.9,11.8h729.8Z" transform="translate(0 -119.75)"/></svg>
+                        <span>Ответ на коментарий {{ comment.user.username }}, {{ comment.text|truncatechars:28 }}</span>
+                    </div>
+                {% endif %}
+                <span class="comment__text">{{ reply.text }}</span>
+            </div>
+        </div>
+    </div>
+    {% if reply.replies.all %}
+        <div class="toggle-reply-btn">Посмотреть ответы</div>
+        {% include "novel/reply.html" with replies=reply.replies.all comment=reply %}
+    {% endif %}
+{% endfor %}

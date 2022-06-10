@@ -3,7 +3,9 @@ import warnings
 from django.core.exceptions import FieldError
 from django.db.models import Count
 
-from .models import Novel, Tag, Author
+from .forms import CommentForm
+from .models import Novel, Tag, Author, Comment
+
 
 def search_novel_by_query(query):
     value = query.split(',')
@@ -11,7 +13,7 @@ def search_novel_by_query(query):
     if Tag.objects.filter(name__iexact=value[0]):
         novels = Novel.objects.all()
         for item in value:
-            novel = novels.filter(tags__name__iexact = item.strip())
+            novel = novels.filter(tags__name__iexact=item.strip())
         if novel:
             return novel
     if Author.objects.filter(name__icontains=query):
@@ -40,3 +42,38 @@ def search_books_by_filters(params):
         else:
             books = books.filter(chapters__lte=params['chaptersNumber'])
     return books
+
+
+def save_comment(request, comment_data):
+    """Saves comments to the database"""
+    comment_form = CommentForm(data=comment_data)
+    print(comment_data)
+    if comment_data['novel_id']:
+        try:
+            novel = Novel.objects.get(id=comment_data['novel_id'])
+        except Novel.DoesNotExist:
+            return False
+    else:
+        return False
+    if comment_form.is_valid():
+        parent_obj = None
+        # get parent comment id if exist
+        try:
+            parent_id = int(comment_data.get('parent_id'))
+        except:
+            parent_id = None
+        if parent_id:
+            try:
+                parent_obj = Comment.objects.get(id=parent_id)
+            except Comment.DoesNotExist:
+                parent_obj = None
+            if parent_obj:
+                replay_comment = comment_form.save(commit=False)
+                replay_comment.parent = parent_obj
+        # if parent does not exist
+        new_comment = comment_form.save(commit=False)
+        new_comment.novel = novel
+        new_comment.user = request.user
+        new_comment.save()
+        return new_comment
+    return False

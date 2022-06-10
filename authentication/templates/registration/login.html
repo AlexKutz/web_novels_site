@@ -18,11 +18,19 @@
     {% if next %}
         <p>Пожалуйста, авторизуйтесь чтобы увидеть эту страницу.</p>
     {% endif %}
-        <div class="login-form-wrap">
-            <form method="post" action="{% url 'login' %}" class="login-form">
+        <div class="authentication-form">
+            <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" class="btn btn-border-anim" value="Login">
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="field-wrapper">
+                        <div class="errors">
+                            {{ field.errors }}
+                        </div>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <button type="submit" value="Login" class="form-submit">Войти</button>
                 <input type="hidden" name="next" value="{{ next }}">
             </form>
         </div>

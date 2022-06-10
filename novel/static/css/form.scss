@@ -1,0 +1,16 @@
+body{
+  height: 100vh;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+}
+.form-col-1 {
+  flex: 0 0 100px;
+}
+.form-content textarea{
+  width: 100%;
+  margin: 0 auto;
+  height: 450px;
+}

@@ -64,76 +64,43 @@
                         книжной полки
                     </button>
                 {% endif %}
+                {% if user.is_superuser %}
+                    <a href="{% url 'add_chapter' novel.id %}" class="btn">[admin]Добавить следущую главу</a>
+                {% endif %}
             </div>
         </div>
         <div class="chapters">
             <h2>Список глав</h2>
             <div class="chapters-box">
                 {% for chapter in chapters %}
-                    <a href="{% url 'read' novel.id chapter.number %}"
-                       class="chapter">Глава {{ chapter.number }} {{ chapter.title }}</a>
+                    <div class="chapter-wrap">
+                        <a href="{% url 'read' novel.id chapter.number %}"
+                           class="chapter">
+                            Глава {{ chapter.number }} {{ chapter.title }}
+                        </a>
+                        {% if user.is_superuser %}
+                            <a class="chapter-edit" href="{% url 'edit_chapter' novel.id chapter.number %}" class="btn">[admin]Редактировать</a>
+                        {% endif %}
+                    </div>
+
                 {% endfor %}
             </div>
         </div>
         <div class="rate">
-            <h2 class="rate__title">Оценить книгу</h2>
-            <textarea id="rate"
-                      class="rate__textarea"
-                      name=""
-                      id=""
-                      placeholder="Напишите комментарий"></textarea>
-            <div class="rate__row">
-                <div class="rate__stars">
-                    <input type="radio" id="star5" name="rate" value="5"/>
-                    <label for="star5" title="text">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4"/>
-                    <label for="star4" title="text">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3"/>
-                    <label for="star3" title="text">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2"/>
-                    <label for="star2" title="text">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1"/>
-                    <label for="star1" title="text">1 star</label>
+            <h2 class="rate__title">Комментировать</h2>
+            <form action="#" class="rate__form" id="commentForm">
+                <div class="rate__form-errors" id="commentFormErrors"></div>
+                <input name="parent_id" type="hidden" id="commentParent">
+                <div id="commentTextAreaContainer">
+                    {{ comment_form }}
                 </div>
-                <button type="submit" class="btn rate__submit" type="submit">Отправить</button>
-            </div>
+                <button type="submit" class="btn rate__submit">Отправить</button>
+            </form>
         </div>
+        {{ user.comment_likes }}
         <div class="comments">
-            <div class="comment">
-                <div class="comment__avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
-                        <defs>
-                            <style>.a {
-                                fill: #1d1d1b;
-                            }
-                            </style>
-                        </defs>
-                        <rect class="a" width="126" height="126"/>
-                    </svg>
-                </div>
-                <div class="comment__data">
-                    <span class="comment__name">Youan</span>
-                    <span class="comment__stars">★★★★★</span>
-                    <span class="comment__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium cum facilis perferendis placeat provident quos repellat tenetur ullam, ut voluptate!</span>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="comment__avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
-                        <defs>
-                            <style>.a {
-                                fill: #1d1d1b;
-                            }
-                            </style>
-                        </defs>
-                        <rect class="a" width="126" height="126"/>
-                    </svg>
-                </div>
-                <div class="comment__data">
-                    <span class="comment__name">Youan</span>
-                    <span class="comment__stars">★★★★★</span>
-                    <span class="comment__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium cum facilis perferendis placeat provident quos repellat tenetur ullam, ut voluptate!</span>
-                </div>
+            <h2 class="rate__title">Коментарии</h2>
+            <div id="comments">
             </div>
         </div>
     </div>

@@ -29,7 +29,6 @@
                         {{ user.get_username|title }}
                     </div>
                 </div>
-                <hr>
                 <div class="profile-row">
                     <div class="profile-row__name">
                         Email
@@ -79,15 +78,9 @@
                     </div>
 
                 </div>
-                <hr>
                 <div class="profile-row">
                     <div class="profile-row__name">Зарегистрирован</div>
                     <div class="profile-row__value">{{ user.date_joined }}</div>
-                </div>
-                <hr>
-                <div class="profile-row">
-                    <div class="profile-row__name">Последняя активность</div>
-                    <div class="profile-row__value">{{ user.last_login }}</div>
                 </div>
             </div>
             <div class="profile__image">
