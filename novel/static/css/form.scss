@@ -5,6 +5,7 @@ body{
 .form-row {
   margin-bottom: 10px;
   display: flex;
+  flex-wrap: wrap;
 }
 .form-col-1 {
   flex: 0 0 100px;

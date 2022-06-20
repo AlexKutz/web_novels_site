@@ -51,7 +51,6 @@ def novel(request, novel_id):
             })
     else:
         comment_form = CommentForm()
-        comments = novel.comments.filter(active=True, parent__isnull=True)
         if request.user.is_authenticated:
             try:
                 bookshelf = UserBookShelfBook.objects.filter(user=request.user).get(novel=novel_id)
@@ -64,7 +63,6 @@ def novel(request, novel_id):
                       {'novel': novel,
                        'chapters': chapters,
                        'bookshelf': bookshelf,
-                       'comments': comments,
                        'comment_form': comment_form
                        })
 
@@ -73,9 +71,8 @@ def novel(request, novel_id):
 def search(request):
     query = request.GET.get('q')
     if not query:
-        return JsonResponse({
-            'error': 'there is no search query in the request',
-        }, status=400, safe=False)
+        novel = Novel.objects.all()
+        return JsonResponse(NovelSerializer(novel, many=True).data, safe=False)
     novel = search_novel_by_query(query=query)
     if novel:
         return JsonResponse(NovelSerializer(novel, many=True).data, safe=False)

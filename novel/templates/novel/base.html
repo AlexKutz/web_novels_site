@@ -32,9 +32,7 @@
 {% block header %}
     <header class="header">
         <div class="header__limiter">
-            <input type="checkbox" id="menuToggle">
-            <label for="menuToggle" class="hamburger-menu__btn noselect"><span></span></label>
-            <a href="{% url 'index' %}" class="header__logo">
+            <a href="{% url 'index' %}" class="header__logo noselect">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.3 8.12">
                     <defs>
                         <style>.a {
@@ -64,6 +62,11 @@
                           d="M81.3,8H79.9V4.31c0-.76-.34-1.15-1-1.15a1.17,1.17,0,0,0-.95.44,2,2,0,0,0-.35,1.29V8H76.16V4.31c0-.77-.32-1.16-1-1.16a1.2,1.2,0,0,0-1,.47,1.86,1.86,0,0,0-.4,1.27V8H72.46V2.08h1.29V3.34a2.08,2.08,0,0,1,2-1.38,1.65,1.65,0,0,1,1.69,1.38A2.19,2.19,0,0,1,79.4,2a1.83,1.83,0,0,1,1.38.53,1.86,1.86,0,0,1,.52,1.32Z"/>
                 </svg>
             </a>
+            <a href="{% url 'index' %}" class="header__logo_mobile noselect">
+                <img src="{% static '/img/siteLogoMobile.png' %}" alt="site logo">
+            </a>
+            <input type="checkbox" id="menuToggle">
+            <label for="menuToggle" class="hamburger-menu__btn noselect"><span></span></label>
             <nav class="header__menu noselect">
                 <div class="header__menu-container">
                     <div class="header__menu-item">
@@ -100,18 +103,19 @@
                         </a>
                     </div>
                     <div class="header__menu-item">
-                </div>
-                    <a href="#" class="header__menu-link">
-                        <div class="header__menu-icon header__menu-icon_contacts">
-                            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 289">
-                                <path d="M255.09,42.31Q215.21,6,155.94,6,93.68,6,49.83,47.3T6,150.12q0,58.95,41.69,101.4Q89.54,294,160.22,294a213,213,0,0,0,83.69-17.33,17.54,17.54,0,0,0,9.63-22.74h0A17.87,17.87,0,0,0,230,244.41q-35.69,15.17-69.82,15.16-54.25,0-84-32.66T46.39,150.29q0-47.76,31.87-79.72t78.22-32q42.74,0,72.2,26.26T258.12,131c0,18.16-4.52,33.32-13.5,45.36s-18.32,18.1-28,18.1c-5.24,0-7.85-2.77-7.85-8.35a151.22,151.22,0,0,1,1-15.92l11.06-89.36H182.77l-2.44,8.75q-14.55-11.72-31.88-11.75-27.48,0-47,21.62T81.83,155.05c0,22.15,5.77,40.07,17.37,53.64s25.52,20.39,41.81,20.39q21.87,0,37.36-18.1,11.69,17.37,34.43,17.34,33.47,0,57.81-28.79T295,130.14Q295,78.68,255.09,42.31ZM167.42,177.5C160.7,186.43,152.67,191,143.33,191q-9.54,0-15.34-9.87t-5.89-24.56q0-18.15,8.21-29.26c5.47-7.4,12.25-11.16,20.34-11.16,7,0,13.26,2.76,18.73,8.34s8.21,13,8.21,22.27A50.47,50.47,0,0,1,167.42,177.5Z"
-                                      transform="translate(-5.5 -5.5)" stroke-miterlimit="10"/>
-                            </svg>
-                        </div>
-                        <span>Контакты</span>
-                    </a>
+                        <a href="{% url 'contacts' %}" class="header__menu-link">
+                            <div class="header__menu-icon header__menu-icon_contacts">
+                                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 289">
+                                    <path d="M255.09,42.31Q215.21,6,155.94,6,93.68,6,49.83,47.3T6,150.12q0,58.95,41.69,101.4Q89.54,294,160.22,294a213,213,0,0,0,83.69-17.33,17.54,17.54,0,0,0,9.63-22.74h0A17.87,17.87,0,0,0,230,244.41q-35.69,15.17-69.82,15.16-54.25,0-84-32.66T46.39,150.29q0-47.76,31.87-79.72t78.22-32q42.74,0,72.2,26.26T258.12,131c0,18.16-4.52,33.32-13.5,45.36s-18.32,18.1-28,18.1c-5.24,0-7.85-2.77-7.85-8.35a151.22,151.22,0,0,1,1-15.92l11.06-89.36H182.77l-2.44,8.75q-14.55-11.72-31.88-11.75-27.48,0-47,21.62T81.83,155.05c0,22.15,5.77,40.07,17.37,53.64s25.52,20.39,41.81,20.39q21.87,0,37.36-18.1,11.69,17.37,34.43,17.34,33.47,0,57.81-28.79T295,130.14Q295,78.68,255.09,42.31ZM167.42,177.5C160.7,186.43,152.67,191,143.33,191q-9.54,0-15.34-9.87t-5.89-24.56q0-18.15,8.21-29.26c5.47-7.4,12.25-11.16,20.34-11.16,7,0,13.26,2.76,18.73,8.34s8.21,13,8.21,22.27A50.47,50.47,0,0,1,167.42,177.5Z"
+                                          transform="translate(-5.5 -5.5)" stroke-miterlimit="10"/>
+                                </svg>
+                            </div>
+                            <span>Контакты</span>
+                        </a>
+                    </div>
                 </div>
             </nav>
+            <div class="filler"></div>
             <div class="header__left-container">
                 <div class="changeColorScheme header__changeColorScheme">
                     <div class="changeColorScheme__moon changeColorScheme__moon_hide">
@@ -196,7 +200,7 @@
                     </div>
                 {% else %}
                     <div class="header__authentication authentication noselect">
-                        <a href="{% url 'login' %}"
+                        <a href="{% url 'login' %}?next={{request.path}}"
                            class="authentication__btn authentication__login-btn noselect btn-border-anim">
                             Вход
                             <svg xmlns="http://www.w3.org/2000/svg" class="authentication__icon"
@@ -209,7 +213,7 @@
                                         transform="translate(-10)"/>
                             </svg>
                         </a>
-                        <a href="{% url 'registration' %}"
+                        <a href="{% url 'registration' %}?next={{request.path}}"
                            class="authentication__btn authentication__register-btn noselect btn-border-anim">
                             Регистрация
                             <svg version="1.1" width="15" style="max-height: 30px; max-width: 30px"

@@ -22,7 +22,7 @@ input {
     font-weight: normal;
     background-color: var(--second-bg-color);
     &:focus {
-        border: 2px solid var(--authentication-border-color);
+        border: 2px solid var(--btns-text-color);
     }
     &::placeholder {
         font-size: 15px;
@@ -63,11 +63,13 @@ input:-webkit-autofill:focus {
     width: 100%;
     text-align: center;
     justify-content: center;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .authentication-form {
     padding: 10px;
-    background-color: #e8e8e8;
+    background-color: var(--bg-2);
     box-sizing: border-box;
     display: inline-block;
     width: 100%;

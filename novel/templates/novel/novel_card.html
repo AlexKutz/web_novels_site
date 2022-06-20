@@ -28,9 +28,9 @@
                         <a href="{% url 'tag' tag.name %}" class="meta__tag bookCard__tag">{{ tag.name }}</a>
                     {% endfor %}
                 </div>
-                <div class="bookCard__description">
-                    {{ novel.description }}
-                </div>
+            </div>
+            <div class="bookCard__description">
+                {{ novel.description }}
             </div>
         </div>
         <div class="bookCard__uploadTime">{{ novel.time_from_upload }}</div>

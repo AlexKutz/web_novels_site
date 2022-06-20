@@ -2,6 +2,9 @@
 .catalog-flex {
   display: flex;
   margin-bottom: 15px;
+  @media screen and (max-width: 420px) {
+    flex-direction: column;
+  }
 }
 
 .catalog-title {
@@ -14,6 +17,12 @@
   position: relative;
 }
 
+.exclude-tags {
+  @media screen and (max-width: 420px) {
+    margin-top: 8px;
+  }
+}
+
 .catalog-chapters-input {
   outline: none;
   border: 1px solid var(--select-border);
@@ -22,6 +31,10 @@
   margin-left: 20px;
   color: var(--second-text-color);
   background-color: var(--second-bg-color);
+  @media screen and (max-width: 420px) {
+    margin-top: 8px;
+    margin-left: 0;
+  }
 }
 
 input::-webkit-outer-spin-button,
@@ -59,6 +72,10 @@ input[type=number] {
   user-select: none;
   color: var(--second-text-color);
   width: 49%;
+  @media screen and (max-width: 420px) {
+    width: 100%;
+    flex: 0 1 100%;
+  }
 }
 
 .ss-main .ss-single-selected {

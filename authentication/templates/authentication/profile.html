@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
     <div id="demo"></div>
-    <div class="profile__change-tabs">
+    <div class="profile__change-tabs noselect">
         <form action="#" id="changeTabsForm">
             <input type="radio" name="tabs" value="1" id="Tab1" checked>
             <label for="Tab1">Информация</label>
@@ -22,7 +22,7 @@
         <div class="profile__flex">
             <div class="profile__data">
                 <div class="profile-row">
-                    <div class="profile-row__name profile__username">
+                    <div class="profile-row__name profile__username noselect">
                         Пользователь
                     </div>
                     <div class="profile-row__value profile__username">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="profile-row">
-                    <div class="profile-row__name">
+                    <div class="profile-row__name noselect">
                         Email
                         <div class="tooltip">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -56,21 +56,21 @@
                         {% if user.email and user.is_active_email %}
                             <div class="profile-email" id="profileEmail">
                                 {{ user.email }}
-                                <div id="btnsContainer" class="profile-email__btns-container">
+                                <div id="btnsContainer" class="profile-email__btns-container noselect">
                                     <button id="setEmailBtn" class="email-btn">Изменить</button>
                                 </div>
                             </div>
                         {% elif user.email and not user.is_active_email %}
                             <div class="profile-email" id="profileEmail">
                                 {{ user.email }}
-                                <div id="btnsContainer" class="profile-email__btns-container">
+                                <div id="btnsContainer" class="profile-email__btns-container noselect">
                                     <button id="setEmailBtn" class="email-btn">Изменить</button>
                                     <button class="profile-email__confirm-btn email-btn" id="emailConfirmBtn">Подтвердить</button>
                                 </div>
                             </div>
                         {% else %}
                             <div class="profile-email" id="profileEmail">
-                                <div id="btnsContainer" class="profile-email__btns-container">
+                                <div id="btnsContainer" class="profile-email__btns-container noselect">
                                     <button class="profile-email__set-btn email-btn" id="setEmailBtn">Указать Email</button>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
 
                 </div>
                 <div class="profile-row">
-                    <div class="profile-row__name">Зарегистрирован</div>
+                    <div class="profile-row__name noselect">Зарегистрирован</div>
                     <div class="profile-row__value">{{ user.date_joined }}</div>
                 </div>
             </div>

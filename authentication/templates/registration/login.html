@@ -30,6 +30,9 @@
                         {{ field }}
                     </div>
                 {% endfor %}
+{#                {% if request.GET.next %}#}
+{#                    <input type="hidden" name="next" value="{{ request.GET.next }}" />#}
+{#                {% endif %}#}
                 <button type="submit" value="Login" class="form-submit">Войти</button>
                 <input type="hidden" name="next" value="{{ next }}">
             </form>

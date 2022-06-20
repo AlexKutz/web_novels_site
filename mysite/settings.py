@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-hkr9@!m4^ry+)6v1txqj9t-xcll4x)ghqk9fa4_muse=ncqaxa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.8', '127.0.0.1', '192.168.1.4', '192.168.1.5']
+ALLOWED_HOSTS = ['192.168.1.2', '192.168.1.8', '127.0.0.1', '192.168.1.4', '192.168.1.5']
 
 # Application definition
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'authentication',
     'reader',
     'novel',
+    'contacts',
     'compressor',
     # 'debug_toolbar',
     'django.contrib.staticfiles',

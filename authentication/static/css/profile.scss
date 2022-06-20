@@ -127,10 +127,10 @@ $x3: -$left-pos + $dot-spacing;
 
   label {
     margin: 0;
-    font-size: 16px;
+    font-size: 0.88rem;
     background-color: var(--second-bg-color);
     padding: 7px 0;
-    width: 150px;
+    width: 8.33rem;
     display: inline-block;
     text-align: center;
     border: 2px solid var(--header-menu-btn-text-color);
@@ -149,7 +149,7 @@ $x3: -$left-pos + $dot-spacing;
 
   label:nth-of-type(2n) {
     border-radius: 0 8px 8px 0;
-    width: 167px;
+    width: 9.27rem;
     transform: translateX(-6px);
   }
 
@@ -166,7 +166,11 @@ $x3: -$left-pos + $dot-spacing;
   &__flex {
     display: flex;
     justify-content: space-between;
-    padding: 20px 35px;
+    padding: 1.2rem 2rem;
+    @media screen and (max-width: 750px) {
+      flex-direction: column-reverse;
+      padding: 1.2rem 0.6rem;
+    }
   }
 }
 
@@ -174,6 +178,9 @@ $x3: -$left-pos + $dot-spacing;
   flex: 1 1 auto;
   padding: 0 30px 0 0;
   color: var(--main-text-color);
+  @media screen and (max-width: 750px) {
+    margin-top: 20px;
+  }
 }
 
 .profile__title {
@@ -194,6 +201,10 @@ $x3: -$left-pos + $dot-spacing;
   flex: 0 0 150px;
   cursor: pointer;
   position: relative;
+
+  @media screen and (max-width: 750px) {
+   align-self: center;
+  }
 
   img {
     width: 100%;
@@ -236,11 +247,20 @@ html[data-colorscheme="dark"] {
   display: flex;
   margin-left: 10px;
   margin-top: 20px;
+  @media screen and (max-width: 510px) {
+    flex-direction: column;
+  }
 
   &__name {
     flex: 0 0 220px;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 510px) {
+      flex: 0 0 auto;
+      &:after {
+        content: ':';
+      }
+    }
 
   }
 
@@ -248,6 +268,9 @@ html[data-colorscheme="dark"] {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 510px) {
+      padding-top: 4px;
+    }
   }
 }
 
@@ -270,6 +293,9 @@ html[data-colorscheme="dark"] {
   border-radius: 50%;
   padding: 2px 2px;
   box-sizing: border-box;
+  @media screen and (max-width: 510px) {
+      display: none;
+    }
 
   &:hover span {
     visibility: visible;

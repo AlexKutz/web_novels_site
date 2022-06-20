@@ -40,8 +40,8 @@ class NovelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Novel
         fields = (
-        'id', 'book_image', 'title', 'alt_title', 'adult_only', 'tags', 'author', 'status', 'words', 'language',
-        'description', 'created_at', 'timesince')
+            'id', 'book_image', 'title', 'alt_title', 'adult_only', 'tags', 'author', 'status', 'words', 'language',
+            'description', 'created_at', 'timesince')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -77,6 +77,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_is_liked(self, obj):
         request = self.context.get('request', None)
+        if request.user.is_anonymous:
+            return False
         logged_in_user = request.user
         is_liked = logged_in_user.liked_comments.filter(comment=obj).exists()
         return is_liked

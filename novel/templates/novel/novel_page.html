@@ -11,7 +11,7 @@
     <div class="book">
         <div class="info">
             <div class="info-bg"></div>
-            <div class="flex-container">
+            <div class="info__flex-container">
                 <div class="book__image noselect">
                     <a href="#" class="bookCard__image">
                         <img src="{{ novel.book_image.url }}" id="bookImage" alt="Cover of the book">
@@ -53,6 +53,7 @@
                    class="btn meta__btn btn-border-anim">Прочитать
                 </a>
                 {% if user.is_authenticated %}
+                    <div id="auth" style="display: none"></div>
                     <button class="btn meta__btn btn-border-anim" style="{% if bookshelf %}display:none;{% endif %}"
                             id="bookShelfAdd">Добавить на
                         <br>
@@ -88,6 +89,7 @@
         </div>
         <div class="rate">
             <h2 class="rate__title">Комментировать</h2>
+            {% if user.is_authenticated %}
             <form action="#" class="rate__form" id="commentForm">
                 <div class="rate__form-errors" id="commentFormErrors"></div>
                 <input name="parent_id" type="hidden" id="commentParent">
@@ -96,6 +98,9 @@
                 </div>
                 <button type="submit" class="btn rate__submit">Отправить</button>
             </form>
+            {% else %}
+                <p class="help-text">Чтобы прокомментировать, пожалуйста авторизуйтесь</p>
+            {% endif %}
         </div>
         {{ user.comment_likes }}
         <div class="comments">

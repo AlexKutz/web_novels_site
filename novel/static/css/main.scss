@@ -115,7 +115,7 @@ textarea {
   }
 }
 
-// Variables scss
+// var scss
 $scrollbar-bg: #72bd72;
 $scrollbar-track-bg: #dedcdc;
 
@@ -125,16 +125,12 @@ $second-bg-color: #fcfafa;
 $main-text-color: #070707;
 $second-text-color: #292929;
 
-$logo-color: #26b026;
-$logo-color-hover: #f16aa2;
+$btns-text-color: #23a123;
+$btns-text-color-hover: #f16aa2;
 
-$header-menu-btn-text-color: #26b026;
-$header-menu-btn-text-color-hover: #f16aa2;
+$bg-2: #e8e8e8;
 
-$authentication-border-color: #1aa81a;
-$authentication-text-color: #1aa81a;
 $authentication-bg-hover: rgba(255, 255, 255, 0.2);
-$authentication-icon-fill: #f3167e;
 
 $header-btn-bg-color: #ffe6f8;
 $header-btn-text-color-hover: #f3167e;
@@ -144,13 +140,6 @@ $search-placeholder: #777;
 
 
 $book-description-text-color: #000000;
-
-$border-anim-color: #f3167e;
-$border-anim-border-color: #f3167e;
-
-$bookCard-btn-border: #26b026;
-
-$btn-text-color: #1aa81a;
 
 $comments-bg-color: white;
 $rate-textarea-bg-color: #fafafa;
@@ -171,38 +160,26 @@ $chapter-bg-hover: #f3f3f3;
 
 //  Variables
 :root {
+  --main-bg-color: #{$main-bg-color};
+  --second-bg-color: #{$second-bg-color};
+  --bg-2: #{$bg-2};
+
   --scrollbar-bg: #{$scrollbar-bg};
   --scrollbar-track-bg: #{$scrollbar-track-bg};
 
-  --main-bg-color: #{$main-bg-color};
-  --second-bg-color: #{$second-bg-color};
 
   --main-text-color: #{$main-text-color};
   --second-text-color: #{$second-text-color};
 
-  --logo-color: #{$logo-color};
-  --logo-color-hover: #{$logo-color-hover};
+  --btns-text-color: #{$btns-text-color};
+  --btns-text-color-hover: #{$btns-text-color-hover};
 
-  --header-menu-btn-text-color: #{$header-menu-btn-text-color};
-  --header-menu-btn-text-color-hover: #{$header-menu-btn-text-color-hover};
-
-  --authentication-border-color: #{$authentication-border-color};
-  --authentication-text-color: #{$authentication-text-color};
   --authentication-bg-hover: #{$authentication-bg-hover};
-
-  --authentication-icon-fill: #{$authentication-icon-fill};
 
   --search-border-color: #{$search-border-color};
   --search-placeholder: #{$search-placeholder};
 
-  --btn-text-color: #{$btn-text-color};
-
   --header-btn-text-color-hover: #{$header-btn-text-color-hover};
-
-  --border-anim-color: #{$border-anim-color};
-  --border-anim-border-color: #{$border-anim-border-color};
-
-  --bookCard-btn-border: #{$bookCard-btn-border};
 
   --chapter-bg-hover: #{$chapter-bg-hover};
 
@@ -224,29 +201,17 @@ $chapter-bg-hover: #f3f3f3;
 
 // Dark theme
 :root[data-colorScheme='dark'] {
-  --scrollbar-bg: #656565;
-  --scrollbar-track-bg: #363636;
-
   --main-bg-color: #18181a;
   --second-bg-color: #2a2a2c;
+  --bg-2: #2a2a2c;
 
   --main-text-color: #eaeaea;
   --second-text-color: #c7c7c7;
 
-  --logo-color: #dfdfdf;
-  --logo-color-hover: white;
+  --btns-text-color: #cecbcb;
+  --btns-text-color-hover: #f1eeee;
 
-  --header-menu-btn-text-color: #cecbcb;
-  --header-menu-btn-text-color-hover: #f1eeee;
-
-
-  --authentication-bg-hover: rgba(255, 255, 255, 0.2);
-  --authentication-border-color: #cecbcb;
-  --authentication-text-color: #cecbcb;
-  --authentication-icon-fill: white;
-
-  --border-anim-color: white;
-  --border-anim-border-color: #e4e4e4;
+  --authentication-bg-hover: rgba(255, 255, 255, 0.08);
 
   --search-border-color: rgb(78, 78, 78);
   --search-placeholder: #a9a9a9;
@@ -267,6 +232,9 @@ $chapter-bg-hover: #f3f3f3;
 
   --select-border: #202020;
   --select-option-selected: #3f3f3f;
+
+  --scrollbar-bg: #656565;
+  --scrollbar-track-bg: #363636;
 }
 
 // Custom scroll
@@ -281,6 +249,24 @@ $chapter-bg-hover: #f3f3f3;
   background: $scrollbar-bg;
   background: var(--scrollbar-bg);
   border-radius: 3px;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+html {
+  @media screen and (min-width: 700px) {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 699px) {
+    font-size: 17px;
+  }
+
+  @media screen and (min-width: 300px) and (max-width: 599px) {
+    font-size: 16px;
+  }
 }
 
 // ChangeColor Scheme
@@ -310,7 +296,7 @@ $chapter-bg-hover: #f3f3f3;
 
     svg {
       stroke-width: 1px;
-      stroke: $header-menu-btn-text-color;
+      stroke: $btns-text-color;
       stroke-width: 1;
     }
 
@@ -363,23 +349,31 @@ $chapter-bg-hover: #f3f3f3;
     white-space: nowrap;
     letter-spacing: 0.6px;
     text-align: center;
-    border: 1px solid $authentication-border-color;
-    border: 1px solid var(--authentication-border-color);
-    color: 1px solid $authentication-text-color;
-    color: var(--authentication-text-color);
+    border: 1px solid $btns-text-color;
+    border: 1px solid var(--btns-text-color);
+    color: 1px solid $btns-text-color;
+    color: var(--btns-text-color);
     position: relative;
     display: inline-block;
+    filter: saturate(1.1);
 
-    &:hover {
-      padding: 6px 28px 6px 12px;
-      background: $authentication-bg-hover;
-      background: var(--authentication-bg-hover);
+    @media screen and (max-width: 386px){
+      padding: 6px 3px;
+    }
 
-      .authentication__icon {
-        width: 15px;
-        opacity: 1;
-        right: 9px;
-        margin-top: 1px;
+    @media screen and (min-width: 750px) {
+      transition: all 0.3s;
+      &:hover {
+        padding: 6px 28px 6px 12px;
+        background: $authentication-bg-hover;
+        background: var(--authentication-bg-hover);
+
+        .authentication__icon {
+          width: 15px;
+          opacity: 1;
+          right: 9px;
+          margin-top: 1px;
+        }
       }
     }
   }
@@ -388,14 +382,11 @@ $chapter-bg-hover: #f3f3f3;
     margin-right: 10px;
   }
 
-  &__register-btn {
-  }
-
   &__icon {
     display: inline-block;
     width: 12px;
     height: 12px;
-    fill: var(--authentication-icon-fill);
+    fill: var(--btns-text-color-hover);
     position: absolute;
     right: 30px;
     opacity: 0;
@@ -407,7 +398,7 @@ $chapter-bg-hover: #f3f3f3;
 .authenticated__dropdown {
   top: 60px;
   background-color: #eae5e5;
-  border: 2px solid var(--authentication-border-color);
+  border: 2px solid var(--btns-text-color);
   right: 0;
   border-radius: 8px;
   position: relative;
@@ -417,14 +408,13 @@ $chapter-bg-hover: #f3f3f3;
   display: inline-block;
   position: absolute;
   z-index: 11000;
-  width: 135px;
   transition: 0.25s;
   z-index: 1111;
-  padding: 8px 8px 8px 11px;
   visibility: hidden;
   opacity: 0;
   background-color: var(--second-bg-color);
   letter-spacing: 1.3px;
+  padding: 5px 0;
 }
 
 .dropdown_active {
@@ -440,8 +430,8 @@ $chapter-bg-hover: #f3f3f3;
   width: 11px;
   height: 11px;
   background-color: var(--second-bg-color);
-  border-top: 2px solid var(--authentication-border-color);
-  border-left: 2px solid var(--authentication-border-color);
+  border-top: 2px solid var(--btns-text-color);
+  border-left: 2px solid var(--btns-text-color);
   transform: rotate(45deg);
 }
 
@@ -462,26 +452,26 @@ $chapter-bg-hover: #f3f3f3;
   margin-bottom: 2px;
   opacity: 0.8;
   position: absolute;
-  stroke: var(--header-menu-btn-text-color);
-  fill: var(--header-menu-btn-text-color);
+  stroke: var(--btns-text-color);
+  fill: var(--btns-text-color);
   transition: 0.2s;
   line {
-    stroke: var(--header-menu-btn-text-color);
+    stroke: var(--btns-text-color);
   }
 }
 
 .dropdown ul li:hover .dropdown__icon {
   opacity: 1;
-  stroke: var(--header-menu-btn-text-color-hover);
-  fill: var(--header-menu-btn-text-color-hover);
+  stroke: var(--btns-text-color-hover);
+  fill: var(--btns-text-color-hover);
   line {
-    stroke: var(--header-menu-btn-text-color-hover);
+    stroke: var(--btns-text-color-hover);
   }
 }
 
 .dropdown__link {
   display: inline-block;
-  color: var(--header-menu-btn-text-color);
+  color: var(--btns-text-color);
   text-decoration: none;
   position: relative;
   left: 30px;
@@ -491,10 +481,11 @@ $chapter-bg-hover: #f3f3f3;
   height: 100%;
   letter-spacing: 1.3px;
   transition: 0.2s;
+  padding-right: 34px;
 }
 
 .dropdown ul li:hover .dropdown__link{
-  color: var(--header-menu-btn-text-color-hover);
+  color: var(--btns-text-color-hover);
 }
 
 .authenticated {
@@ -510,10 +501,11 @@ $chapter-bg-hover: #f3f3f3;
   }
   &__account-image {
     object-fit: cover;
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 101%;
     border-radius: 50%;
     background-color: #e5dada;
+    background-color: var(--main-bg-color);
     box-shadow: 0 0 5px rgba(0,0,0, 0.3);
   }
 }
@@ -610,18 +602,20 @@ $chapter-bg-hover: #f3f3f3;
     left: -1px;
   }
 
-  &:hover {
-    border: 1px solid transparent;
-    color: var(--border-anim-color);
+  @media screen and (min-width: 600px) {
+    &:hover {
+      border: 1px solid transparent;
+      color: var(--btns-text-color-hover);
 
-    &:before {
-      width: 100%;
-      border-color: var(--border-anim-border-color);
-    }
+      &:before {
+        width: 100%;
+        border-color: var(--btns-text-color-hover);
+      }
 
-    &:after {
-      height: 100%;
-      border-color: var(--border-anim-border-color);
+      &:after {
+        height: 100%;
+        border-color: var(--btns-text-color-hover);
+      }
     }
   }
 }
@@ -652,8 +646,8 @@ html,body
   scroll-behavior: smooth;
   width: 100%;
   height: 100%;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
@@ -683,7 +677,7 @@ h1 {
   background-color: $second-bg-color;
   background-color: var(--second-bg-color);
   border-bottom: solid 1px rgba(107, 107, 107, 0.16);
-  box-shadow: 0 2px 6px rgba(70, 70, 70, 0.18);
+  box-shadow: 0 2px 6px rgba(120, 135, 118, 0.18);
   &__limiter {
     display: flex;
     justify-content: space-between;
@@ -693,7 +687,24 @@ h1 {
     padding: 0 20px;
     margin: 0 auto;
     height: 100%;
-    box-sizing: content-box;
+    box-sizing: border-box;
+    @media screen and (max-width: 1000px){
+      padding: 0 calc(3px + 2vmin);
+    }
+  }
+
+  &__logo_mobile {
+    display: none;
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    @media screen and (max-width: 930px) {
+      display: inline-block;
+    }
   }
 
   &__logo {
@@ -701,19 +712,20 @@ h1 {
     height: 100%;
     max-width: 200px;
     min-width: 150px;
-    @media screen and (max-width: 880px){
+    filter: brightness(1.2) contrast(0.9);
+    @media screen and (max-width: 930px){
       display: none;
     }
     svg {
       width: 100%;
       height: 100%;
       transition: fill 0.2s;
-      fill: $logo-color;
-      fill: var(--logo-color);
+      fill: $btns-text-color;
+      fill: var(--btns-text-color);
 
       &:hover {
-        fill: $logo-color-hover;
-        fill: var(--logo-color-hover);
+        fill: $btns-text-color-hover;
+        fill: var(--btns-text-color-hover);
       }
     }
   }
@@ -734,14 +746,14 @@ h1 {
     &-container {
       display: flex;
       align-items: center;
-      @media screen and (max-width: 880px){
+      @media screen and (max-width: 680px){
         flex-direction: column;
         align-items: flex-start;
         margin: 0 auto;
       }
     }
 
-    @media screen and (max-width: 880px){
+    @media screen and (max-width: 680px){
       position: absolute;
       background-color: var(--second-bg-color);
       top: -200px;
@@ -750,7 +762,7 @@ h1 {
       left: 0;
       right: 0;
       padding: 5px 0 8px 0;
-      z-index: -100;
+      z-index: 55;
       opacity: 0;
       box-shadow: 0 6px 6px rgba(70, 70, 70, 0.12);
     }
@@ -791,6 +803,10 @@ h1 {
     &-item {
       display: flex;
       align-items: center;
+      &:hover span {
+        color: $btns-text-color-hover;
+        color: var(--btns-text-color-hover);
+      }
     }
 
     &-link {
@@ -804,25 +820,24 @@ h1 {
         letter-spacing: 1.3px;
         font-size: 16px;
         font-weight: 500;
-        color: $header-menu-btn-text-color;
-        color: var(--header-menu-btn-text-color);
-        &:hover {
-          color: $header-menu-btn-text-color-hover;
-          color: var(--header-menu-btn-text-color-hover);
-        }
+        color: $btns-text-color;
+        color: var(--btns-text-color);
       }
     }
   }
 
   &__changeColorScheme {
-    margin-right: 20px;
+    margin-right: 8px;
+    margin-right: calc(3px + 2vmin);
   }
 }
 
 #menuToggle {
   opacity: 0;
   display: none;
-  @media screen and (max-width: 880px){
+  width: 0;
+  height: 0;
+  @media screen and (max-width: 680px){
     display: inline-block;
   }
 }
@@ -844,13 +859,14 @@ h1 {
 .hamburger-menu__btn {
   display: none;
   align-items: center;
-  position: fixed;
-  left: 20px;
+  position: relative;
   width: 26px;
+  min-width: 26px;
   height: 26px;
+  left: 15px;
+  left: calc(7px + 2vmin);
   cursor: pointer;
-  z-index: 1;
-  @media screen and (max-width: 880px){
+  @media screen and (max-width: 680px){
     display: flex;
   }
 }
@@ -863,7 +879,7 @@ h1 {
   width: 100%;
   height: 2px;
 
-  background-color: var(--header-menu-btn-text-color);
+  background-color: var(--btns-text-color);
 }
 
 .hamburger-menu__btn > span::before {
@@ -877,10 +893,13 @@ h1 {
 }
 
 #menuToggle:checked ~ .header__menu {
-  z-index: 5;
   top: 56px;
   opacity: 1;
   display: flex;
+}
+
+.filler {
+  flex: 1 1 auto;
 }
 
 .footer {
@@ -888,6 +907,7 @@ h1 {
 }
 
 .page {
+  width: 100%;
   &__limiter {
     max-width: 1000px;
     width: 100%;
@@ -895,10 +915,13 @@ h1 {
     margin: 55px auto 0 auto;
     height: 100%;
     box-sizing: border-box;
+    @media screen and (max-width: 1000px){
+      padding: 30px calc(5px + 1vw) 0 calc(5px + 1vw);
+    }
   }
 
   &__col-1 {
-    flex: 1 1 auto;
+    width: 100%;
   }
 
   &__col-2 {
@@ -914,29 +937,31 @@ h1 {
  * novel_card.html
 */
 .bookCard {
-  padding: 18px 20px 12px 15px;
+  padding: 0.994rem 1.014rem 1.008rem 1.011rem;
   background-color: $second-bg-color;
   background-color: var(--second-bg-color);
   margin-bottom: 17px;
   position: relative;
   box-shadow: 0 2px 11px -1px rgba(0, 0, 0, 0.24);
+  @media screen and (max-width: 550px){
+    padding: 0.8rem 0.78rem 0.82rem 0.71rem;
+  }
 
   &__container {
     display: flex;
-    @media screen and (max-width: 550px) {
-      flex-direction: column;
-    }
+    flex-wrap: wrap;
   }
 
   &__column-1 {
-    flex: 0 0 110px;
+    flex: 1 1 24%;
+    max-width: 130px;
     display: flex;
     flex-direction: column;
   }
 
   &__column-2 {
-    padding-left: 15px;
-    width: auto;
+    flex: 1 1 70%;
+    padding-left: 0.85rem;
     display: flex;
     flex-direction: column;
   }
@@ -956,13 +981,10 @@ h1 {
   &__title {
     display: inline-block;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 1rem;
     color: $main-text-color;
     color: var(--main-text-color);
     font-weight: 500;
-    @media screen and (max-width: 550px) {
-      margin-top: 20px;
-    }
   }
 
   &__adultOnly {
@@ -973,8 +995,8 @@ h1 {
   &__metaData {
     color: $second-text-color;
     color: var(--second-text-color);
-    margin-top: 6px;
-    font-size: 15px;
+    margin-top: 0.30rem;
+    font-size: 0.83rem;
   }
 
   &__author {
@@ -1017,20 +1039,20 @@ h1 {
   }
 
   &__tags {
-    margin-top: 8px;
+    margin-top: 0.38rem;
   }
 
   &__tag {
     display: inline-block;
-    padding: 2px 5px;
+    padding: 0.11rem 0.27rem;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 0.77rem;
     font-weight: 400;
     text-decoration: none;
     color: $second-text-color;
     color: var(--second-text-color);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
-    margin-bottom: 6px;
+    margin-bottom: 0.33rem;
     background-color: var(--second-bg-color);
 
     &:hover {
@@ -1043,10 +1065,11 @@ h1 {
     font-weight: 500;
     margin-top: 8px;
     width: 100%;
-    border: 1px solid $bookCard-btn-border;
-    border: 1px solid var(--bookCard-btn-border);
-    color: $btn-text-color;
-    color: var(--btn-text-color);
+    border: 1px solid $btns-text-color;
+    border: 1px solid var(--btns-text-color);
+    color: $btns-text-color;
+    color: var(--btns-text-color);
+    font-size: 0.8rem;
 
     &:active {
       transform: scale(0.94);
@@ -1055,11 +1078,14 @@ h1 {
   }
 
   &__description {
-    margin-top: 12px;
+    margin-top: 0.66rem;
     padding-left: 2px;
     color: var(--main-text-color);
-    font-size: 15px;
+    font-size: 0.83rem;
     text-align: justify;
+    @media screen and (max-width: 699px) {
+      font-size: 0.92rem;
+    }
   }
 
   &__uploadTime {

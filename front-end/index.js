@@ -56,15 +56,16 @@ function main () {
   }
 
   const commentForm = document.getElementById('commentForm')
-  if (document.getElementById('comments') && commentForm) {
+  if (document.getElementById('comments')) {
     const comments = new Comments()
     comments.update()
-    commentForm.onsubmit = (e) => {
-      e.preventDefault()
-      comments.postComment(commentForm)
+    if (commentForm) {
+      commentForm.onsubmit = (e) => {
+        e.preventDefault()
+        comments.postComment(commentForm)
+      }
     }
   }
-  authenticationToolTips()
 }
 
 // function truncateChars (string, length) {
@@ -100,11 +101,14 @@ class Comments {
         }
       })
       .then(json => {
-        this.commentsBox.innerHTML = this.renderComments(json, '', 0)
+        const isAuth = document.getElementById('auth') != null
+        this.commentsBox.innerHTML = this.renderComments(json, '', 0, isAuth)
         const comments = this.commentsBox.querySelectorAll('.comment')
-        comments.forEach(comment => {
-          this.addEventListener(comment)
-        })
+        if (isAuth) {
+          comments.forEach(comment => {
+            this.addEventListener(comment)
+          })
+        }
       })
       .catch(err => {
         console.error(err)
@@ -194,11 +198,10 @@ class Comments {
     return `<svg id="heart${id}" data-type="like" style="max-width:20px; max-height:23px; width:100%; height:100%;" class='heart ${likeState ? 'heart_pressed' : ''}' viewBox="0 0 34 29.7"><path data-type="like" d="M17,28.4C4.41,18.15,1,14.58,1,9A8,8,0,0,1,9,1c3.6,0,5.63,1.94,7.25,3.76l.75.85.75-.85C19.37,2.94,21.39,1,25,1a8,8,0,0,1,8,8C33,14.58,29.59,18.15,17,28.4Z"/><path data-type="like" d="M9,2A7,7,0,0,0,2,9c0,5.1,3.2,8.5,15,18.1C28.8,17.5,32,14.1,32,9a7,7,0,0,0-7-7c-3.5,0-5.4,2.1-6.9,3.8L17,7.1,15.9,5.8C14.4,4.1,12.5,2,9,2Z" style="fill:none"/></svg>`
   }
 
-  renderComments (comments, lstComment = '', inh) {
+  renderComments (comments, lstComment = '', inh, isAuth) {
     let html = ''
     inh += 1
     for (const comment of comments) {
-      console.log(comment)
       html += `
                       <div class="comment" id="comment${comment.id}">
                         <div class="comment__id hidden" style="display:none;">${comment.id}</div>
@@ -223,7 +226,7 @@ class Comments {
                         <span class='comment__buttons noselect'>
                             ${comment.is_liked ? this.makeHeart(true, comment.id) : this.makeHeart(false, comment.id)}
                             <span id="likeTotal${comment.id}"> ${comment.totalLikes ? comment.totalLikes : ''}</span>
-                            <span class="comment__buttons-response" data-type="response">Ответить</span>
+                            ${isAuth ? '<span class="comment__buttons-response" data-type="response">Ответить</span>' : ''}
                         </span>
                         
                         ${// eslint-disable-next-line eqeqeq
@@ -231,7 +234,7 @@ class Comments {
                         ? `<button class="toggle-reply-btn noselect" 
                         onclick="toggleRepliesHidden(rep${comment.id})"><svg id="Layer_1" style='max-width:15px;' data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 448"><path d="M503.69,322.16l-176,152C312.28,487.45,288,476.65,288,456V375.93C127.37,374.09,0,341.9,0,189.67,0,128.23,39.58,67.37,83.33,35.54c13.66-9.93,33.11,2.54,28.08,18.63C66.07,199.19,132.92,237.68,288,239.92V152c0-20.7,24.3-31.45,39.69-18.16l176,152A24,24,0,0,1,503.69,322.16Z" transform="translate(0 -32)"/></svg>Посмотреть ответы</button>
                         <div class="replies hidden ${inh > 1 ? 'mobile-margin-off' : ''} ${inh > 4 ? 'margin-off' : ''}" id=rep${comment.id}>
-                            ${this.renderComments(comment.replies, comment, inh)}
+                            ${this.renderComments(comment.replies, comment, inh, isAuth)}
                         </div>
                         `
                         : ''}
@@ -261,8 +264,10 @@ class Comments {
         }
       })
       .then(json => {
+        console.log('hele')
         const comments = new Array(json)
-        const html = this.renderComments(comments, '', 0)
+        const isAuth = true
+        const html = this.renderComments(comments, '', 0, isAuth)
         if (json.parent) {
           this.update()
         } else {
