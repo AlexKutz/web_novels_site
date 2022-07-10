@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Count
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.timesince import timesince
 from django.utils.translation import ngettext_lazy
 
@@ -18,6 +19,7 @@ TIME_STRINGS = {
     'hour': ngettext_lazy('%(num)d час', '%(num)d часа', 'num'),
     'minute': ngettext_lazy('%(num)d минута', '%(num)d минуты', 'num'),
 }
+
 
 class Status(models.Model):
     name = models.CharField(max_length=16)
@@ -164,3 +166,39 @@ class CommentLike(models.Model):
     def __str__(self):
         return 'Comment id {}'.format(self.comment)
 
+
+class Userip(models.Model):
+    ip = models.CharField(verbose_name='Айпи адрес', max_length=30)  # айпи адрес
+    count = models.IntegerField(verbose_name="Визиты", default=0)  # Ip посещения
+
+    class Meta:
+        verbose_name = "Доступ к информации о пользователе"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return f"${self.ip} | соединения ({self.count})"
+
+
+# Всего посещений сайта
+class VisitNumber(models.Model):
+    count = models.IntegerField(verbose_name="Всего посещений сайта", default=0)  # Всего посещений сайта
+
+    class Meta:
+        verbose_name = "Всего посещений сайта"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.count)
+
+
+# Статистика посещений за один день
+class DayNumber(models.Model):
+    day = models.DateField(verbose_name='свидание', default=timezone.now)
+    count = models.IntegerField(verbose_name="Количество посещений сайта", default=0)  # Всего посещений сайта
+
+    class Meta:
+        verbose_name = "Статистика ежедневных посещений сайта"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.day)

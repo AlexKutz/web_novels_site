@@ -16,7 +16,6 @@
 }
 
 .info {
-  position: relative;
   background-color: var(--second-bg-color);
   padding: 1.11rem;
   @media screen and (max-width: 351px){
@@ -43,10 +42,10 @@
 .info-bg {
   position: absolute;
   width: 600%;
-  height: 120%;
+  height: 60%;
+  top: 0;
   right: 50%;
   transform: translateX(50%);
-  bottom: 0;
   z-index: -5;
 }
 

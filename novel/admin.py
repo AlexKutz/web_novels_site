@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Tag, Author, Rate, Novel, Status, Chapter, Language, Comment, CommentLike
+from .models import Tag, Author, Rate, Novel, Status, Chapter, Language, Comment, CommentLike, VisitNumber, DayNumber, \
+    Userip
 
 
 @admin.register(Comment)
@@ -14,4 +15,4 @@ class CommentAdmin(admin.ModelAdmin):
         queryset.update(active=True)
 
 
-admin.site.register([Tag, Author, Rate, Novel, Status, Chapter, Language, CommentLike])
+admin.site.register([Tag, Author, Rate, Novel, Status, Chapter, Language, CommentLike, VisitNumber, DayNumber, Userip])

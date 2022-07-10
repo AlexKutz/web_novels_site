@@ -2,17 +2,18 @@ import json
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-from django.http import JsonResponse, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
+from django.core.paginator import Paginator
 
 from .forms import CommentForm, AddChapterForm
 from .serializerz import *
 
-from .services import search_novel_by_query, search_books_by_filters, save_comment
+from .services import search_books_by_filters, save_comment, change_info
 
 
 def index(request):
+    change_info(request)
     ctx = {
-        "novel": Novel.objects.all(),
         "popular_tags": Tag.objects.all()[:16]
     }
     return render(request, 'novel/index.html', ctx)
@@ -67,26 +68,9 @@ def novel(request, novel_id):
                        })
 
 
-@api_view(['GET'])
-def search(request):
-    query = request.GET.get('q')
-    if not query:
-        novel = Novel.objects.all()
-        return JsonResponse(NovelSerializer(novel, many=True).data, safe=False)
-    novel = search_novel_by_query(query=query)
-    if novel:
-        return JsonResponse(NovelSerializer(novel, many=True).data, safe=False)
-    else:
-        return JsonResponse({
-            'error': 'nothing found',
-            'query': query,
-        }, safe=False, status=200)
-
-
 def catalog(request):
     ctx = {
         'tags': Tag.objects.all(),
-        'novel': Novel.objects.all().order_by('title'),
     }
     return render(request, 'novel/catalog.html', ctx)
 
@@ -115,11 +99,39 @@ def author_novels(request, author):
 
 
 @csrf_exempt
-def get_filtered_books_json(request):
+def get_books_json_api(request):
     if request.method == "POST":
-        params = json.loads(request.body)
-        books = search_books_by_filters(params)
-        return JsonResponse(NovelSerializer(books, many=True).data, safe=False)
+        try:
+            options = json.loads(request.body)
+        except ValueError:
+            return HttpResponseBadRequest()
+        if options.get('filters'):
+            books = search_books_by_filters(options['filters'])
+        else:
+            books = Novel.objects.all()
+        if options['sort_by']:
+            books = books.order_by(options['sort_by'])
+        else:
+            books = books.order_by('-created_at')
+        payload = {}
+        if options.get('pagination_options'):
+            page_number = options['pagination_options']['page']
+            books_per_page = options['pagination_options']['books_per_page']
+            paginator = Paginator(books, books_per_page)
+            page_obj = paginator.get_page(page_number)
+            data = NovelSerializer(page_obj, many=True).data
+            payload['page'] = {
+                "number": page_obj.number,
+                "has_next": page_obj.has_next(),
+                "has_previous": page_obj.has_previous(),
+                "elided_page_range": list(paginator.get_elided_page_range(page_obj.number, on_each_side=1, on_ends=1))
+            }
+            payload['data'] = data
+        else:
+            data = NovelSerializer(books, many=True).data
+            payload['data'] = data
+
+        return JsonResponse(payload)
 
 
 def add_to_bookshelf(request):
