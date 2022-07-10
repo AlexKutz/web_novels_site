@@ -4,10 +4,17 @@
 
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    {% block meta %}
+        <meta name="description" content="Сайт для чтения переводов китайский веб-новел, лайт-новел, фанфиков.">
+    {% endblock %}
 
-    {% include "novel/META.html" %}
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <meta name="theme-color" content="#fafafa">
 
     {% load compress %}
     {% compress css %}

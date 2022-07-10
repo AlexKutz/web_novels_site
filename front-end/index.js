@@ -727,7 +727,7 @@ function createBookCard (novelData) {
         <div class="bookCard__container">
           <div class="bookCard__column-1">
             <a href="/books/${novelData.id}" class="bookCard__image noselect">
-              <img src="${novelData.book_image}" alt="Cover of the book">
+              <img src="${novelData.book_image}" alt="book picture">
             </a>
             <div class="bookCard__buttons noselect">
               <a href="/books/${novelData.id}" class="btn bookCard__btn btn-border-anim">Читать</a>
