@@ -2,7 +2,9 @@
 {% block title %}{{ author.name }}{% endblock %}
 {% block content %}
     <h1>Книги автора  {{ author.name }}</h1>
-    <div class="cards">
-        {% include 'novel/novel_card.html' %}
+    <div id="author" class="hidden">{{ author.name }}</div>
+    <div class="author-books" id="section">
+    </div>
+    <div id="pagination">
     </div>
 {% endblock %}

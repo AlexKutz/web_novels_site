@@ -41,10 +41,9 @@
                 <div class="catalog-sort">
                     <h2 class="catalog-title">Сортировать результаты по</h2>
                     <select class="catalog-sortby">
+                        <option value="-created_at">Дате загрузки</option>
                         <option value="title">Имени</option>
                         <option value="-chapters">Количеству глав</option>
-                        <option value="-rate">Рейтингу</option>
-                        <option value="-comments">Количеству комментариев</option>
                     </select>
                 </div>
                 <div class="catalog-submit">
@@ -52,9 +51,9 @@
                 </div>
             </form>
         </div>
-        <div class="catalog-books">
-            {% include 'novel/novel_card.html' %}
+        <div class="catalog-books" id="section">
         </div>
+        <div id="pagination"></div>
         <div class="loading-cover" id="loading">
             <div class="lds-ring">
                 <div></div>

@@ -59,7 +59,6 @@ def email_change(request):
             change_datetime = datetime.datetime.fromisoformat(request.session.get('email_change_datetime'))
             if change_datetime:
                 current_datetime = datetime.datetime.now()
-                print('current', current_datetime, 'change:', change_datetime)
                 next_change = 60 - (current_datetime - change_datetime).total_seconds() / 60.0
                 if next_change > 0:
                     return JsonResponse({
@@ -75,7 +74,6 @@ def email_change(request):
             }, safe=False)
         else:
             errors = form.errors.as_data()
-            print(errors)
             return JsonResponse({
                 'message': form.errors,
             }, safe=False, status=400)

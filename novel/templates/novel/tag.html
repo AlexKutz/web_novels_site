@@ -18,14 +18,11 @@
             <label for="sort-2">Имя</label>
             <input type="radio" name="sort" value="-chapters" class="tag-sort__option" id="sort-3" data-input="true">
             <label for="sort-3">Количесто<br>глав</label>
-            <input type="radio" name="sort" value="-rate" class="tag-sort__option" id="sort-4" data-input="true">
-            <label for="sort-4">Рейтинг</label>
-            <input type="radio" name="sort" value="-comments" class="tag-sort__option" id="sort-5" data-input="true">
-            <label for="sort-5">Количесто<br>комментариев</label>
         </form>
-        <div class="tag-cards" id="tagCards">
+        <div class="tag-cards" id="section">
             {% include 'novel/novel_card.html' %}
         </div>
+        <div id="pagination"></div>
     <div class="loading-cover" id="loading">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
     </div>

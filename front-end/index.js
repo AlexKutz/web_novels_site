@@ -1,57 +1,59 @@
 import SlimSelect from 'slim-select'
 import Croppie from './plugins/croppie'
 import tingle from './plugins/tingle'
-
 import FastAverageColor from 'fast-average-color'
 
 document.addEventListener('DOMContentLoaded', () => main())
 
 function main () {
   BackToTop('backToTop', 'backToTop_hide')
-
   DarkMode('changeColorScheme__sun', 'changeColorScheme__moon', 'changeColorScheme__sun_hide', 'changeColorScheme__moon_hide')
-
-  if (document.getElementById('search-form') != null) {
-    search('search-form', 'section')
+  if (document.querySelector('.catalog-books')) {
+    catalog()
+    renderPage({
+      sort_by: '-created_at',
+      pagination_options: {
+        page: 1,
+        books_per_page: 16
+      }
+    })
+  }
+  if (document.querySelector('.last-books')) {
+    index()
   }
 
-  Catalog()
+  if (document.querySelector('.author-books')) {
+    authorBooksPage()
+  }
+
   if (document.getElementById('accountIco')) {
     authenticationMenu()
   }
-  const tagSortForm = document.getElementById('tagSort')
-  if (tagSortForm != null) {
-    tagPageSorting(tagSortForm)
+  if (document.getElementById('tagSort')) {
+    tagPageSorting()
   }
   const container = document.getElementById('profileEmail')
   if (container != null) {
     setAccountEmail(container)
   }
-
   if (document.getElementById('imageInput') != null) {
     changeProfileImage()
   }
-
-  const btn = document.getElementById('emailConfirmBtn')
-  if (btn) {
-    btn.onclick = () => {
+  const emailConfirmBtn = document.getElementById('emailConfirmBtn')
+  if (emailConfirmBtn) {
+    emailConfirmBtn.onclick = () => {
       sendActivationRequest()
     }
   }
-
-  const bg = document.querySelector('.info-bg')
-  if (bg) {
+  if (document.querySelector('.info-bg')) {
     changeBackgroundOnNovePage()
   }
 
-  const changeTabsForm = document.getElementById('changeTabsForm')
-  if (changeTabsForm) {
-    changeTab(changeTabsForm)
+  if (document.getElementById('changeTabsForm')) {
+    changeTab()
   }
 
-  const bookshelfAdd = document.getElementById('bookShelfAdd')
-  const bookshelfRemove = document.getElementById('bookShelfRemove')
-  if (bookshelfAdd || bookshelfRemove) {
+  if (document.getElementById('bookShelfAdd') || document.getElementById('bookShelfRemove')) {
     toggleBookshelf()
   }
 
@@ -68,14 +70,139 @@ function main () {
   }
 }
 
-// function truncateChars (string, length) {
-//   // Return the text truncated to be no longer than the specified number of characters.
-//   if (string.length > length) {
-//     return string.substring(0, length) + '...'
-//   } else {
-//     return string
-//   }
-// }
+function index () {
+  const renderOptions = {
+    sort_by: '-created_at',
+    pagination_options: {
+      page: 1,
+      books_per_page: 16
+    }
+  }
+  renderPage(renderOptions)
+  search('search-form')
+}
+
+function search (formId) {
+  const form = document.getElementById(formId)
+  addEventListeners()
+
+  function addEventListeners () {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const renderOptions = {
+        sort_by: '-created_at',
+        pagination_options: {
+          page: 1,
+          books_per_page: 16
+        },
+        filters: {
+        }
+      }
+      const inputValue = form.childNodes[1].value
+      const title = inputValue.match(/"(.*?)"/)
+      const author = inputValue.match(/\((.*?)\)/)
+      if (title) {
+        renderOptions.filters.title = title[1].trim()
+      }
+      if (author) {
+        renderOptions.filters.author = author[1].trim()
+      }
+
+      const re = /\[(.*?)\]/g
+      const result = []
+      let current
+      // eslint-disable-next-line no-cond-assign
+      while (current = re.exec(inputValue)) {
+        result.push(current.pop())
+      }
+      if (result) {
+        renderOptions.filters.include_tags = result
+      }
+      if (result.length === 0 && !title && !author) {
+        return
+      }
+      renderPage(renderOptions)
+    })
+  }
+}
+
+function authorBooksPage () {
+  const author = document.getElementById('author').innerText
+  const renderOptions = {
+    sort_by: '-created_at',
+    pagination_options: {
+      page: 1,
+      books_per_page: 16
+    },
+    filters: {
+      author
+    }
+  }
+  renderPage(renderOptions)
+}
+
+function renderPaginator (pageData, options) {
+  const paginator = document.getElementById('pagination')
+  paginator.innerHTML = ''
+  const linksContainer = document.createElement('div')
+  linksContainer.classList.add('step-links')
+  linksContainer.classList.add('noselect')
+  const paginatorConstruction = pageData.elided_page_range
+  const lastPageNumber = paginatorConstruction[paginatorConstruction.length - 1]
+  const pageNumber = pageData.number
+  if (pageData.has_previous) {
+    const prevBtn = document.createElement('span')
+    prevBtn.innerText = '<'
+    prevBtn.onclick = () => {
+      options.pagination_options.page = pageNumber - 1
+      renderPage(options)
+    }
+    linksContainer.append(prevBtn)
+  }
+  for (const button of paginatorConstruction) {
+    const doc = document.createElement('span')
+    if (button === pageNumber) {
+      doc.classList.add('pagination__current-page')
+      doc.innerText = button
+      linksContainer.append(doc)
+      continue
+    }
+    if (button === '…') {
+      if (pageNumber < lastPageNumber - 3 && linksContainer.querySelector('.pagination__current-page') != null) {
+        doc.classList.add('pagination__rewind_forward')
+        doc.onclick = () => {
+          options.pagination_options.page = pageNumber + 4
+          renderPage(options)
+        }
+      }
+      if (pageNumber > 4 && linksContainer.querySelector('.pagination__current-page') == null) {
+        doc.classList.add('pagination__rewind_back')
+        doc.onclick = () => {
+          options.pagination_options.page = pageNumber - 4
+          renderPage(options)
+        }
+      }
+    } else {
+      doc.innerText = button
+      doc.onclick = (e) => {
+        options.pagination_options.page = button
+        renderPage(options)
+      }
+    }
+    linksContainer.append(doc)
+  }
+  if (pageData.has_next) {
+    const nextBtn = document.createElement('span')
+    nextBtn.innerText = '>'
+    nextBtn.onclick = () => {
+      options.pagination_options.page = pageNumber + 1
+      renderPage(options)
+    }
+    linksContainer.append(nextBtn)
+  }
+
+  paginator.appendChild(linksContainer)
+}
 
 class Comments {
   constructor () {
@@ -116,9 +243,9 @@ class Comments {
   }
 
   /**
-     * Sets an event listener on like and response buttons to specified comment
-     * @param comment
-     */
+   * Sets an event listener on like and response buttons to specified comment
+   * @param comment
+   */
   addEventListener (comment) {
     comment.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -214,12 +341,12 @@ class Comments {
                                 <span class="comment__name">${comment.user.username}</span>
                                 <span class="comment__created noselect">${comment.created_on}</span>
                                 ${lstComment.parent
-                ? `
+        ? `
                                     <div class="comment__reply-msg ${inh > 1 ? 'mobile-display-on' : ''} ${inh > 4 ? 'display-on' : ''}">
                                         <svg id="Layer_1" style="max-width: 15px; max-height: 15px; display: inline-block" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 879.19 860.19"><path d="M863.49,979.67s15.6,4.1,15.7-19.6c-.1-23.8-.1-135.5-.1-152.5.1-16.8-13-16.5-13-16.5H305.59c0-191.2,0-318.05-.1-369.25.1-24.4,0-40.2,0-40.2h95.1c36.7,0,9-27.6,9-27.6s-159.1-206-180.8-227.8c-15.8-15.6-30.6,1.9-30.6,1.9L11.59,348.92S-16,375.12,14,375h102.9s0,17.8.1,44.9c-.1,53.2-.1,180.75,0,371.15h-.2v176.8c.3,4.3,3.3,11,16.9,11.8h729.8Z" transform="translate(0 -119.75)"/></svg>
                                         <span>Ответ на коментарий [${lstComment.user.username}]</span>
                                     </div>`
-                : ''}
+        : ''}
                                 <span class="comment__text">${comment.text}</span>
                             </div>
                         </div>
@@ -230,14 +357,14 @@ class Comments {
                         </span>
                         
                         ${// eslint-disable-next-line eqeqeq
-                          comment.replies != false
-                        ? `<button class="toggle-reply-btn noselect" 
+        comment.replies != false
+          ? `<button class="toggle-reply-btn noselect" 
                         onclick="toggleRepliesHidden(rep${comment.id})"><svg id="Layer_1" style='max-width:15px;' data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 448"><path d="M503.69,322.16l-176,152C312.28,487.45,288,476.65,288,456V375.93C127.37,374.09,0,341.9,0,189.67,0,128.23,39.58,67.37,83.33,35.54c13.66-9.93,33.11,2.54,28.08,18.63C66.07,199.19,132.92,237.68,288,239.92V152c0-20.7,24.3-31.45,39.69-18.16l176,152A24,24,0,0,1,503.69,322.16Z" transform="translate(0 -32)"/></svg>Посмотреть ответы</button>
                         <div class="replies hidden ${inh > 1 ? 'mobile-margin-off' : ''} ${inh > 4 ? 'margin-off' : ''}" id=rep${comment.id}>
                             ${this.renderComments(comment.replies, comment, inh, isAuth)}
                         </div>
                         `
-                        : ''}
+          : ''}
                     </div>
                 `
     }
@@ -264,7 +391,6 @@ class Comments {
         }
       })
       .then(json => {
-        console.log('hele')
         const comments = new Array(json)
         const isAuth = true
         const html = this.renderComments(comments, '', 0, isAuth)
@@ -327,7 +453,9 @@ function toggleBookshelf () {
         bookshelfAdd.style.display = 'none'
         bookshelfRemove.style.display = 'flex'
       })
-      .catch(error => { throw new Error(error) })
+      .catch(error => {
+        throw new Error(error)
+      })
   }
   bookshelfRemove.onclick = () => {
     fetch('/remove_from_bookshelf/', {
@@ -345,11 +473,14 @@ function toggleBookshelf () {
         bookshelfRemove.style.display = 'none'
         bookshelfAdd.style.display = 'flex'
       })
-      .catch(error => { throw new Error(error) })
+      .catch(error => {
+        throw new Error(error)
+      })
   }
 }
 
-function changeTab (form) {
+function changeTab () {
+  const form = document.getElementById('changeTabsForm')
   const profile = document.getElementById('profile')
   const bookshelf = document.getElementById('bookshelf')
   bookshelf.classList.add('hidden')
@@ -538,46 +669,46 @@ function setAccountEmail (block) {
   }
 }
 
-function tagPageSorting (form) {
+function tagPageSorting () {
   // Sort bookCards on tag page using fetch ajax
-  const bookCards = document.getElementById('tagCards')
+  const form = document.getElementById('tagSort')
   const loading = document.getElementById('loading')
   const tag = document.getElementById('tag')
   form.onclick = (e) => {
     if (e.target.dataset.input === 'true') {
-      bookCards.innerHTML = ''
       loading.style.display = 'block'
       const includeTags = [tag.innerText]
-      const params = {
-        include_tags: includeTags, sort_by: e.target.value
+      const options = {
+        filters: {
+          include_tags: includeTags
+        },
+        sort_by: e.target.value,
+        pagination_options: {
+          page: 1,
+          books_per_page: 16
+        }
       }
-      getFilteredBooksFromServer(params)
-        .then((books) => {
-          renderPage(books, bookCards)
-          loading.style.display = 'none'
-        })
-        .catch((e) => {
-          console.warn(e)
+      renderPage(options)
+        .then(() => {
           loading.style.display = 'none'
         })
     }
   }
 }
 
-function getFilteredBooksFromServer (params) {
-  return fetch('/get_filtered_books_json/', {
+function getBooksFromServer (options) {
+  return fetch('/get_books_json_api/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify(options)
   })
-    .then((response) => {
-      return response
-    }).then((res) => res.json())
+    .then(response => response)
+    .then(res => res.json())
 }
 
-function renderPage (json, whereToRender) {
+function renderBookCards (json, whereToRender) {
   // Get list of dictionaries with book data and render it on page
   let html = ''
   for (const book of json) {
@@ -606,7 +737,7 @@ function createBookCard (novelData) {
             <a href="/books/${novelData.id}" class="bookCard__title">${novelData.title}</a>
             ${novelData.adult_only ? '<span className="bookCard__adultOnly"> [R18+]</span>' : ''}
             <div class="bookCard__metaData">
-              <a href="#" class="bookCard__author">${novelData.author.name}</a>
+              <a href="/authors/${novelData.author.id}" class="bookCard__author">${novelData.author.name}</a>
               <span class="bookCard__numWords">
               ${novelData.words}
               </span>
@@ -639,45 +770,56 @@ function authenticationMenu () {
   }
 }
 
-function Catalog () {
-  const bookCards = document.querySelector('.catalog-books')
+function catalog () {
   const loading = document.getElementById('loading')
-  if (bookCards) {
-    const includeTags = new SlimSelect({
-      select: '.include-tags', searchPlaceholder: 'Поиск'
-    })
-    const excludeTags = new SlimSelect({
-      select: '.exclude-tags', searchPlaceholder: 'Поиск'
-    })
-    const sortBy = new SlimSelect({
-      select: '.catalog-sortby', showSearch: false
-    })
-    const chaptersSelect = new SlimSelect({
-      select: '.catalog-chapter', showSearch: false
-    })
-    const chaptersInput = document.getElementById('chaptersInput')
-    const form = document.getElementById('filters-form')
-    form.onsubmit = (e) => {
-      e.preventDefault()
-      loading.style.display = 'block'
-      const params = {
+  const includeTags = new SlimSelect({
+    select: '.include-tags', searchPlaceholder: 'Поиск'
+  })
+  const excludeTags = new SlimSelect({
+    select: '.exclude-tags', searchPlaceholder: 'Поиск'
+  })
+  const sortBy = new SlimSelect({
+    select: '.catalog-sortby', showSearch: false
+  })
+  const chaptersSelect = new SlimSelect({
+    select: '.catalog-chapter', showSearch: false
+  })
+  const chaptersInput = document.getElementById('chaptersInput')
+  const form = document.getElementById('filters-form')
+  form.onsubmit = (e) => {
+    e.preventDefault()
+    loading.style.display = 'block'
+    const options = {
+      filters: {
         include_tags: includeTags.selected(),
         exclude_tags: excludeTags.selected(),
-        sort_by: sortBy.selected(),
         chapters_more_less_select: chaptersSelect.selected(),
-        chaptersNumber: chaptersInput.value
+        chapters_number: chaptersInput.value
+      },
+      sort_by: sortBy.selected(),
+      pagination_options: {
+        page: 1,
+        books_per_page: 16
       }
-      getFilteredBooksFromServer(params)
-        .then((books) => {
-          renderPage(books, bookCards)
-          loading.style.display = 'none'
-        })
-        .catch((e) => {
-          console.warn(e)
-          loading.style.display = 'none'
-        })
     }
+    renderPage(options)
   }
+}
+
+function renderPage (options) {
+  const placeToRender = document.getElementById('section')
+  return getBooksFromServer(options)
+    .then(response => {
+      if (Array.isArray(response.data) && response.data.length !== 0) {
+        renderBookCards(response.data, placeToRender)
+      } else {
+        placeToRender.innerHTML = ''
+        const noFoundedMsg = document.createElement('div')
+        noFoundedMsg.innerText = 'Книг не найдено'
+        placeToRender.appendChild(noFoundedMsg)
+      }
+      renderPaginator(response.page, options)
+    })
 }
 
 function BackToTop (btnClass, hideClass) {
@@ -713,7 +855,7 @@ function BackToTop (btnClass, hideClass) {
   function scrollToTop () {
     const c = document.documentElement.scrollTop || document.body.scrollTop
     if (c > 0) {
-      window.requestAnimationFrame(this.scrollToTop)
+      window.requestAnimationFrame(scrollToTop)
       window.scrollTo(0, c - c / 8)
     }
   }
@@ -766,57 +908,5 @@ function DarkMode (lightBtnClass, darkBtnClass, lightHideClass, darkHideClass) {
       document.documentElement.dataset.colorscheme = 'light'
       window.localStorage.setItem('lightMode', 'light')
     }
-  }
-}
-
-function search (formId, placeOnPageId) {
-  const form = document.getElementById(formId)
-  const placeOnPage = document.getElementById(placeOnPageId)
-  addEventListeners()
-
-  function createUrl (data) {
-    // Return url with parameters for request
-    const url = new URL('search/', location.protocol.concat('//').concat(window.location.host))
-    for (const [key, value] of Object.entries(data)) {
-      url.searchParams.append(key, value)
-    }
-    return url
-  }
-
-  function addEventListeners () {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      const inputValue = form.childNodes[1].value
-      sendRequest(createUrl({ q: inputValue }))
-        .then(data => {
-          renderPage(data, placeOnPage)
-        })
-        .catch(error => { throw new Error(error) })
-    })
-  }
-
-  function sendRequest (url) {
-    // Function which send GET request with search query on server and return Parsed JSON
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-
-      xhr.open('GET', url)
-
-      xhr.responseType = 'json'
-
-      xhr.onload = () => {
-        if (xhr.status >= 400) {
-          reject(xhr.response)
-        } else {
-          resolve(xhr.response)
-        }
-      }
-
-      xhr.onerror = (e) => {
-        reject(xhr.response)
-      }
-
-      xhr.send()
-    })
   }
 }
