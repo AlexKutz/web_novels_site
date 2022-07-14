@@ -1,19 +1,14 @@
 <!doctype html>
 <html lang="ru" data-colorScheme="light">
 {% load static %}
-
 <head>
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/png" href="{% static '/img/favicon.png' %}"/>
     {% block meta %}
         <meta name="description" content="Сайт для чтения переводов китайский веб-новел, лайт-новел, фанфиков.">
     {% endblock %}
-
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
     <meta name="theme-color" content="#fafafa">
 
     {% load compress %}
@@ -24,7 +19,6 @@
         <script type="text/javascript" src="{% static 'novel.js' %}"></script>
     {% endcompress %}
     {% block loadscss %}{% endblock %}
-
 </head>
 
 <body>
