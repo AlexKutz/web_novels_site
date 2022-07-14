@@ -503,7 +503,7 @@ html {
     cursor: pointer;
   }
   &__account-image {
-    object-fit: cover;
+    object-fit: contain;
     width: 101%;
     height: 101%;
     border-radius: 50%;

@@ -1,5 +1,8 @@
 {% extends 'novel/base.html' %}
-{% block title %}page{% endblock %}
+{% block title %}{{ novel.title }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ novel.description }}">
+{% endblock %}
 {% load static %}
 {% load compress %}
 {% block loadscss %}
