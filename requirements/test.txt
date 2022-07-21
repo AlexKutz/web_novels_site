@@ -1,4 +1,0 @@
-coverage==6.3.2
-flake8==4.0.1
-isort==5.10.1
-django-debug-toolbar==3.2.4
