@@ -30,105 +30,119 @@
     </svg>
 </button>
 
-{% block header %}
-    <header class="header">
-        <div class="header__limiter">
-            <a href="{% url 'index' %}" class="header__logo noselect" style='max-width:150px;'>
-		    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126.08 25.76"><text transform="translate(0 19.73) scale(0.97 1)" style="font-size:22px;font-family:TrebuchetMS, Trebuchet MS">Webnowellib</text></svg>
-            </a>
-            <a href="{% url 'index' %}" class="header__logo_mobile noselect">
-                <img src="{% static '/img/siteLogoMobile.png' %}" alt="site logo">
-            </a>
-            <input type="checkbox" id="menuToggle">
-            <label for="menuToggle" class="hamburger-menu__btn noselect"><span></span></label>
-            <nav class="header__menu noselect">
-                <div class="header__menu-container">
-                    <div class="header__menu-item">
-                        <a href="{% url 'catalog' %}" class="header__menu-link">
-                            <div class="header__menu-icon header__menu-icon_catalog">
-                                <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 298 287.29">
-                                    <path d="M162.51,260.49,150,281l-12.49-20.48A42.74,42.74,0,0,0,101,240l-91,.14V20h92.54a45.18,45.18,0,0,1,36,17.91L150,53l11.44-15.12a45.18,45.18,0,0,1,36-17.91H290V240H199A42.72,42.72,0,0,0,162.51,260.49Z"
-                                          transform="translate(-1 -11)" fill="none" stroke-miterlimit="10" stroke-width=26
-                                          opacity="0.99"/>
-                                    <line x1="148.5" y1="42" x2="148.5" y2="259.71" fill="none" stroke-miterlimit="10"
-                                          stroke-width="26"/>
-                                    <line x1="62.84" y1="144.5" x2="116.12" y2="144.5" fill="none" stroke-miterlimit="10"
-                                          stroke-width="20"/>
-                                    <line x1="39.41" y1="170.5" x2="116.12" y2="170.5" fill="none" stroke-miterlimit="10"
-                                          stroke-width="20"/>
-                                </svg>
-                            </div>
-                            <span>Каталог</span>
-                        </a>
-                    </div>
-                    <div class="header__menu-item">
-                        <a href="{% url 'tags' %}" class="header__menu-link">
-                            <div class="header__menu-icon header__menu-icon_tags">
-                                <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 291.61 291.61">
-                                    <path d="M279.65,187l-94,94a22.87,22.87,0,0,1-32.24-.11L20.94,148.41a11.38,11.38,0,0,1-3.32-7.49L13.46,53.77a37.18,37.18,0,0,1,39-39L139.58,19a11.39,11.39,0,0,1,7.49,3.32L279.53,154.73A22.87,22.87,0,0,1,279.65,187Z"
-                                          transform="translate(-4.03 -5.36)" fill="none" stroke-miterlimit="10"
-                                          stroke-width="26"/>
-                                    <ellipse cx="108" cy="110" rx="29.39" ry="29.61"
-                                             transform="translate(-50.18 103.23) rotate(-45)" fill="none"
-                                             stroke-miterlimit="10" stroke-width="26"/>
-                                </svg>
-                            </div>
-                            <span>Теги</span>
-                        </a>
-                    </div>
-                    <div class="header__menu-item">
-                        <a href="{% url 'contacts' %}" class="header__menu-link">
-                            <div class="header__menu-icon header__menu-icon_contacts">
-                                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 289">
-                                    <path d="M255.09,42.31Q215.21,6,155.94,6,93.68,6,49.83,47.3T6,150.12q0,58.95,41.69,101.4Q89.54,294,160.22,294a213,213,0,0,0,83.69-17.33,17.54,17.54,0,0,0,9.63-22.74h0A17.87,17.87,0,0,0,230,244.41q-35.69,15.17-69.82,15.16-54.25,0-84-32.66T46.39,150.29q0-47.76,31.87-79.72t78.22-32q42.74,0,72.2,26.26T258.12,131c0,18.16-4.52,33.32-13.5,45.36s-18.32,18.1-28,18.1c-5.24,0-7.85-2.77-7.85-8.35a151.22,151.22,0,0,1,1-15.92l11.06-89.36H182.77l-2.44,8.75q-14.55-11.72-31.88-11.75-27.48,0-47,21.62T81.83,155.05c0,22.15,5.77,40.07,17.37,53.64s25.52,20.39,41.81,20.39q21.87,0,37.36-18.1,11.69,17.37,34.43,17.34,33.47,0,57.81-28.79T295,130.14Q295,78.68,255.09,42.31ZM167.42,177.5C160.7,186.43,152.67,191,143.33,191q-9.54,0-15.34-9.87t-5.89-24.56q0-18.15,8.21-29.26c5.47-7.4,12.25-11.16,20.34-11.16,7,0,13.26,2.76,18.73,8.34s8.21,13,8.21,22.27A50.47,50.47,0,0,1,167.42,177.5Z"
-                                          transform="translate(-5.5 -5.5)" stroke-miterlimit="10"/>
-                                </svg>
-                            </div>
-                            <span>Контакты</span>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-            <div class="filler"></div>
-            <div class="header__left-container">
-                <div class="changeColorScheme header__changeColorScheme">
-                    <div class="changeColorScheme__moon changeColorScheme__moon_hide">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-moon">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </div>
-                    <div class="changeColorScheme__sun changeColorScheme__sun_hide">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-sun">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    </div>
-                </div>
-                {% if user.is_authenticated %}
-                    <div class="header__authentication noselect authenticated">
-                        <div class="authenticated__account" id="accountIco" data-menu="true">
-                            <img src="{{ user.image.url }}" class="authenticated__account-image" id="headerAccImage"
-                                 data-menu="true">
+<div class="site-container">
+    {% block header %}
+        <header class="header">
+            <div class="header__limiter">
+                <a href="{% url 'index' %}" class="header__logo noselect" style='max-width:150px;'>
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126.08 25.76">
+                        <text transform="translate(0 19.73) scale(0.97 1)"
+                              style="font-size:22px;font-family:TrebuchetMS, Trebuchet MS">Webnowellib
+                        </text>
+                    </svg>
+                </a>
+                <a href="{% url 'index' %}" class="header__logo_mobile noselect">
+                    <img src="{% static '/img/siteLogoMobile.png' %}" alt="site logo">
+                </a>
+                <input type="checkbox" id="menuToggle">
+                <label for="menuToggle" class="hamburger-menu__btn noselect"><span></span></label>
+                <nav class="header__menu noselect">
+                    <div class="header__menu-container">
+                        <div class="header__menu-item">
+                            <a href="{% url 'catalog' %}" class="header__menu-link">
+                                <div class="header__menu-icon header__menu-icon_catalog">
+                                    <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 298 287.29">
+                                        <path d="M162.51,260.49,150,281l-12.49-20.48A42.74,42.74,0,0,0,101,240l-91,.14V20h92.54a45.18,45.18,0,0,1,36,17.91L150,53l11.44-15.12a45.18,45.18,0,0,1,36-17.91H290V240H199A42.72,42.72,0,0,0,162.51,260.49Z"
+                                              transform="translate(-1 -11)" fill="none" stroke-miterlimit="10"
+                                              stroke-width=26
+                                              opacity="0.99"/>
+                                        <line x1="148.5" y1="42" x2="148.5" y2="259.71" fill="none"
+                                              stroke-miterlimit="10"
+                                              stroke-width="26"/>
+                                        <line x1="62.84" y1="144.5" x2="116.12" y2="144.5" fill="none"
+                                              stroke-miterlimit="10"
+                                              stroke-width="20"/>
+                                        <line x1="39.41" y1="170.5" x2="116.12" y2="170.5" fill="none"
+                                              stroke-miterlimit="10"
+                                              stroke-width="20"/>
+                                    </svg>
+                                </div>
+                                <span>Каталог</span>
+                            </a>
                         </div>
-                        <div class="authenticated__dropdown dropdown" id="accountDrop" data-menu="true">
-                            <ul>
-                                <li data-menu="true">
-                                    <svg version="1.1" class="dropdown__icon" id="Layer_1"
-                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         x="0px" y="0px"
-                                         width="512px" height="512px" viewBox="0 0 512 512"
-                                         enable-background="new 0 0 512 512" xml:space="preserve">
+                        <div class="header__menu-item">
+                            <a href="{% url 'tags' %}" class="header__menu-link">
+                                <div class="header__menu-icon header__menu-icon_tags">
+                                    <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 291.61 291.61">
+                                        <path d="M279.65,187l-94,94a22.87,22.87,0,0,1-32.24-.11L20.94,148.41a11.38,11.38,0,0,1-3.32-7.49L13.46,53.77a37.18,37.18,0,0,1,39-39L139.58,19a11.39,11.39,0,0,1,7.49,3.32L279.53,154.73A22.87,22.87,0,0,1,279.65,187Z"
+                                              transform="translate(-4.03 -5.36)" fill="none" stroke-miterlimit="10"
+                                              stroke-width="26"/>
+                                        <ellipse cx="108" cy="110" rx="29.39" ry="29.61"
+                                                 transform="translate(-50.18 103.23) rotate(-45)" fill="none"
+                                                 stroke-miterlimit="10" stroke-width="26"/>
+                                    </svg>
+                                </div>
+                                <span>Теги</span>
+                            </a>
+                        </div>
+                        <div class="header__menu-item">
+                            <a href="{% url 'contacts' %}" class="header__menu-link">
+                                <div class="header__menu-icon header__menu-icon_contacts">
+                                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 289">
+                                        <path d="M255.09,42.31Q215.21,6,155.94,6,93.68,6,49.83,47.3T6,150.12q0,58.95,41.69,101.4Q89.54,294,160.22,294a213,213,0,0,0,83.69-17.33,17.54,17.54,0,0,0,9.63-22.74h0A17.87,17.87,0,0,0,230,244.41q-35.69,15.17-69.82,15.16-54.25,0-84-32.66T46.39,150.29q0-47.76,31.87-79.72t78.22-32q42.74,0,72.2,26.26T258.12,131c0,18.16-4.52,33.32-13.5,45.36s-18.32,18.1-28,18.1c-5.24,0-7.85-2.77-7.85-8.35a151.22,151.22,0,0,1,1-15.92l11.06-89.36H182.77l-2.44,8.75q-14.55-11.72-31.88-11.75-27.48,0-47,21.62T81.83,155.05c0,22.15,5.77,40.07,17.37,53.64s25.52,20.39,41.81,20.39q21.87,0,37.36-18.1,11.69,17.37,34.43,17.34,33.47,0,57.81-28.79T295,130.14Q295,78.68,255.09,42.31ZM167.42,177.5C160.7,186.43,152.67,191,143.33,191q-9.54,0-15.34-9.87t-5.89-24.56q0-18.15,8.21-29.26c5.47-7.4,12.25-11.16,20.34-11.16,7,0,13.26,2.76,18.73,8.34s8.21,13,8.21,22.27A50.47,50.47,0,0,1,167.42,177.5Z"
+                                              transform="translate(-5.5 -5.5)" stroke-miterlimit="10"/>
+                                    </svg>
+                                </div>
+                                <span>Контакты</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <div class="filler"></div>
+                <div class="header__left-container">
+                    <div class="changeColorScheme header__changeColorScheme">
+                        <div class="changeColorScheme__moon changeColorScheme__moon_hide">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-moon">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                        </div>
+                        <div class="changeColorScheme__sun changeColorScheme__sun_hide">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-sun">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="header__authentication noselect authenticated">
+                            <div class="authenticated__account" id="accountIco" data-menu="true">
+                                <img src="{{ user.image.url }}" class="authenticated__account-image" id="headerAccImage"
+                                     data-menu="true">
+                            </div>
+                            <div class="authenticated__dropdown dropdown" id="accountDrop" data-menu="true">
+                                <ul>
+                                    <li data-menu="true">
+                                        <svg version="1.1" class="dropdown__icon" id="Layer_1"
+                                             xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             x="0px" y="0px"
+                                             width="512px" height="512px" viewBox="0 0 512 512"
+                                             enable-background="new 0 0 512 512" xml:space="preserve">
 <g id="user">
 	<g>
 		<path d="M256.167,277.721c-55.4,0-100.471-45.071-100.471-100.471S200.767,76.779,256.167,76.779
@@ -143,57 +157,58 @@
 	</g>
 </g>
 </svg>
-                                    <a href="{% url 'profile' %}" class="dropdown__link">Аккаунт</a>
-                                </li>
-                                <li>
-                                    <svg viewBox="0 0 32 32" class="dropdown__icon" xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <style>.cls-1 {
-                                                fill: none;
-                                                stroke: #000;
-                                                stroke-linecap: round;
-                                                stroke-linejoin: round;
-                                                stroke-width: 2px;
-                                            }</style>
-                                        </defs>
-                                        <title/>
-                                        <g id="logout">
-                                            <line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/>
-                                            <path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z"/>
-                                            <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/>
-                                            <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/>
-                                            <line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/>
-                                            <line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/>
-                                        </g>
-                                    </svg>
-                                    <a href="{% url 'logout' %}?next={{ request.path }}"
-                                       class="dropdown__link">Выйти</a>
-                                </li>
-                            </ul>
+                                        <a href="{% url 'profile' %}" class="dropdown__link">Аккаунт</a>
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 32 32" class="dropdown__icon"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <defs>
+                                                <style>.cls-1 {
+                                                    fill: none;
+                                                    stroke: #000;
+                                                    stroke-linecap: round;
+                                                    stroke-linejoin: round;
+                                                    stroke-width: 2px;
+                                                }</style>
+                                            </defs>
+                                            <title/>
+                                            <g id="logout">
+                                                <line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/>
+                                                <path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z"/>
+                                                <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/>
+                                                <line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/>
+                                                <line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/>
+                                                <line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/>
+                                            </g>
+                                        </svg>
+                                        <a href="{% url 'logout' %}?next={{ request.path }}"
+                                           class="dropdown__link">Выйти</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                {% else %}
-                    <div class="header__authentication authentication noselect">
-                        <a href="{% url 'login' %}?next={{request.path}}"
-                           class="authentication__btn authentication__login-btn noselect btn-border-anim">
-                            Вход
-                            <svg xmlns="http://www.w3.org/2000/svg" class="authentication__icon"
-                                 style="max-height: 30px; max-width: 30px; margin-top: 1px;" viewBox="0 0 310 330">
-                                <path
-                                        d="M25,180H208.79l-44.4,44.39a15,15,0,0,0,21.22,21.22l70-70a15,15,0,0,0,0-21.21l-70-70a15,15,0,0,0-21.22,21.22L208.79,150H25a15,15,0,0,0,0,30Z"
-                                        transform="translate(-10)"/>
-                                <path
-                                        d="M175,30H290V300H175a15,15,0,0,0,0,30H305a15,15,0,0,0,15-15V15A15,15,0,0,0,305,0H175a15,15,0,0,0,0,30Z"
-                                        transform="translate(-10)"/>
-                            </svg>
-                        </a>
-                        <a href="{% url 'registration' %}?next={{request.path}}"
-                           class="authentication__btn authentication__register-btn noselect btn-border-anim">
-                            Регистрация
-                            <svg version="1.1" width="15" style="max-height: 30px; max-width: 30px"
-                                 class="authentication__icon" xmlns="http://www.w3.org/2000/svg"
-                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 viewBox="0 0 1523 1639.7" xml:space="preserve">
+                    {% else %}
+                        <div class="header__authentication authentication noselect">
+                            <a href="{% url 'login' %}?next={{ request.path }}"
+                               class="authentication__btn authentication__login-btn noselect btn-border-anim">
+                                Вход
+                                <svg xmlns="http://www.w3.org/2000/svg" class="authentication__icon"
+                                     style="max-height: 30px; max-width: 30px; margin-top: 1px;" viewBox="0 0 310 330">
+                                    <path
+                                            d="M25,180H208.79l-44.4,44.39a15,15,0,0,0,21.22,21.22l70-70a15,15,0,0,0,0-21.21l-70-70a15,15,0,0,0-21.22,21.22L208.79,150H25a15,15,0,0,0,0,30Z"
+                                            transform="translate(-10)"/>
+                                    <path
+                                            d="M175,30H290V300H175a15,15,0,0,0,0,30H305a15,15,0,0,0,15-15V15A15,15,0,0,0,305,0H175a15,15,0,0,0,0,30Z"
+                                            transform="translate(-10)"/>
+                                </svg>
+                            </a>
+                            <a href="{% url 'registration' %}?next={{ request.path }}"
+                               class="authentication__btn authentication__register-btn noselect btn-border-anim">
+                                Регистрация
+                                <svg version="1.1" width="15" style="max-height: 30px; max-width: 30px"
+                                     class="authentication__icon" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     viewBox="0 0 1523 1639.7" xml:space="preserve">
           <path d="M976.6,1011.3c25.4,9.9,50.2,21.3,74.2,34c29.9,15.8,41.3,52.7,25.5,82.6c-15.8,29.9-52.7,41.3-82.6,25.5
                C907.8,1108,812,1084,712.6,1084c-289.9,0-537.2,206.2-591.5,487.2c-6.4,33.1-38.5,54.8-71.6,48.4c-33.1-6.4-54.8-38.5-48.4-71.6
                c47.9-248.4,221-448,447.7-536.7c-165-92.4-276.5-268.9-276.5-471.3c0-298.2,241.9-540,540.3-540c298.4,0,540.3,241.8,540.3,540
@@ -205,32 +220,32 @@
                c-9.1-5.3-16.6-12.9-21.9-21.9c-5.5-9.4-8.4-20-8.3-30.9v-181.3H974.5c-33.8,0-61.1-27.4-61.1-61.1c0-33.8,27.4-61.1,61.1-61.1
                L1158.1,1287.7L1158.1,1287.7z"/>
         </svg>
-                        </a>
-                    </div>
-                {% endif %}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+    {% endblock %}
+
+    <main class="page">
+        <div class="page__limiter">
+            <div class="flex-container">
+                <div class="page__col-1">
+                    {% block content %}
+                        <h1> PAGE CONTENT </h1>
+                    {% endblock %}
+                </div>
+                {#          <div class="page__col-2">#}
+                {#              <div class="info-board"></div>#}
+                {#          </div>#}
             </div>
         </div>
-    </header>
-{% endblock %}
+    </main>
 
-<main class="page">
-    <div class="page__limiter">
-        <div class="flex-container">
-            <div class="page__col-1">
-                {% block content %}
-                    <h1> PAGE CONTENT </h1>
-                {% endblock %}
-            </div>
-            {#          <div class="page__col-2">#}
-            {#              <div class="info-board"></div>#}
-            {#          </div>#}
-        </div>
-    </div>
-</main>
-
-<footer class="footer">
-    <div class="footer__limiter"></div>
-</footer>
-
+    <footer class="footer">
+        <div class="footer__limiter"></div>
+    </footer>
+</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {% extends 'novel/base.html' %}
-{% block title %}{{ Книги автора author.name }}{% endblock %}
+{% block title %}Книги автора {{ author.name }}{% endblock %}
 {% block meta %}
     <meta name="description" content="Переводы книг автора {{ author.name }}">
 {% endblock %}
@@ -8,7 +8,7 @@
     <div id="author" class="hidden">{{ author.name }}</div>
     <div class="author-books" id="section">
     </div>
-    <div id="pagination">
+    <div id="pagination"></div>
     <div class="cards">
         {% include 'novel/novel_card.html' %}
     </div>
