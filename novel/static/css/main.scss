@@ -507,8 +507,7 @@ html {
     width: 101%;
     height: 101%;
     border-radius: 50%;
-    background-color: #e5dada;
-    background-color: var(--main-bg-color);
+    background-color: #f3f0f2;
     box-shadow: 0 0 5px rgba(0,0,0, 0.3);
   }
 }
@@ -713,7 +712,7 @@ h1 {
   &__logo {
     display: block;
     height: 100%;
-    max-width: 200px;
+    max-width: 140px;
     min-width: 150px;
     filter: brightness(1.2) contrast(0.9);
     @media screen and (max-width: 930px){
@@ -1056,6 +1055,7 @@ h1 {
     color: var(--second-text-color);
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
     margin-bottom: 0.33rem;
+    margin-left: 0.20rem;
     background-color: var(--second-bg-color);
 
     &:hover {

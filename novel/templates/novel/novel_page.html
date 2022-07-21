@@ -75,7 +75,7 @@
         </div>
         <div class="chapters">
             <h2>Список глав</h2>
-            <div class="chapters-box">
+            <div class="chapters-box" style="overflow-x:hidden;">
                 {% for chapter in chapters %}
                     <div class="chapter-wrap">
                         <a href="{% url 'read' novel.id chapter.number %}"

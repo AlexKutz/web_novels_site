@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os.path
 
-from .local_settings import *
+from .prodaction_settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,13 +113,6 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-]
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "novel", "static"),
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "reader", "static"),
-    os.path.join(BASE_DIR, "authentication", "static")
 ]
 
 INTERNAL_IPS = [

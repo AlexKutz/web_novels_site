@@ -5,16 +5,12 @@
 
 <head>
     <title>Novel</title>
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-
-    {% include "novel/META.html" %}
-
     {% load compress %}
     {% compress css %}
         <link rel="stylesheet" type="text/x-scss" href="{% static 'css/reader.css' %}">
     {% endcompress %}
     <script src="{% static 'reader.js' %}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>

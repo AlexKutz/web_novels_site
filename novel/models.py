@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Count
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.timesince import timesince
@@ -84,6 +85,8 @@ class Novel(models.Model):
     def _get_num_words_formatted(self):
         return number_words_filter(self.words)
 
+
+
     time_from_upload = property(_get_timesince)
     number_words_formatted = property(_get_num_words_formatted)
 
@@ -104,7 +107,7 @@ class Rate(models.Model):
 
 
 class Chapter(models.Model):
-    title = models.CharField(max_length=16, blank=True)
+    title = models.CharField(max_length=64, blank=True)
     novel = models.ForeignKey(Novel, on_delete=models.CASCADE)
     number = models.PositiveIntegerField()
     content = models.TextField()
@@ -114,9 +117,10 @@ class Chapter(models.Model):
         return f'{self.novel} / {self.title} / {self.number}'
 
 
+@receiver(post_save, sender=Novel)
 def update_tag_counter(sender, instance, created, **kwargs):
-    # Update counter in tag model
     count = Tag.objects.annotate(Count('novel'))
+    print('work')
     for item in count:
         tag = Tag.objects.get(name=item.name)
         tag.count = item.novel__count
